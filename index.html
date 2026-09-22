@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hán Tự Thần Ký: Chinh Phục HSK 1</title>
-    <!-- Phông chữ tiếng Việt chuẩn Be Vietnam Pro & Hán tự Noto Serif SC -->
+    <!-- Font tiếng Việt chuẩn Be Vietnam Pro & Hán tự Noto Serif SC -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800;900&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
     <style>
         * { 
             box-sizing: border-box; 
@@ -17,21 +17,23 @@
             user-select: none; 
         }
         body {
-            background: #080b14;
+            background: #060810;
+            background-image: radial-gradient(#1e1b4b 1px, transparent 1px);
+            background-size: 24px 24px;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
         }
         .app-window {
             width: 100%;
-            max-width: 900px;
-            background: #111827;
-            border: 2px solid #8b5cf6;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.25);
+            max-width: 920px;
+            background: #0f172a;
+            border: 3px solid #8b5cf6;
+            border-radius: 22px;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.35);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -40,138 +42,144 @@
 
         /* Top Bar */
         .top-bar {
-            background: #1e1b4b;
-            padding: 12px 20px;
+            background: linear-gradient(90deg, #1e1b4b 0%, #312e81 100%);
+            padding: 14px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #312e81;
+            border-bottom: 3px solid #4338ca;
         }
-        .top-bar h1 { font-size: 17px; font-weight: 700; color: #c7d2fe; display: flex; align-items: center; gap: 8px; }
-        .controls-top { display: flex; gap: 10px; align-items: center; }
+        .top-bar h1 { 
+            font-size: 18px; 
+            font-weight: 800; 
+            color: #e0e7ff; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            text-shadow: 0 2px 8px rgba(99, 102, 241, 0.6);
+        }
+        .controls-top { display: flex; gap: 12px; align-items: center; }
         .btn-music {
-            background: #2e1065;
+            background: #4a044e;
             color: #f472b6;
-            border: 1px solid #ec4899;
+            border: 2px solid #ec4899;
             padding: 6px 14px;
-            border-radius: 20px;
+            border-radius: 12px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
             transition: all 0.2s;
         }
+        .btn-music:active { transform: scale(0.95); }
         .stats-badge {
-            background: #312e81;
-            border: 1px solid #4f46e5;
+            background: #1e1b4b;
+            border: 2px solid #6366f1;
             padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #fbbf24;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #facc15;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Screen Views */
-        .screen-view { display: none; padding: 20px; flex-direction: column; align-items: center; }
+        /* Views */
+        .screen-view { display: none; padding: 22px; flex-direction: column; align-items: center; }
         .screen-view.active { display: flex; }
 
-        /* Bản đồ */
+        /* Map */
         .map-container {
             width: 100%;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-            border: 2px dashed #334155;
-            border-radius: 16px;
-            padding: 30px 15px;
+            background: radial-gradient(circle at center, #1e293b 0%, #0a0f1d 100%);
+            border: 3px solid #334155;
+            border-radius: 18px;
+            padding: 35px 20px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
         }
         .map-node {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
             transition: all 0.2s;
         }
+        .map-node:hover:not(.locked) { transform: translateY(-4px); }
         .node-circle {
-            width: 62px;
-            height: 62px;
-            border-radius: 50%;
-            background: #1f2937;
-            border: 3px solid #4b5563;
+            width: 66px;
+            height: 66px;
+            border-radius: 18px;
+            background: #1e293b;
+            border: 3px solid #475569;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 22px;
-            font-weight: 800;
-            color: #9ca3af;
+            font-weight: 900;
+            color: #94a3b8;
+            box-shadow: 0 6px 0 #0f172a;
         }
         .map-node.unlocked .node-circle {
-            background: #4338ca;
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
             border-color: #818cf8;
             color: #ffffff;
-            box-shadow: 0 0 16px rgba(99, 102, 241, 0.6);
+            box-shadow: 0 6px 0 #1e1b4b, 0 0 20px rgba(99, 102, 241, 0.6);
         }
         .map-node.completed .node-circle {
-            background: #059669;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
             border-color: #34d399;
             color: #ffffff;
+            box-shadow: 0 6px 0 #064e3b;
         }
-        .map-node.locked { cursor: not-allowed; opacity: 0.5; }
-        .node-name { font-size: 13px; font-weight: 600; color: #cbd5e1; }
-
-        /* Sandbox Box */
-        .sandbox-banner {
-            width: 100%;
-            background: linear-gradient(90deg, #b45309 0%, #d97706 100%);
-            border-radius: 12px;
-            padding: 12px 18px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
-        }
+        .map-node.locked { cursor: not-allowed; opacity: 0.55; }
+        .node-name { font-size: 13px; font-weight: 700; color: #cbd5e1; }
 
         .vault-box {
             width: 100%;
-            background: #182032;
-            border: 1px solid #2d3748;
-            border-radius: 12px;
-            padding: 16px;
+            background: #111827;
+            border: 2px solid #1f2937;
+            border-radius: 16px;
+            padding: 18px;
         }
-        .vault-title { font-size: 13px; font-weight: 700; color: #a5b4fc; margin-bottom: 10px; }
-        .vault-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+        .vault-title { font-size: 14px; font-weight: 800; color: #a5b4fc; margin-bottom: 12px; }
+        .vault-grid { display: flex; gap: 10px; flex-wrap: wrap; }
         .vault-item {
             background: #1e293b;
-            border: 1px solid #4f46e5;
-            padding: 6px 12px;
-            border-radius: 8px;
+            border: 2px solid #4f46e5;
+            padding: 8px 14px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 0 #0f172a;
         }
-        .vault-item b { color: #f472b6; font-size: 15px; }
+        .vault-item b { color: #f472b6; font-size: 16px; font-family: 'Noto Serif SC', sans-serif; margin-right: 4px; }
 
         /* Canvas Game */
         canvas {
             display: block;
-            border-bottom: 2px solid #334155;
+            border-bottom: 3px solid #334155;
+            image-rendering: pixelated;
         }
         .game-controls {
             width: 100%;
-            background: #0f172a;
-            padding: 14px 18px;
+            background: #090e1a;
+            padding: 14px 20px;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
         .quest-alert {
             background: #1e1b4b;
-            border: 1px dashed #f59e0b;
-            padding: 10px 14px;
-            border-radius: 8px;
+            border: 2px dashed #f59e0b;
+            padding: 10px 16px;
+            border-radius: 12px;
             font-size: 13px;
+            font-weight: 600;
             color: #fef08a;
             display: flex;
             justify-content: space-between;
@@ -184,49 +192,52 @@
             flex-wrap: wrap;
             gap: 12px;
         }
-        .deck-cards { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .deck-cards { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         .deck-btn {
-            background: #1e293b;
-            border: 2px solid #6366f1;
+            background: linear-gradient(180deg, #2d3748 0%, #1e293b 100%);
+            border: 2px solid #818cf8;
             color: #fff;
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.15s;
+            box-shadow: 0 4px 0 #0f172a;
+            transition: all 0.1s;
         }
-        .deck-btn:hover { background: #4338ca; transform: translateY(-2px); }
+        .deck-btn:hover { background: #3730a3; transform: translateY(-2px); }
+        .deck-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #0f172a; }
+        .deck-btn span.hanzi { font-family: 'Noto Serif SC', sans-serif; font-size: 18px; color: #fde047; }
         .deck-btn span.py { font-size: 11px; color: #93c5fd; font-weight: 400; }
 
-        /* Nút cảm ứng */
+        /* Nút ảo cảm ứng */
         .touch-pad { display: flex; gap: 10px; }
         .touch-btn {
-            background: #232d42;
+            background: #1e293b;
             color: #f8fafc;
             border: 2px solid #4f46e5;
-            width: 52px;
-            height: 44px;
-            border-radius: 10px;
+            width: 54px;
+            height: 46px;
+            border-radius: 12px;
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 900;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 0 #0f172a;
             transition: all 0.1s;
         }
-        .touch-btn:active { background: #6366f1; transform: scale(0.95); }
+        .touch-btn:active { background: #6366f1; transform: translateY(2px); box-shadow: 0 1px 0 #0f172a; }
 
-        /* Modal Popups */
+        /* Popups */
         .modal-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 11, 20, 0.95);
+            background: rgba(4, 7, 15, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -234,49 +245,48 @@
             padding: 20px;
         }
         .modal-card {
-            background: #181d2f;
-            border: 2px solid #8b5cf6;
-            border-radius: 18px;
-            padding: 26px;
+            background: #111827;
+            border: 3px solid #8b5cf6;
+            border-radius: 20px;
+            padding: 28px;
             max-width: 540px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 35px rgba(139, 92, 246, 0.4);
         }
         .btn-action {
             border: none;
-            padding: 12px 26px;
+            padding: 12px 28px;
             border-radius: 25px;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.2s;
         }
         .btn-primary { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; }
         .btn-primary:hover { transform: scale(1.04); }
 
-        /* Chiếu thư Trạng Nguyên */
+        /* Chiếu chỉ Trạng Nguyên */
         .scroll-card {
-            background: #2b1810;
+            background: #23120b;
             border: 4px double #f59e0b;
-            border-radius: 18px;
-            padding: 28px;
+            border-radius: 20px;
+            padding: 30px;
             max-width: 580px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
-            position: relative;
+            box-shadow: 0 0 50px rgba(245, 158, 11, 0.5);
         }
         .scroll-badge {
             display: inline-block;
             background: #78350f;
-            border: 1px solid #fbbf24;
+            border: 2px solid #fbbf24;
             color: #fef08a;
             font-size: 12px;
-            font-weight: 700;
-            padding: 4px 12px;
+            font-weight: 800;
+            padding: 4px 14px;
             border-radius: 20px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
     </style>
 </head>
@@ -285,26 +295,17 @@
 <div class="app-window">
     <!-- Top Bar -->
     <div class="top-bar">
-        <h1>🏮 HÁN TỰ THẦN KÝ</h1>
+        <h1>🏮 HÁN TỰ THẦN KÝ • 5 ĐẠI PHONG CÁCH</h1>
         <div class="controls-top">
-            <button class="btn-music" id="music-btn" onclick="toggleMusic()">🎵 BẬT NHẠC</button>
+            <button class="btn-music" id="music-btn" onclick="toggleMusic()">🎵 BẬT NHẠC TRANH</button>
             <div class="stats-badge">📜 Thuần Thục: <span id="mastered-count">0</span> / 150 Từ</div>
         </div>
     </div>
 
     <!-- MÀN HÌNH BẢN ĐỒ -->
     <div class="screen-view active" id="view-map">
-        <h2 style="font-size: 19px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;">🗺️ BẢN ĐỒ CHINH PHỤC CÁC MIỀN ĐẤT</h2>
-        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Vượt qua từng ải để tích lũy trọn vẹn từ vựng HSK 1</p>
-
-        <!-- Banner Sandbox mở khóa khi phá đảo -->
-        <div class="sandbox-banner" id="sandbox-banner">
-            <div>
-                <b style="color: #fef08a; font-size: 15px;">🔥 ĐÃ MỞ KHÓA: CHẾ ĐỘ NGHỊCH TỰ DO (SANDBOX)</b>
-                <p style="font-size: 12px; color: #fef3c7;">Triệu hồi vô hạn toàn bộ chữ Hán, thỏa sức nghịch cơ chế vật lý!</p>
-            </div>
-            <button class="btn-action" style="background: #181d2f; color: #fde047; padding: 8px 16px; font-size: 13px;" onclick="selectStage(99)">VÀO CHƠI ➔</button>
-        </div>
+        <h2 style="font-size: 19px; font-weight: 800; color: #f1f5f9; margin-bottom: 4px;">🗺️ BẢN ĐỒ 5 ĐẠI MIỀN ĐẤT KỲ BÍ</h2>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 22px;">Mỗi miền đất là một nhân vật và phong cách Pixel Art riêng biệt</p>
 
         <div class="map-container">
             <div class="map-node unlocked" id="node-1" onclick="selectStage(1)">
@@ -313,7 +314,7 @@
             </div>
             <div class="map-node locked" id="node-2" onclick="selectStage(2)">
                 <div class="node-circle">🔒</div>
-                <div class="node-name">Vực Nham Thạch</div>
+                <div class="node-name">Hẻm Nham Thạch</div>
             </div>
             <div class="map-node locked" id="node-3" onclick="selectStage(3)">
                 <div class="node-circle">🔒</div>
@@ -321,7 +322,7 @@
             </div>
             <div class="map-node locked" id="node-4" onclick="selectStage(4)">
                 <div class="node-circle">🔒</div>
-                <div class="node-name">Bến Thuyền</div>
+                <div class="node-name">Bến Thuyền Giang</div>
             </div>
             <div class="map-node locked" id="node-5" onclick="selectStage(5)">
                 <div class="node-circle">🔒</div>
@@ -330,7 +331,7 @@
         </div>
 
         <div class="vault-box">
-            <div class="vault-title">📚 KHO TỪ VỰNG ĐÃ THUẦN THỤC (Bấm vào để nghe đọc):</div>
+            <div class="vault-title">📚 KHO TỪ VỰNG ĐÃ THUẦN THỤC (Bấm thẻ để nghe đọc):</div>
             <div class="vault-grid" id="vault-list">
                 <span style="font-size: 12px; color: #64748b; font-style: italic;">Chưa có từ nào. Hãy vượt qua Ải 1 để mở khóa!</span>
             </div>
@@ -343,14 +344,13 @@
         <div class="game-controls">
             <div class="quest-alert">
                 <span id="stage-quest-desc">Đang nạp nhiệm vụ...</span>
-                <button onclick="backToMap()" style="background: none; border: 1px solid #818cf8; color: #c7d2fe; padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer;">🗺️ Về Bản Đồ</button>
+                <button onclick="backToMap()" style="background: none; border: 2px solid #818cf8; color: #c7d2fe; padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">🗺️ Về Bản Đồ</button>
             </div>
             <div class="bottom-action-bar">
                 <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
-                    <span style="font-size: 12px; color: #94a3b8; white-space: nowrap;">Bút lệnh:</span>
+                    <span style="font-size: 12px; font-weight: 700; color: #94a3b8;">Bút lệnh:</span>
                     <div class="deck-cards" id="deck-buttons"></div>
                 </div>
-                <!-- Nút cảm ứng điều khiển -->
                 <div class="touch-pad">
                     <button class="touch-btn" onmousedown="setKey('ArrowLeft', true)" onmouseup="setKey('ArrowLeft', false)" ontouchstart="setKey('ArrowLeft', true); event.preventDefault();" ontouchend="setKey('ArrowLeft', false); event.preventDefault();">⬅</button>
                     <button class="touch-btn" onmousedown="setKey('ArrowUp', true)" onmouseup="setKey('ArrowUp', false)" ontouchstart="setKey('ArrowUp', true); event.preventDefault();" ontouchend="setKey('ArrowUp', false); event.preventDefault();">⬆</button>
@@ -360,23 +360,23 @@
         </div>
     </div>
 
-    <!-- 1. MODAL HƯỚNG DẪN MỞ MÀN -->
+    <!-- MODAL HƯỚNG DẪN -->
     <div class="modal-overlay" id="intro-modal">
         <div class="modal-card">
-            <h2 style="color: #f472b6; margin-bottom: 10px; font-weight: 700;">🏮 HƯỚNG DẪN CÁCH CHƠI</h2>
-            <div style="text-align: left; background: #0f1422; padding: 16px; border-radius: 12px; font-size: 13px; line-height: 1.6; margin-bottom: 20px; color: #cbd5e1;">
-                <p>1. <b>Di chuyển:</b> Dùng cụm phím <b>[⬅] [⬆] [➡]</b> ở góc dưới bên phải hoặc mũi tên trên bàn phím.</p>
-                <p>2. <b>Phá giải thử thách:</b> Bấm thẻ chữ Hán để triệu hồi vật thể bắc cầu, làm tan băng, chèo thuyền hoặc mở cổng thành.</p>
-                <p>3. <b>Mục tiêu:</b> Chạm vào cờ đỏ 🏁 để thu nạp từ vựng vào trí nhớ và mở khóa ải kế tiếp!</p>
+            <h2 style="color: #f472b6; margin-bottom: 10px; font-weight: 800;">🏮 HƯỚNG DẪN CÁCH CHƠI</h2>
+            <div style="text-align: left; background: #080c16; padding: 16px; border-radius: 14px; font-size: 13px; line-height: 1.6; margin-bottom: 20px; color: #cbd5e1; border: 1px solid #1f2937;">
+                <p>1. <b>Di chuyển:</b> Dùng <b>[⬅] [⬆] [➡]</b> hoặc phím mũi tên trên bàn phím.</p>
+                <p>2. <b>Phá giải thử thách:</b> Bấm thẻ chữ Hán để triệu hồi vật thể bắc cầu, làm tan băng, chèo thuyền vượt sông hoặc phá cổng thành.</p>
+                <p>3. <b>Mục tiêu:</b> Chạm vào lá cờ đỏ 🏁 để thu nạp từ vựng và mở khóa màn tiếp theo!</p>
             </div>
             <button class="btn-action btn-primary" onclick="closeIntro()">ĐÃ HIỂU — BẮT ĐẦU CHƠI (START) ➔</button>
         </div>
     </div>
 
-    <!-- 2. MODAL QUA ẢI THƯỜNG -->
+    <!-- MODAL QUA ẢI THƯỜNG -->
     <div class="modal-overlay" id="victory-modal" style="display: none;">
         <div class="modal-card" style="border-color: #10b981;">
-            <h2 style="color: #34d399; margin-bottom: 6px; font-weight: 700;">🎉 QUA ẢI THÀNH CÔNG!</h2>
+            <h2 style="color: #34d399; margin-bottom: 6px; font-weight: 800;">🎉 QUA ẢI THÀNH CÔNG!</h2>
             <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px;">Bạn đã thu nạp thành công các Hán tự sau vào trí nhớ:</p>
             <div id="modal-words" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 22px;"></div>
             <div style="display: flex; gap: 14px; justify-content: center;">
@@ -386,24 +386,19 @@
         </div>
     </div>
 
-    <!-- 3. CHIẾU CHỈ TRẠNG NGUYÊN (KHI PHÁ ĐẢO ẢI 5) -->
+    <!-- CHIẾU CHỈ TRẠNG NGUYÊN (ẢI 5) -->
     <div class="modal-overlay" id="grand-victory-modal" style="display: none;">
         <div class="scroll-card">
             <div class="scroll-badge">🏆 CHIẾU CHỈ KHẢO THÍ HÁN TỰ THẦN KÝ</div>
-            <h2 style="color: #fbbf24; font-size: 24px; font-weight: 800; margin-bottom: 6px;">SẮC PHONG DANH HIỆU</h2>
-            <div style="font-size: 18px; font-weight: 800; color: #f472b6; margin-bottom: 14px; letter-spacing: 0.5px;">
+            <h2 style="color: #fbbf24; font-size: 24px; font-weight: 900; margin-bottom: 6px;">SẮC PHONG DANH HIỆU</h2>
+            <div style="font-size: 18px; font-weight: 900; color: #f472b6; margin-bottom: 14px;">
                 "HÁN TỰ ĐỆ NHẤT THẦN BÚT — THÁNH BẺ LÁI HSK 1"
             </div>
-            
-            <div style="background: rgba(15, 20, 34, 0.85); border: 1px dashed #f59e0b; border-radius: 12px; padding: 14px; text-align: left; font-size: 13px; line-height: 1.6; color: #fde68a; margin-bottom: 20px;">
-                <p>📜 <b>Chiến tích:</b> Đã dùng bàn ghế vượt nham thạch, ném lửa thiêu băng, vượt trùng giang và phá tung đại thành!</p>
-                <p>🎖️ <b>Đánh giá:</b> <b>Cấp độ S+</b> (Trí lực vô biên, kỹ năng ứng biến thượng thừa).</p>
-                <p>✨ <b>Đặc ân:</b> Mở khóa <b>Skin Trạng Nguyên Áo Đỏ Mũ Cánh Chuồn</b> & <b>Chế độ Nghịch Tự Do (Sandbox)</b>!</p>
+            <div style="background: rgba(10, 15, 26, 0.9); border: 2px dashed #f59e0b; border-radius: 14px; padding: 16px; text-align: left; font-size: 13px; line-height: 1.6; color: #fde68a; margin-bottom: 22px;">
+                <p>📜 <b>Chiến tích:</b> Đã hóa thân 5 nhân vật kỳ tài, thuần thục trọn vẹn các yếu tố thử thách HSK 1!</p>
+                <p>🎖️ <b>Đánh giá:</b> <b>Cấp độ S+</b> (Trí lực vô biên, độ nhây thượng thừa).</p>
             </div>
-
-            <div style="display: flex; gap: 12px; justify-content: center;">
-                <button class="btn-action" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #1e1b4b; font-weight: 800;" onclick="claimGrandReward()">NHẬN DANH HIỆU & MỞ KHÓA SKIN ➔</button>
-            </div>
+            <button class="btn-action" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #1e1b4b; font-weight: 900;" onclick="claimGrandReward()">VỀ BẢN ĐỒ KHOE CHIẾN TÍCH ➔</button>
         </div>
     </div>
 </div>
@@ -443,7 +438,7 @@
             clearInterval(musicInterval);
             isMusicPlaying = false;
             btn.innerText = '🎵 BẬT NHẠC TRANH';
-            btn.style.background = '#2e1065';
+            btn.style.background = '#4a044e';
         } else {
             isMusicPlaying = true;
             btn.innerText = '🔊 TẮT NHẠC';
@@ -463,121 +458,103 @@
         }
     }
 
-    // ==================== DỮ LIỆU CÁC ẢI ====================
-    let isScholarSkin = false; // Trạng thái mở khóa Skin Trạng Nguyên
-    let isSandboxUnlocked = false;
-
+    // ==================== CẤU HÌNH 5 ẢI & 5 NHÂN VẬT KHÁC NHAU ====================
     const stagesData = {
         1: {
             title: "Ải 1: Thảo Nguyên Hoang Dã",
-            desc: "💡 Nhiệm vụ: Di chuyển, triệu hồi 水 (Nước) và 苹果 (Táo) để nạp năng lượng rồi chạm cờ đỏ 🏁.",
+            desc: "💡 Nhân vật: Tiểu Thư Đồng — Di chuyển, triệu hồi 水 (Nước) & 苹果 (Táo) nạp năng lượng rồi chạm cờ 🏁.",
+            charSkin: "scholar_boy", // Tiểu Thư Đồng
             theme: "grass",
-            skyColor: ["#142850", "#27496d"],
-            groundColor: "#1e392a",
-            grassColor: "#2e7d32",
+            skyGrad: ["#0f172a", "#1e3a8a"],
+            groundTop: "#22c55e",
+            groundBody: "#14532d",
             deck: [
                 { char: "水", pinyin: "shuǐ", vn: "Nước", color: "#38bdf8", type: "item" },
                 { char: "苹果", pinyin: "píngguǒ", vn: "Táo", color: "#ef4444", type: "item" }
             ],
             platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
             obstacles: [],
-            goal: { x: 780, y: 265, w: 30, h: 45 }
+            goal: { x: 780, y: 260, w: 30, h: 50 }
         },
         2: {
-            title: "Ải 2: Vực Thẳm Nham Thạch",
-            desc: "💡 Thử thách: Vực sâu chia cắt! Thả 桌子 (Bàn) làm cầu và 椅子 (Ghế) làm bậc thang để leo lên vách núi chạm cờ 🏁.",
+            title: "Ải 2: Hẻm Nham Thạch Vực Sâu",
+            desc: "💡 Nhân vật: Tiểu Hỏa Hiệp — Thả 桌子 (Bàn) làm cầu và 椅子 (Ghế) làm bậc thang để leo lên vách núi chạm cờ 🏁.",
+            charSkin: "fire_ninja", // Hỏa Hiệp Băng Đô Đỏ
             theme: "lava",
-            skyColor: ["#2d1115", "#450a0a"],
-            groundColor: "#292524",
-            grassColor: "#78350f",
+            skyGrad: ["#1c1917", "#450a0a"],
+            groundTop: "#b45309",
+            groundBody: "#292524",
             deck: [
                 { char: "桌子", pinyin: "zhuōzi", vn: "Cái bàn", color: "#b45309", type: "bridge" },
                 { char: "椅子", pinyin: "yǐzi", vn: "Cái ghế", color: "#d97706", type: "step" }
             ],
             platforms: [
                 { x: 0, y: 310, w: 230, h: 50 },
-                { x: 520, y: 210, w: 340, h: 150 }
+                { x: 520, y: 200, w: 340, h: 160 }
             ],
             obstacles: [
-                { type: "pit", x: 230, w: 290, y: 345, h: 15, label: "🔥 VỰC NHAM THẠCH NGUY HIỂM" }
+                { type: "pit", x: 230, w: 290, y: 345, h: 15, label: "🔥 VỰC NHAM THẠCH" }
             ],
-            goal: { x: 780, y: 165, w: 30, h: 45 }
+            goal: { x: 780, y: 150, w: 30, h: 50 }
         },
         3: {
             title: "Ải 3: Băng Tuyết Sơn Rét Buốt",
-            desc: "💡 Thử thách: Tảng băng lớn chặn đường! Triệu hồi 火 (Lửa) để làm tan chảy tảng băng rồi tới đích 🏁.",
+            desc: "💡 Nhân vật: Tiểu Hồ Ly Tuyết — Tảng băng chặn lối! Triệu hồi 火 (Lửa) làm tan băng rồi tới đích 🏁.",
+            charSkin: "snow_fox", // Hồ Ly Tuyết Có Tai Thú
             theme: "snow",
-            skyColor: ["#0f172a", "#1e293b"],
-            groundColor: "#334155",
-            grassColor: "#e2e8f0",
+            skyGrad: ["#020617", "#1e293b"],
+            groundTop: "#f1f5f9",
+            groundBody: "#334155",
             deck: [
                 { char: "火", pinyin: "huǒ", vn: "Lửa", color: "#f97316", type: "fire" },
                 { char: "家", pinyin: "jiā", vn: "Mái nhà", color: "#6366f1", type: "house" }
             ],
             platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
             obstacles: [
-                { type: "ice_wall", x: 440, y: 190, w: 50, h: 120, hp: 1, label: "BĂNG" }
+                { type: "ice_wall", x: 440, y: 180, w: 55, h: 130, hp: 1, label: "BĂNG" }
             ],
-            goal: { x: 780, y: 265, w: 30, h: 45 }
+            goal: { x: 780, y: 260, w: 30, h: 50 }
         },
+        // Ải 4: ĐÃ SỬA DỨT ĐIỂM LỖI - BỜ CỰC CHUẨN, THUYỀN KHÔNG BỊ TRÔI LỖI
         4: {
             title: "Ải 4: Bến Thuyền Sông Lớn",
-            desc: "💡 Thử thách: Dòng sông sâu ngăn lối! Triệu hồi 船 (Thuyền) làm cầu nổi và cứu chú 猫 (Mèo) rồi chạm cờ 🏁.",
+            desc: "💡 Nhân vật: Tiểu Ngư Phủ Nón Lá — Thả 船 (Thuyền) bắc cầu nổi vượt sông và cứu chú 猫 (Mèo) rồi về đích 🏁.",
+            charSkin: "fisherman", // Ngư Phủ Đội Nón Lá
             theme: "river",
-            skyColor: ["#082f49", "#0369a1"],
-            groundColor: "#1e293b",
-            grassColor: "#0284c7",
+            skyGrad: ["#082f49", "#0c4a6e"],
+            groundTop: "#38bdf8",
+            groundBody: "#0f172a",
             deck: [
                 { char: "船", pinyin: "chuán", vn: "Thuyền", color: "#0284c7", type: "boat" },
                 { char: "猫", pinyin: "māo", vn: "Mèo", color: "#fb923c", type: "item" }
             ],
+            // Hai bờ sông thiết kế cực kỳ bằng phẳng, dễ bước qua
             platforms: [
-                { x: 0, y: 310, w: 220, h: 50 },
-                { x: 580, y: 310, w: 280, h: 50 }
+                { x: 0, y: 310, w: 260, h: 50 },
+                { x: 500, y: 310, w: 360, h: 50 }
             ],
             obstacles: [
-                { type: "water", x: 220, w: 360, y: 320, h: 40, label: "🌊 DÒNG SÔNG SÂU" }
+                { type: "water", x: 260, w: 240, y: 320, h: 40, label: "🌊 DÒNG SÔNG SÂU" }
             ],
-            goal: { x: 780, y: 265, w: 30, h: 45 }
+            goal: { x: 780, y: 260, w: 30, h: 50 }
         },
         5: {
             title: "Ải 5: Hoàng Thành Khảo Thí",
-            desc: "💡 Thử thách cuối: Cửa thành khóa kín! Triệu hồi 书 (Sách) và 大 (Đại khổng lồ) để mở cổng đại thành 🏁.",
+            desc: "💡 Nhân vật: Tiểu Hoàng Đế Mũ Miện — Cửa thành khóa kín! Triệu hồi 书 (Sách) & 大 (Đại) để mở cổng đại thành 🏁.",
+            charSkin: "emperor", // Hoàng Đế Mũ Miện Ngọc
             theme: "city",
-            skyColor: ["#3b0764", "#581c87"],
-            groundColor: "#312e81",
-            grassColor: "#fbbf24",
+            skyGrad: ["#3b0764", "#701a75"],
+            groundTop: "#fbbf24",
+            groundBody: "#312e81",
             deck: [
                 { char: "书", pinyin: "shū", vn: "Sách", color: "#a855f7", type: "book" },
                 { char: "大", pinyin: "dà", vn: "To / Lớn", color: "#e11d48", type: "large_key" }
             ],
             platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
             obstacles: [
-                { type: "gate", x: 450, y: 150, w: 45, h: 160, hp: 1, label: "CỔNG THÀNH" }
+                { type: "gate", x: 450, y: 140, w: 50, h: 170, hp: 1, label: "CỔNG THÀNH" }
             ],
-            goal: { x: 780, y: 265, w: 30, h: 45 }
-        },
-        // Ải 99: Chế độ Sandbox tự do nghịch
-        99: {
-            title: "Ải Bí Mật: Nghịch Tự Do (Chaos Sandbox)",
-            desc: "🔥 Chế độ tự do: Triệu hồi không giới hạn toàn bộ chữ Hán để nghịch ngợm vật lý!",
-            theme: "city",
-            skyColor: ["#18181b", "#27272a"],
-            groundColor: "#3f3f46",
-            grassColor: "#e4e4e7",
-            deck: [
-                { char: "水", pinyin: "shuǐ", vn: "Nước", color: "#38bdf8", type: "item" },
-                { char: "苹果", pinyin: "píngguǒ", vn: "Táo", color: "#ef4444", type: "item" },
-                { char: "桌子", pinyin: "zhuōzi", vn: "Bàn", color: "#b45309", type: "bridge" },
-                { char: "椅子", pinyin: "yǐzi", vn: "Ghế", color: "#d97706", type: "step" },
-                { char: "火", pinyin: "huǒ", vn: "Lửa", color: "#f97316", type: "fire" },
-                { char: "船", pinyin: "chuán", vn: "Thuyền", color: "#0284c7", type: "boat" },
-                { char: "猫", pinyin: "māo", vn: "Mèo", color: "#fb923c", type: "item" },
-                { char: "大", pinyin: "dà", vn: "Đại", color: "#e11d48", type: "large_key" }
-            ],
-            platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
-            obstacles: [],
-            goal: { x: 780, y: 265, w: 30, h: 45 }
+            goal: { x: 780, y: 260, w: 30, h: 50 }
         }
     };
 
@@ -591,6 +568,7 @@
     const ctx = canvas.getContext('2d');
     let player, platforms, obstacles, goal, summonedObjects = [];
     let walkCycle = 0;
+    let blinkTimer = 0;
     const keys = {};
 
     window.addEventListener('keydown', e => keys[e.code] = true);
@@ -610,7 +588,7 @@
         s.deck.forEach(c => {
             const btn = document.createElement('button');
             btn.className = 'deck-btn';
-            btn.innerHTML = `${c.char} <span class="py">${c.pinyin}</span>`;
+            btn.innerHTML = `<span class="hanzi">${c.char}</span> <span class="py">${c.pinyin}</span>`;
             btn.onclick = () => summonObject(c);
             deckContainer.appendChild(btn);
         });
@@ -620,9 +598,9 @@
         goal = s.goal;
         player = {
             x: 60,
-            y: 240,
-            w: 24,
-            h: 52,
+            y: 235,
+            w: 28,
+            h: 55,
             vx: 0,
             vy: 0,
             facing: 1,
@@ -633,15 +611,22 @@
 
     function summonObject(card) {
         speak(card.char);
-        let w = 55, h = 42;
-        if (card.char === "桌子") { w = 145; h = 42; }
-        if (card.char === "椅子") { w = 60; h = 65; }
-        if (card.char === "家") { w = 110; h = 90; }
-        if (card.char === "船") { w = 160; h = 40; }
-        if (card.char === "大") { w = 70; h = 70; }
+        let w = 58, h = 45;
+        if (card.char === "桌子") { w = 150; h = 45; }
+        if (card.char === "椅子") { w = 65; h = 70; }
+        if (card.char === "家") { w = 115; h = 95; }
+        // Thuyền rộng 180 vừa khít lấp đầy mặt sông 240px ở Ải 4
+        if (card.char === "船") { w = 180; h = 46; }
+        if (card.char === "大") { w = 75; h = 75; }
+
+        let dropX = Math.min(Math.max(player.x + 60, 140), 700);
+        // Nếu ở Ải 4 và triệu hồi thuyền, căn rơi chuẩn ngay giữa lòng sông
+        if (card.char === "船" && currentStage === 4) {
+            dropX = 290;
+        }
 
         summonedObjects.push({
-            x: Math.min(Math.max(player.x + 60, 150), 720),
+            x: dropX,
             y: 20,
             w: w,
             h: h,
@@ -657,11 +642,11 @@
 
         let isMoving = false;
         if (keys['ArrowLeft'] || keys['KeyA']) {
-            player.vx = -4;
+            player.vx = -4.2;
             player.facing = -1;
             isMoving = true;
         } else if (keys['ArrowRight'] || keys['KeyD']) {
-            player.vx = 4;
+            player.vx = 4.2;
             player.facing = 1;
             isMoving = true;
         } else {
@@ -669,13 +654,15 @@
         }
 
         if (isMoving && player.grounded) {
-            walkCycle += 0.25;
+            walkCycle += 0.28;
         } else {
             walkCycle = 0;
         }
 
+        blinkTimer = (blinkTimer + 1) % 180;
+
         if ((keys['ArrowUp'] || keys['KeyW'] || keys['Space']) && player.grounded) {
-            player.vy = -10.5;
+            player.vy = -10.8;
             player.grounded = false;
         }
 
@@ -684,6 +671,7 @@
         player.y += player.vy;
         player.grounded = false;
 
+        // Va chạm sàn đất
         platforms.forEach(p => {
             if (player.x + player.w > p.x && player.x < p.x + p.w) {
                 if (player.y + player.h > p.y && player.y + player.h < p.y + p.h && player.vy > 0) {
@@ -694,6 +682,7 @@
             }
         });
 
+        // Va chạm chướng ngại vật
         obstacles.forEach(obs => {
             if ((obs.type === "ice_wall" || obs.type === "gate") && obs.hp > 0) {
                 if (player.x + player.w > obs.x && player.x < obs.x + obs.w &&
@@ -703,12 +692,14 @@
             }
         });
 
+        // Rơi vực hoặc ngã sông -> Tự động quay lại điểm xuất phát bờ trái an toàn
         if (player.y > 400) {
             player.x = 60;
-            player.y = 240;
+            player.y = 235;
             player.vy = 0;
         }
 
+        // Vật thể rơi & va chạm
         summonedObjects.forEach((obj, idx) => {
             obj.vy += gravity;
             obj.y += obj.vy;
@@ -722,14 +713,16 @@
                 }
             });
 
-            if (obj.type === 'boat' && obj.y + obj.h >= 325) {
-                obj.y = 325 - obj.h;
+            // Thuyền nổi trên mặt nước ở Ải 4
+            if (obj.type === 'boat' && obj.y + obj.h >= 320) {
+                obj.y = 320 - obj.h;
                 obj.vy = 0;
             } else if (obj.y + obj.h >= 355) {
                 obj.y = 355 - obj.h;
                 obj.vy = 0;
             }
 
+            // Lửa làm tan băng Ải 3
             if (obj.type === 'fire') {
                 obstacles.forEach(obs => {
                     if (obs.type === "ice_wall" && obs.hp > 0) {
@@ -742,6 +735,7 @@
                 });
             }
 
+            // Chữ Đại mở cổng Ải 5
             if (obj.type === 'large_key') {
                 obstacles.forEach(obs => {
                     if (obs.type === "gate" && obs.hp > 0) {
@@ -754,6 +748,7 @@
                 });
             }
 
+            // Nhặt vật phẩm (Táo, nước, mèo, sách)
             if (obj.type === 'item' || obj.type === 'book') {
                 if (player.x + player.w > obj.x && player.x < obj.x + obj.w &&
                     player.y + player.h > obj.y && player.y < obj.y + obj.h) {
@@ -761,6 +756,7 @@
                     summonedObjects.splice(idx, 1);
                 }
             } else {
+                // Nhảy lên vật thể (Thuyền, Bàn, Ghế...)
                 if (player.x + player.w > obj.x && player.x < obj.x + obj.w) {
                     if (player.y + player.h > obj.y && player.y + player.h < obj.y + obj.h && player.vy > 0) {
                         player.y = obj.y - player.h;
@@ -771,175 +767,284 @@
             }
         });
 
+        // Chạm cờ chiến thắng
         if (player.x + player.w > goal.x && player.x < goal.x + goal.w &&
             player.y + player.h > goal.y && player.y < goal.y + goal.h) {
             triggerVictory();
         }
     }
 
-    // ==================== ĐỒ HỌA BỐI CẢNH & NHÂN VẬT ====================
-    let snowFlakes = Array.from({length: 40}, () => ({ x: Math.random() * 860, y: Math.random() * 360, r: Math.random() * 2.5 + 1 }));
-
-    function drawHumanPlayer(x, y, facing, walkAnim) {
+    // ==================== BỘ VẼ 5 NHÂN VẬT PIXEL KHÁC NHAU ====================
+    function drawDynamicSkinPlayer(skin, x, y, facing, walkAnim, isBlinking) {
         ctx.save();
-        ctx.translate(x + 12, y + 26);
+        ctx.translate(x + 14, y + 28);
         if (facing === -1) ctx.scale(-1, 1);
 
-        const legSwing = Math.sin(walkAnim) * 8;
+        const legSwing = Math.sin(walkAnim) * 7;
+        const bounce = Math.abs(Math.cos(walkAnim)) * 3;
 
-        // Nếu đã mở khóa Skin Trạng Nguyên: Nở hoa sen vàng dưới chân khi chạy
-        if (isScholarSkin && Math.abs(legSwing) > 3) {
-            ctx.fillStyle = "#fbbf24";
+        // 1. Chân bước đi
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(-8, 14 - bounce, 6, 12 + legSwing);
+        ctx.fillRect(2, 14 - bounce, 6, 12 - legSwing);
+
+        // 2. Thân trang phục riêng theo từng ải
+        if (skin === "scholar_boy") {
+            // Ải 1: Tiểu Thư Đồng - Áo xanh lam
+            ctx.fillStyle = "#2563eb";
             ctx.beginPath();
-            ctx.arc(-2, 24, 3, 0, Math.PI * 2);
+            ctx.roundRect(-11, -4 - bounce, 22, 20, [4, 4, 3, 3]);
             ctx.fill();
+            ctx.fillStyle = "#f59e0b"; // Đai vàng
+            ctx.fillRect(-11, 6 - bounce, 22, 4);
+        } else if (skin === "fire_ninja") {
+            // Ải 2: Tiểu Hỏa Hiệp - Áo đen viền cam rực lửa
+            ctx.fillStyle = "#18181b";
+            ctx.beginPath();
+            ctx.roundRect(-11, -4 - bounce, 22, 20, [4, 4, 3, 3]);
+            ctx.fill();
+            ctx.fillStyle = "#ea580c"; // Đai lửa cam
+            ctx.fillRect(-11, 5 - bounce, 22, 5);
+        } else if (skin === "snow_fox") {
+            // Ải 3: Hồ Ly Tuyết - Áo lông trắng tuyết viền xanh băng
+            ctx.fillStyle = "#f8fafc";
+            ctx.beginPath();
+            ctx.roundRect(-11, -4 - bounce, 22, 20, [4, 4, 3, 3]);
+            ctx.fill();
+            ctx.fillStyle = "#38bdf8"; // Đai xanh băng
+            ctx.fillRect(-11, 6 - bounce, 22, 4);
+        } else if (skin === "fisherman") {
+            // Ải 4: Ngư Phủ Giang Hồ - Áo nâu đũi mộc mạc
+            ctx.fillStyle = "#0284c7";
+            ctx.beginPath();
+            ctx.roundRect(-11, -4 - bounce, 22, 20, [4, 4, 3, 3]);
+            ctx.fill();
+            ctx.fillStyle = "#d97706"; // Đai rơm vàng
+            ctx.fillRect(-11, 6 - bounce, 22, 4);
+        } else if (skin === "emperor") {
+            // Ải 5: Tiểu Hoàng Đế - Long bào vàng rực
+            ctx.fillStyle = "#eab308";
+            ctx.beginPath();
+            ctx.roundRect(-11, -4 - bounce, 22, 20, [4, 4, 3, 3]);
+            ctx.fill();
+            ctx.fillStyle = "#dc2626"; // Đai hồng ngọc
+            ctx.fillRect(-11, 6 - bounce, 22, 4);
         }
 
-        ctx.fillStyle = "#1e293b";
-        ctx.fillRect(-6, 12, 5, 14 + legSwing);
-        ctx.fillRect(1, 12, 5, 14 - legSwing);
-
-        // Trang phục: Áo Đỏ Trạng Nguyên hoặc Áo Lam Hiệp Khách
-        ctx.fillStyle = isScholarSkin ? "#dc2626" : "#38bdf8";
+        // 3. Đầu Chibi tròn to & má hồng
+        ctx.fillStyle = "#ffedd5";
         ctx.beginPath();
-        ctx.roundRect(-9, -8, 18, 22, [4, 4, 2, 2]);
+        ctx.arc(0, -16 - bounce, 14, 0, Math.PI * 2);
         ctx.fill();
 
-        // Đai lưng vàng óng
-        ctx.fillStyle = isScholarSkin ? "#fbbf24" : "#ef4444";
-        ctx.fillRect(-9, 4, 18, 4);
-
-        // Khuôn mặt
-        ctx.fillStyle = "#fed7aa";
+        // Má hồng anime
+        ctx.fillStyle = "rgba(244, 114, 182, 0.75)";
         ctx.beginPath();
-        ctx.arc(0, -16, 8, 0, Math.PI * 2);
+        ctx.arc(-7, -13 - bounce, 3.5, 0, Math.PI * 2);
+        ctx.arc(7, -13 - bounce, 3.5, 0, Math.PI * 2);
         ctx.fill();
 
-        // Tóc & Mũ cánh chuồn Trạng Nguyên
-        ctx.fillStyle = "#0f172a";
-        ctx.beginPath();
-        ctx.arc(0, -18, 8, Math.PI, Math.PI * 2);
-        ctx.fill();
-
-        if (isScholarSkin) {
-            // Mũ cánh chuồn Trạng Nguyên
-            ctx.fillStyle = "#1e1b4b";
-            ctx.fillRect(-8, -26, 16, 8);
-            // Hai cánh chuồn xòe ngang hai bên
-            ctx.fillStyle = "#fbbf24";
-            ctx.fillRect(-16, -24, 8, 3);
-            ctx.fillRect(8, -24, 8, 3);
+        // Đôi mắt Anime
+        if (!isBlinking) {
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(3, -19 - bounce, 5, 7);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(4, -19 - bounce, 2.5, 2.5);
+            ctx.fillRect(5.5, -15 - bounce, 1.5, 1.5);
         } else {
-            // Búi tóc cổ phong bình thường
+            ctx.strokeStyle = "#0f172a";
+            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.arc(facing * -2, -26, 4, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.arc(5, -16 - bounce, 3, Math.PI, 0);
+            ctx.stroke();
         }
 
-        ctx.fillStyle = "#0f172a";
-        ctx.fillRect(2, -17, 2.5, 2.5);
+        // Tóc đen cơ sở
+        ctx.fillStyle = "#090d16";
+        ctx.beginPath();
+        ctx.arc(0, -19 - bounce, 14, Math.PI, Math.PI * 2);
+        ctx.fill();
 
-        ctx.fillStyle = isScholarSkin ? "#b91c1c" : "#0284c7";
-        ctx.fillRect(-2, -4, 4, 14 - legSwing);
+        // 4. Mũ & Phụ kiện ĐỘC QUYỀN từng nhân vật:
+        if (skin === "scholar_boy") {
+            // Ải 1: Búi tóc tròn & trâm đỏ cài tóc
+            ctx.beginPath();
+            ctx.arc(-3, -31 - bounce, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ef4444";
+            ctx.fillRect(-7, -33 - bounce, 12, 3);
+        } else if (skin === "fire_ninja") {
+            // Ải 2: Băng đô đỏ rực buộc trán có đuôi bay
+            ctx.fillStyle = "#ef4444";
+            ctx.fillRect(-14, -22 - bounce, 28, 4);
+            ctx.fillRect(-22, -18 - bounce + Math.sin(walkAnim) * 4, 10, 4);
+        } else if (skin === "snow_fox") {
+            // Ải 3: Đôi tai hồ ly tuyết vểnh trên đầu
+            ctx.fillStyle = "#f8fafc";
+            ctx.beginPath();
+            ctx.moveTo(-10, -28 - bounce); ctx.lineTo(-4, -38 - bounce); ctx.lineTo(0, -28 - bounce); ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(0, -28 - bounce); ctx.lineTo(6, -38 - bounce); ctx.lineTo(10, -28 - bounce); ctx.fill();
+            ctx.fillStyle = "#f472b6"; // Lòng tai hồng
+            ctx.fillRect(-6, -34 - bounce, 3, 5);
+            ctx.fillRect(4, -34 - bounce, 3, 5);
+        } else if (skin === "fisherman") {
+            // Ải 4: Đội NÓN LÁ Pixel vàng
+            ctx.fillStyle = "#facc15";
+            ctx.beginPath();
+            ctx.moveTo(-22, -22 - bounce);
+            ctx.lineTo(0, -36 - bounce);
+            ctx.lineTo(22, -22 - bounce);
+            ctx.fill();
+            ctx.strokeStyle = "#ca8a04";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        } else if (skin === "emperor") {
+            // Ải 5: Mũ Miện Hoàng Đế có rèm hạt ngọc
+            ctx.fillStyle = "#1e1b4b";
+            ctx.fillRect(-12, -34 - bounce, 24, 7);
+            ctx.fillStyle = "#facc15";
+            ctx.fillRect(-16, -36 - bounce, 32, 4);
+            // Chuỗi hạt ngọc rủ xuống trước trán
+            ctx.fillStyle = "#ef4444";
+            ctx.fillRect(4, -31 - bounce, 2, 7);
+            ctx.fillRect(8, -31 - bounce, 2, 7);
+        }
+
+        // 5. Tay áo vung vẩy khi chạy
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(-4, 0 - bounce, 5, 12 - legSwing);
 
         ctx.restore();
     }
 
+    // ==================== ĐỒ HỌA BỐI CẢNH CANVAs ====================
+    let snowFlakes = Array.from({length: 45}, () => ({ x: Math.random() * 860, y: Math.random() * 360, r: Math.random() * 2.5 + 1.2 }));
+
     function renderGame() {
         const s = stagesData[currentStage] || stagesData[1];
 
+        // 1. Nền trời chuyển sắc
         const grad = ctx.createLinearGradient(0, 0, 0, 360);
-        grad.addColorStop(0, s.skyColor[0]);
-        grad.addColorStop(1, s.skyColor[1]);
+        grad.addColorStop(0, s.skyGrad[0]);
+        grad.addColorStop(1, s.skyGrad[1]);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // Hiệu ứng bão tuyết Pixel ở Ải 3
         if (s.theme === "snow") {
-            ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
             snowFlakes.forEach(f => {
-                ctx.beginPath();
-                ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-                ctx.fill();
-                f.y += 1.5;
-                f.x += 0.5;
+                ctx.fillRect(f.x, f.y, f.r, f.r);
+                f.y += 1.8;
+                f.x += 0.6;
                 if (f.y > 360) f.y = 0;
                 if (f.x > 860) f.x = 0;
             });
         }
 
+        // Bối cảnh bến sông ở Ải 4: Vẽ ngọn hải đăng / cọc gỗ bến cảng phía xa
+        if (s.theme === "river") {
+            ctx.fillStyle = "rgba(3, 105, 161, 0.35)";
+            ctx.fillRect(720, 180, 24, 130);
+            ctx.fillStyle = "#facc15";
+            ctx.fillRect(726, 170, 12, 12);
+        }
+
+        // 2. Chướng ngại vật
         obstacles.forEach(obs => {
             if (obs.type === "pit") {
                 ctx.fillStyle = "#450a0a";
                 ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
-                ctx.fillStyle = "#ef4444";
-                ctx.font = "700 11px 'Be Vietnam Pro', sans-serif";
+                ctx.fillStyle = "#f97316";
+                ctx.fillRect(obs.x + 30, obs.y + 4, 8, 6);
+                ctx.fillRect(obs.x + 120, obs.y + 2, 10, 6);
+                ctx.fillStyle = "#fef08a";
+                ctx.font = "800 11px 'Be Vietnam Pro', sans-serif";
                 ctx.textAlign = "center";
                 ctx.fillText(obs.label, obs.x + obs.w / 2, obs.y + 11);
             } else if (obs.type === "water") {
-                ctx.fillStyle = "#0284c7";
+                // Mặt nước Ải 4 thiết kế sóng pixel cực đẹp
+                ctx.fillStyle = "#0369a1";
                 ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+                ctx.fillStyle = "#38bdf8";
+                for (let sx = obs.x + 10; sx < obs.x + obs.w - 10; sx += 32) {
+                    ctx.fillRect(sx, obs.y + 4, 16, 4);
+                }
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "700 12px 'Be Vietnam Pro', sans-serif";
+                ctx.font = "800 12px 'Be Vietnam Pro', sans-serif";
                 ctx.textAlign = "center";
-                ctx.fillText(obs.label, obs.x + obs.w / 2, obs.y + 24);
+                ctx.fillText(obs.label, obs.x + obs.w / 2, obs.y + 25);
             } else if (obs.type === "ice_wall" && obs.hp > 0) {
-                ctx.fillStyle = "rgba(147, 197, 253, 0.85)";
-                ctx.beginPath();
-                ctx.roundRect(obs.x, obs.y, obs.w, obs.h, 8);
-                ctx.fill();
+                ctx.fillStyle = "#93c5fd";
+                ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
                 ctx.strokeStyle = "#ffffff";
-                ctx.lineWidth = 2;
-                ctx.stroke();
+                ctx.lineWidth = 3;
+                ctx.strokeRect(obs.x, obs.y, obs.w, obs.h);
                 ctx.fillStyle = "#1e3a8a";
-                ctx.font = "700 14px 'Be Vietnam Pro', sans-serif";
+                ctx.font = "900 15px 'Be Vietnam Pro', sans-serif";
                 ctx.textAlign = "center";
                 ctx.fillText("🧊 BĂNG", obs.x + obs.w / 2, obs.y + obs.h / 2);
             } else if (obs.type === "gate" && obs.hp > 0) {
-                ctx.fillStyle = "#831843";
-                ctx.beginPath();
-                ctx.roundRect(obs.x, obs.y, obs.w, obs.h, 6);
-                ctx.fill();
-                ctx.strokeStyle = "#fbbf24";
-                ctx.lineWidth = 3;
-                ctx.stroke();
+                ctx.fillStyle = "#881337";
+                ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+                ctx.strokeStyle = "#facc15";
+                ctx.lineWidth = 4;
+                ctx.strokeRect(obs.x, obs.y, obs.w, obs.h);
                 ctx.fillStyle = "#fef08a";
-                ctx.font = "700 13px 'Be Vietnam Pro', sans-serif";
+                ctx.font = "900 13px 'Be Vietnam Pro', sans-serif";
                 ctx.textAlign = "center";
-                ctx.fillText("🚪 KHÓA", obs.x + obs.w / 2, obs.y + obs.h / 2);
+                ctx.fillText("🚪 KHÓA", obs.x + obs.w / 2, obs.y + obs.h / 2 + 10);
             }
         });
 
+        // 3. Nền đất
         platforms.forEach(p => {
-            ctx.fillStyle = s.groundColor;
+            ctx.fillStyle = s.groundBody;
             ctx.fillRect(p.x, p.y, p.w, p.h);
-            ctx.fillStyle = s.grassColor;
-            ctx.fillRect(p.x, p.y, p.w, 8);
+            ctx.fillStyle = s.groundTop;
+            ctx.fillRect(p.x, p.y, p.w, 10);
+            for (let gx = p.x; gx < p.x + p.w; gx += 14) {
+                ctx.fillRect(gx, p.y - 3, 5, 4);
+            }
         });
 
+        // 4. Cờ đích
+        const flagWave = Math.sin(Date.now() / 150) * 4;
         ctx.fillStyle = "#ef4444";
-        ctx.fillRect(goal.x, goal.y, 25, 18);
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(goal.x, goal.y, 4, 45);
+        ctx.beginPath();
+        ctx.moveTo(goal.x + 4, goal.y);
+        ctx.lineTo(goal.x + 32 + flagWave, goal.y + 12);
+        ctx.lineTo(goal.x + 4, goal.y + 24);
+        ctx.fill();
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(goal.x, goal.y, 4, 50);
 
+        // 5. Khối Hán tự 3D Retro
         summonedObjects.forEach(obj => {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+            ctx.fillRect(obj.x + 3, obj.y + 4, obj.w, obj.h);
+
             ctx.fillStyle = obj.color;
             ctx.beginPath();
-            ctx.roundRect(obj.x, obj.y, obj.w, obj.h, 8);
+            ctx.roundRect(obj.x, obj.y, obj.w, obj.h, 10);
             ctx.fill();
+
             ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 2.5;
             ctx.stroke();
 
             ctx.fillStyle = "#ffffff";
-            ctx.font = "700 16px 'Noto Serif SC', 'Be Vietnam Pro', sans-serif";
+            ctx.font = "900 18px 'Noto Serif SC', sans-serif";
             ctx.textAlign = "center";
-            ctx.fillText(obj.char, obj.x + obj.w / 2, obj.y + obj.h / 2 + 6);
+            ctx.fillText(obj.char, obj.x + obj.w / 2, obj.y + obj.h / 2 + 7);
         });
 
-        drawHumanPlayer(player.x, player.y, player.facing, walkCycle);
+        // 6. Vẽ nhân vật độc quyền của Ải hiện tại
+        drawDynamicSkinPlayer(s.charSkin, player.x, player.y, player.facing, walkCycle, blinkTimer > 170);
     }
 
-    // ==================== TIẾP TỤC & THÀNH TỰU PHÁ ĐẢO ====================
+    // ==================== QUA ẢI & TIẾN TRÌNH ====================
     let victoryTriggered = false;
 
     function triggerVictory() {
@@ -947,35 +1052,28 @@
         victoryTriggered = true;
         speak("太好了");
 
-        if (currentStage !== 99) {
-            completedStages.add(currentStage);
-            if (currentStage < 5) unlockedStages.add(currentStage + 1);
+        completedStages.add(currentStage);
+        if (currentStage < 5) unlockedStages.add(currentStage + 1);
 
-            const curStageInfo = stagesData[currentStage];
-            curStageInfo.deck.forEach(c => masteredVocabulary.set(c.char, { pinyin: c.pinyin, vn: c.vn }));
-        }
+        const curStageInfo = stagesData[currentStage];
+        curStageInfo.deck.forEach(c => masteredVocabulary.set(c.char, { pinyin: c.pinyin, vn: c.vn }));
 
-        // Nếu vượt qua Ải 5 (Phá đảo game): Mở Chiếu thư Trạng Nguyên!
         if (currentStage === 5) {
             document.getElementById('grand-victory-modal').style.display = 'flex';
         } else {
-            // Mở modal qua ải thường
-            const curStageInfo = stagesData[currentStage];
             const modalWords = document.getElementById('modal-words');
             modalWords.innerHTML = '';
-
             curStageInfo.deck.forEach(c => {
                 const item = document.createElement('div');
                 item.style.background = '#1e293b';
-                item.style.border = '1px solid #10b981';
-                item.style.padding = '8px 14px';
-                item.style.borderRadius = '8px';
-                item.innerHTML = `<div style="font-size:22px; font-weight:700; color:#f472b6; font-family:'Noto Serif SC', sans-serif;">${c.char}</div>
+                item.style.border = '2px solid #10b981';
+                item.style.padding = '8px 16px';
+                item.style.borderRadius = '10px';
+                item.innerHTML = `<div style="font-size:24px; font-weight:900; color:#f472b6; font-family:'Noto Serif SC', sans-serif;">${c.char}</div>
                                   <div style="font-size:11px; color:#38bdf8;">${c.pinyin}</div>
-                                  <div style="font-size:12px; font-weight:600; color:#cbd5e1;">${c.vn}</div>`;
+                                  <div style="font-size:12px; font-weight:700; color:#cbd5e1;">${c.vn}</div>`;
                 modalWords.appendChild(item);
             });
-
             document.getElementById('victory-modal').style.display = 'flex';
         }
     }
@@ -983,9 +1081,6 @@
     function claimGrandReward() {
         document.getElementById('grand-victory-modal').style.display = 'none';
         victoryTriggered = false;
-        isScholarSkin = true; // Kích hoạt Skin Trạng Nguyên
-        isSandboxUnlocked = true; // Mở khóa Sandbox
-        document.getElementById('sandbox-banner').style.display = 'flex';
         backToMap();
     }
 
@@ -1044,7 +1139,7 @@
             masteredVocabulary.forEach((val, char) => {
                 const item = document.createElement('div');
                 item.className = 'vault-item';
-                item.innerHTML = `<b style="font-family:'Noto Serif SC', sans-serif;">${char}</b> <span>${val.pinyin} (${val.vn})</span> 🔊`;
+                item.innerHTML = `<b>${char}</b> <span>${val.pinyin} (${val.vn})</span> 🔊`;
                 item.onclick = () => speak(char);
                 vaultGrid.appendChild(item);
             });
@@ -1052,7 +1147,7 @@
     }
 
     function selectStage(num) {
-        if (num !== 99 && !unlockedStages.has(num)) {
+        if (!unlockedStages.has(num)) {
             alert("Ải này đang bị khóa! Bạn cần chinh phục ải trước đã.");
             return;
         }
