@@ -3,685 +3,581 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hán Tự Thần Ký: Chinh Phục HSK 1 - Pixel Chibi Edition</title>
-    <!-- Pixelated / Gaming Font -->
+    <title>Hán Tự Thần Ký: Chinh Phục HSK 1</title>
+    <!-- Phông chữ tiếng Việt chuẩn Be Vietnam Pro & Hán tự Noto Serif SC -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --pixel-bg: #0d0e1a;
-            --panel-bg: #151829;
-            --panel-border: #4d4375;
-            --gold: #ffcc00;
-            --pink: #ff6097;
-            --cyan: #38e1ff;
-            --green: #48e078;
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Be Vietnam Pro', sans-serif; 
+            user-select: none; 
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            image-rendering: pixelated;
-        }
-
         body {
-            background: radial-gradient(circle at 50% 30%, #1c1a36 0%, #0c0b16 100%);
+            background: #080b14;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 10px;
-            font-family: 'Nunito', sans-serif;
         }
-
-        .pixel-card {
-            box-shadow: 
-                0 0 0 4px #121020,
-                0 0 0 8px #51427c,
-                0 16px 36px rgba(0, 0, 0, 0.65);
-        }
-
-        .game-frame {
+        .app-window {
             width: 100%;
-            max-width: 920px;
-            background: var(--panel-bg);
-            border-radius: 6px;
+            max-width: 900px;
+            background: #111827;
+            border: 2px solid #8b5cf6;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.25);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
-            border: 4px solid #362e54;
         }
 
-        /* Top HUD Bar */
-        .top-hud {
-            background: #1e1a38;
-            padding: 12px 18px;
+        /* Top Bar */
+        .top-bar {
+            background: #1e1b4b;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 4px solid #100e1f;
+            border-bottom: 2px solid #312e81;
         }
-
-        .top-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .top-title h1 {
-            font-family: 'ZCOOL KuaiLe', cursive, 'Press Start 2P';
-            font-size: 20px;
-            color: #ffd866;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px #441a1a;
-        }
-
-        .hud-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .pixel-btn {
-            background: #2b254a;
-            color: #ff94bb;
-            border: 3px solid #ff4b82;
+        .top-bar h1 { font-size: 17px; font-weight: 700; color: #c7d2fe; display: flex; align-items: center; gap: 8px; }
+        .controls-top { display: flex; gap: 10px; align-items: center; }
+        .btn-music {
+            background: #2e1065;
+            color: #f472b6;
+            border: 1px solid #ec4899;
             padding: 6px 14px;
+            border-radius: 20px;
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: inset -2px -2px 0px #941740, inset 2px 2px 0px #ffaec9;
-            transition: transform 0.1s;
+            transition: all 0.2s;
         }
-        .pixel-btn:active {
-            transform: translate(2px, 2px);
-        }
-
-        .hud-badge {
-            background: #110e20;
-            border: 2px solid #574c80;
-            padding: 6px 12px;
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--gold);
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .stats-badge {
+            background: #312e81;
+            border: 1px solid #4f46e5;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fbbf24;
         }
 
-        /* Screens */
-        .view-layer {
-            display: none;
-            padding: 20px;
-            flex-direction: column;
-            align-items: center;
+        /* Screen Views */
+        .screen-view { display: none; padding: 20px; flex-direction: column; align-items: center; }
+        .screen-view.active { display: flex; }
+
+        /* Bản đồ */
+        .map-container {
             width: 100%;
-        }
-        .view-layer.active {
-            display: flex;
-        }
-
-        /* Overworld Map */
-        .map-stage-board {
-            width: 100%;
-            background: #101124;
-            border: 4px solid #2e264e;
-            padding: 30px 16px;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            border: 2px dashed #334155;
+            border-radius: 16px;
+            padding: 30px 15px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            position: relative;
             margin-bottom: 20px;
-            background-image: radial-gradient(#272346 12%, transparent 12%);
-            background-size: 16px 16px;
         }
-
-        .map-line-back {
-            position: absolute;
-            top: 50%;
-            left: 8%;
-            right: 8%;
-            height: 6px;
-            background: #25203f;
-            border-top: 2px solid #3c3463;
-            border-bottom: 2px solid #0a0914;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        .map-stop {
+        .map-node {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            z-index: 2;
-            transition: transform 0.15s;
+            transition: all 0.2s;
         }
-        .map-stop:hover:not(.locked) {
-            transform: translateY(-4px);
-        }
-
-        .stop-block {
-            width: 64px;
-            height: 64px;
-            background: #211c38;
-            border: 4px solid #4a406f;
-            box-shadow: inset -4px -4px 0 #110e22, inset 4px 4px 0 #6d5da1, 0 6px 12px rgba(0,0,0,0.5);
+        .node-circle {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: #1f2937;
+            border: 3px solid #4b5563;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 22px;
-            font-weight: 900;
-            color: #79719c;
-        }
-
-        .map-stop.unlocked .stop-block {
-            background: #5d3df2;
-            border-color: #8c75ff;
-            color: #ffffff;
-            box-shadow: inset -4px -4px 0 #3a1ecc, inset 4px 4px 0 #b3a3ff, 0 0 16px rgba(120, 86, 255, 0.6);
-        }
-
-        .map-stop.completed .stop-block {
-            background: #00b359;
-            border-color: #38e68b;
-            color: #ffffff;
-            box-shadow: inset -4px -4px 0 #007339, inset 4px 4px 0 #7dfac0;
-        }
-
-        .map-stop.locked {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
-
-        .stop-caption {
-            font-size: 13px;
             font-weight: 800;
-            color: #d1ccf0;
-            text-shadow: 1px 1px #0e0d1a;
+            color: #9ca3af;
+        }
+        .map-node.unlocked .node-circle {
+            background: #4338ca;
+            border-color: #818cf8;
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.6);
+        }
+        .map-node.completed .node-circle {
+            background: #059669;
+            border-color: #34d399;
+            color: #ffffff;
+        }
+        .map-node.locked { cursor: not-allowed; opacity: 0.5; }
+        .node-name { font-size: 13px; font-weight: 600; color: #cbd5e1; }
+
+        /* Sandbox Box */
+        .sandbox-banner {
+            width: 100%;
+            background: linear-gradient(90deg, #b45309 0%, #d97706 100%);
+            border-radius: 12px;
+            padding: 12px 18px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
         }
 
-        /* Vault / Codex */
-        .vault-frame {
+        .vault-box {
             width: 100%;
-            background: #141427;
-            border: 3px solid #2f284e;
+            background: #182032;
+            border: 1px solid #2d3748;
+            border-radius: 12px;
             padding: 16px;
         }
-
-        .vault-head {
-            font-size: 13px;
-            font-weight: 900;
-            color: #ffd866;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .vault-tokens {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-
-        .vault-token {
-            background: #231f3d;
-            border: 2px solid #584b86;
+        .vault-title { font-size: 13px; font-weight: 700; color: #a5b4fc; margin-bottom: 10px; }
+        .vault-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+        .vault-item {
+            background: #1e293b;
+            border: 1px solid #4f46e5;
             padding: 6px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: inset -2px -2px 0 #120f24, inset 2px 2px 0 #7e6fb8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 13px;
         }
-        .vault-token:hover {
-            border-color: var(--pink);
-            transform: translateY(-2px);
-        }
-        .vault-token .hz {
-            font-size: 18px;
-            font-weight: 900;
-            color: #ff6097;
-        }
-        .vault-token .sub {
-            font-size: 11px;
-            color: #92e7ff;
-        }
+        .vault-item b { color: #f472b6; font-size: 15px; }
 
-        /* Canvas Area */
-        canvas#pixelCanvas {
+        /* Canvas Game */
+        canvas {
             display: block;
-            background: #0c0b14;
-            image-rendering: pixelated;
-            width: 100%;
-            height: 380px;
+            border-bottom: 2px solid #334155;
         }
-
-        .action-strip {
+        .game-controls {
             width: 100%;
-            background: #141224;
-            padding: 12px 18px;
-            border-top: 4px solid #211c38;
+            background: #0f172a;
+            padding: 14px 18px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
-
-        .prompt-banner {
-            background: #231c44;
-            border: 2px solid #ffd866;
-            padding: 8px 14px;
+        .quest-alert {
+            background: #1e1b4b;
+            border: 1px dashed #f59e0b;
+            padding: 10px 14px;
+            border-radius: 8px;
             font-size: 13px;
-            color: #fff4bd;
+            color: #fef08a;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
-
-        .sub-control-row {
+        .bottom-action-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
         }
-
-        .deck-tray {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .deck-card-btn {
-            background: #2d2650;
-            border: 3px solid #63539e;
-            padding: 8px 16px;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 900;
+        .deck-cards { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .deck-btn {
+            background: #1e293b;
+            border: 2px solid #6366f1;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: inset -2px -2px 0 #18142e, inset 2px 2px 0 #8f7ed4;
-            transition: all 0.1s;
+            gap: 6px;
+            transition: all 0.15s;
         }
-        .deck-card-btn:hover {
-            border-color: var(--cyan);
-            transform: translateY(-2px);
-        }
-        .deck-card-btn:active {
-            transform: translate(2px, 2px);
-        }
-        .deck-card-btn .py {
-            font-size: 11px;
-            color: #8beaff;
-            font-weight: 700;
-        }
+        .deck-btn:hover { background: #4338ca; transform: translateY(-2px); }
+        .deck-btn span.py { font-size: 11px; color: #93c5fd; font-weight: 400; }
 
-        .d-pad-box {
-            display: flex;
-            gap: 8px;
-        }
-
-        .d-btn {
+        /* Nút cảm ứng */
+        .touch-pad { display: flex; gap: 10px; }
+        .touch-btn {
+            background: #232d42;
+            color: #f8fafc;
+            border: 2px solid #4f46e5;
             width: 52px;
             height: 44px;
-            background: #362f59;
-            border: 3px solid #65589c;
-            color: #ffffff;
+            border-radius: 10px;
             font-size: 18px;
-            font-weight: 900;
+            font-weight: 700;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: inset -3px -3px 0 #1e1933, inset 3px 3px 0 #8676c9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.1s;
         }
-        .d-btn:active {
-            background: #604ebd;
-            transform: translate(2px, 2px);
-            box-shadow: none;
-        }
+        .touch-btn:active { background: #6366f1; transform: scale(0.95); }
 
-        /* Modals Overlay */
-        .modal-shade {
+        /* Modal Popups */
+        .modal-overlay {
             position: absolute;
-            inset: 0;
-            background: rgba(9, 8, 18, 0.94);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(8, 11, 20, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 100;
             padding: 20px;
         }
-
-        .retro-dialog {
-            background: #1b1733;
-            border: 4px solid #ff4b82;
+        .modal-card {
+            background: #181d2f;
+            border: 2px solid #8b5cf6;
+            border-radius: 18px;
             padding: 26px;
+            max-width: 540px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+        .btn-action {
+            border: none;
+            padding: 12px 26px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; }
+        .btn-primary:hover { transform: scale(1.04); }
+
+        /* Chiếu thư Trạng Nguyên */
+        .scroll-card {
+            background: #2b1810;
+            border: 4px double #f59e0b;
+            border-radius: 18px;
+            padding: 28px;
             max-width: 580px;
             width: 100%;
             text-align: center;
-            box-shadow: inset -4px -4px 0 #0d0b1a, inset 4px 4px 0 #ff80a9, 0 10px 40px rgba(255, 75, 130, 0.3);
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
+            position: relative;
         }
-
-        .retro-title {
-            font-family: 'ZCOOL KuaiLe', cursive, 'Press Start 2P';
-            font-size: 22px;
-            color: #ffd866;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px #441a1a;
-        }
-
-        .rule-list {
-            background: #110e20;
-            border: 2px solid #3d3463;
-            padding: 14px;
-            text-align: left;
-            font-size: 13px;
-            line-height: 1.7;
-            color: #dcd7fa;
-            margin: 16px 0;
-        }
-        .rule-list b {
-            color: var(--cyan);
-        }
-
-        .tokens-recap {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 18px 0;
-        }
-
-        .recap-chip {
-            background: #252044;
-            border: 2px solid #48e078;
-            padding: 8px 14px;
-            text-align: center;
-            box-shadow: inset -2px -2px 0 #131024, inset 2px 2px 0 #89ffae;
-        }
-        .recap-chip .ch {
-            font-size: 24px;
-            font-weight: 900;
-            color: #ff6097;
-        }
-        .recap-chip .p {
-            font-size: 11px;
-            color: #90ecff;
-        }
-        .recap-chip .m {
-            font-size: 11px;
-            color: #e4dfff;
-        }
-
-        .btn-launch-play {
-            background: linear-gradient(180deg, #ff6097 0%, #d82967 100%);
-            border: 3px solid #ff9ec1;
-            color: #ffffff;
-            padding: 12px 30px;
-            font-size: 15px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: inset -2px -2px 0 #770930, inset 2px 2px 0 #ffc4d8, 0 4px 15px rgba(255, 96, 151, 0.4);
-        }
-        .btn-launch-play:active {
-            transform: translate(2px, 2px);
+        .scroll-badge {
+            display: inline-block;
+            background: #78350f;
+            border: 1px solid #fbbf24;
+            color: #fef08a;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
         }
     </style>
 </head>
 <body>
 
-<div class="game-frame pixel-card">
-    <!-- Top HUD Bar -->
-    <div class="top-hud">
-        <div class="top-title">
-            <span style="font-size: 22px;">🏮</span>
-            <h1>HÁN TỰ THẦN KÝ</h1>
-            <span style="font-size: 10px; color: #ff6097; font-weight: 900; border: 2px solid #ff6097; padding: 2px 6px; border-radius: 4px;">PIXEL CHIBI</span>
+<div class="app-window">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <h1>🏮 HÁN TỰ THẦN KÝ</h1>
+        <div class="controls-top">
+            <button class="btn-music" id="music-btn" onclick="toggleMusic()">🎵 BẬT NHẠC TRANH</button>
+            <div class="stats-badge">📜 Thuần Thục: <span id="mastered-count">0</span> / 150 Từ</div>
         </div>
-        <div class="hud-actions">
-            <button class="pixel-btn" id="music-btn" onclick="toggleGuzhengEngine()">🎵 BẬT NHẠC TRANH</button>
-            <div class="hud-badge">
-                <span>📜 THUẦN THỤC:</span>
-                <span id="vocab-total-count" style="color: #fff;">0</span> / 150
+    </div>
+
+    <!-- MÀN HÌNH BẢN ĐỒ -->
+    <div class="screen-view active" id="view-map">
+        <h2 style="font-size: 19px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;">🗺️ BẢN ĐỒ CHINH PHỤC CÁC MIỀN ĐẤT</h2>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Vượt qua từng ải để tích lũy trọn vẹn từ vựng HSK 1</p>
+
+        <!-- Banner Sandbox mở khóa khi phá đảo -->
+        <div class="sandbox-banner" id="sandbox-banner">
+            <div>
+                <b style="color: #fef08a; font-size: 15px;">🔥 ĐÃ MỞ KHÓA: CHẾ ĐỘ NGHỊCH TỰ DO (SANDBOX)</b>
+                <p style="font-size: 12px; color: #fef3c7;">Triệu hồi vô hạn toàn bộ chữ Hán, thỏa sức nghịch cơ chế vật lý!</p>
+            </div>
+            <button class="btn-action" style="background: #181d2f; color: #fde047; padding: 8px 16px; font-size: 13px;" onclick="selectStage(99)">VÀO CHƠI ➔</button>
+        </div>
+
+        <div class="map-container">
+            <div class="map-node unlocked" id="node-1" onclick="selectStage(1)">
+                <div class="node-circle">1</div>
+                <div class="node-name">Thảo Nguyên</div>
+            </div>
+            <div class="map-node locked" id="node-2" onclick="selectStage(2)">
+                <div class="node-circle">🔒</div>
+                <div class="node-name">Vực Nham Thạch</div>
+            </div>
+            <div class="map-node locked" id="node-3" onclick="selectStage(3)">
+                <div class="node-circle">🔒</div>
+                <div class="node-name">Băng Tuyết Sơn</div>
+            </div>
+            <div class="map-node locked" id="node-4" onclick="selectStage(4)">
+                <div class="node-circle">🔒</div>
+                <div class="node-name">Bến Thuyền</div>
+            </div>
+            <div class="map-node locked" id="node-5" onclick="selectStage(5)">
+                <div class="node-circle">🔒</div>
+                <div class="node-name">Hoàng Thành</div>
+            </div>
+        </div>
+
+        <div class="vault-box">
+            <div class="vault-title">📚 KHO TỪ VỰNG ĐÃ THUẦN THỤC (Bấm vào để nghe đọc):</div>
+            <div class="vault-grid" id="vault-list">
+                <span style="font-size: 12px; color: #64748b; font-style: italic;">Chưa có từ nào. Hãy vượt qua Ải 1 để mở khóa!</span>
             </div>
         </div>
     </div>
 
-    <!-- 1. OVERWORLD MAP VIEW -->
-    <div class="view-layer active" id="view-map">
-        <div style="text-align: center; margin-bottom: 16px;">
-            <h2 style="font-size: 18px; color: #ffd866; font-weight: 900;">🗺️ BẢN ĐỒ THẾ GIỚI CỔ PHONG</h2>
-            <p style="font-size: 12px; color: #a49bc7;">Nhấp vào từng ải để phiêu lưu cùng tiểu hiệp khách chibi</p>
-        </div>
-
-        <div class="map-stage-board">
-            <div class="map-line-back"></div>
-            <div class="map-stop unlocked" id="map-node-1" onclick="openStage(1)">
-                <div class="stop-block">1</div>
-                <div class="stop-caption">Thảo Nguyên</div>
+    <!-- MÀN HÌNH CHƠI (CANVAS GAME) -->
+    <div class="screen-view" id="view-game" style="padding: 0;">
+        <canvas id="gameCanvas" width="860" height="360"></canvas>
+        <div class="game-controls">
+            <div class="quest-alert">
+                <span id="stage-quest-desc">Đang nạp nhiệm vụ...</span>
+                <button onclick="backToMap()" style="background: none; border: 1px solid #818cf8; color: #c7d2fe; padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer;">🗺️ Về Bản Đồ</button>
             </div>
-            <div class="map-stop locked" id="map-node-2" onclick="openStage(2)">
-                <div class="stop-block">🔒</div>
-                <div class="stop-caption">Vực Nham Thạch</div>
-            </div>
-            <div class="map-stop locked" id="map-node-3" onclick="openStage(3)">
-                <div class="stop-block">🔒</div>
-                <div class="stop-caption">Băng Tuyết Sơn</div>
-            </div>
-            <div class="map-stop locked" id="map-node-4" onclick="openStage(4)">
-                <div class="stop-block">🔒</div>
-                <div class="stop-caption">Bến Thuyền</div>
-            </div>
-            <div class="map-stop locked" id="map-node-5" onclick="openStage(5)">
-                <div class="stop-block">🔒</div>
-                <div class="stop-caption">Hoàng Thành</div>
-            </div>
-        </div>
-
-        <div class="vault-frame">
-            <div class="vault-head">
-                <span>📚 KHO TỪ THUẦN THỤC (BẤM VÀO THẺ ĐỂ NGHE ĐỌC ZH-CN):</span>
-                <span style="font-size: 11px; color: #8c82b0;">HSK 1 VOCABULARY</span>
-            </div>
-            <div class="vault-tokens" id="vault-tokens-container">
-                <span style="font-size: 12px; color: #6d648f; font-style: italic;">Chưa có từ nào được giải phóng. Hãy vượt qua Ải 1!</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. GAMEPLAY VIEW (CANVAS & RETRO CONTROLS) -->
-    <div class="view-layer" id="view-game" style="padding: 0;">
-        <canvas id="pixelCanvas" width="880" height="380"></canvas>
-        <div class="action-strip">
-            <div class="prompt-banner">
-                <span id="stage-desc-text">Đang tải nhiệm vụ...</span>
-                <button onclick="returnToOverworld()" class="pixel-btn" style="padding: 4px 10px; font-size: 11px; border-color: #ffd866; color: #ffd866;">🗺️ Về Bản Đồ</button>
-            </div>
-            <div class="sub-control-row">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 12px; color: #a49bc7; font-weight: 800;">TRIỆU HỒI:</span>
-                    <div class="deck-tray" id="deck-card-tray"></div>
+            <div class="bottom-action-bar">
+                <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
+                    <span style="font-size: 12px; color: #94a3b8; white-space: nowrap;">Bút lệnh:</span>
+                    <div class="deck-cards" id="deck-buttons"></div>
                 </div>
-                <!-- D-PAD CONTROLLER -->
-                <div class="d-pad-box">
-                    <button class="d-btn" onmousedown="handleKey('ArrowLeft', true)" onmouseup="handleKey('ArrowLeft', false)" ontouchstart="handleKey('ArrowLeft', true); event.preventDefault();" ontouchend="handleKey('ArrowLeft', false); event.preventDefault();">⬅</button>
-                    <button class="d-btn" onmousedown="handleKey('ArrowUp', true)" onmouseup="handleKey('ArrowUp', false)" ontouchstart="handleKey('ArrowUp', true); event.preventDefault();" ontouchend="handleKey('ArrowUp', false); event.preventDefault();">⬆</button>
-                    <button class="d-btn" onmousedown="handleKey('ArrowRight', true)" onmouseup="handleKey('ArrowRight', false)" ontouchstart="handleKey('ArrowRight', true); event.preventDefault();" ontouchend="handleKey('ArrowRight', false); event.preventDefault();">➡</button>
+                <!-- Nút cảm ứng điều khiển -->
+                <div class="touch-pad">
+                    <button class="touch-btn" onmousedown="setKey('ArrowLeft', true)" onmouseup="setKey('ArrowLeft', false)" ontouchstart="setKey('ArrowLeft', true); event.preventDefault();" ontouchend="setKey('ArrowLeft', false); event.preventDefault();">⬅</button>
+                    <button class="touch-btn" onmousedown="setKey('ArrowUp', true)" onmouseup="setKey('ArrowUp', false)" ontouchstart="setKey('ArrowUp', true); event.preventDefault();" ontouchend="setKey('ArrowUp', false); event.preventDefault();">⬆</button>
+                    <button class="touch-btn" onmousedown="setKey('ArrowRight', true)" onmouseup="setKey('ArrowRight', false)" ontouchstart="setKey('ArrowRight', true); event.preventDefault();" ontouchend="setKey('ArrowRight', false); event.preventDefault();">➡</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 3. WELCOME MODAL -->
-    <div class="modal-shade" id="welcome-modal">
-        <div class="retro-dialog">
-            <div class="retro-title">🏮 HÁN TỰ THẦN KÝ 🏮</div>
-            <div style="font-size: 13px; color: #ff90b7; font-weight: 800; margin-bottom: 10px;">BẢN NÂNG CẤP: ĐỒ HỌA PIXEL CHIBI RETRO 8-BIT</div>
-            <div class="rule-list">
-                <p>1. <b>Hiệp Khách Chibi:</b> Di chuyển bằng <b>[⬅] [⬆] [➡]</b> hoặc phím mũi tên. Nhân vật thở nhấp nhô, chớp mắt và bước chân ngắn lon ton.</p>
-                <p>2. <b>Thần Bút Hán Tự:</b> Bấm thẻ chữ Hán để triệu hồi vật thể pixel rớt xuống giải cứu địa hình.</p>
-                <p>3. <b>Mục tiêu:</b> Chạm vào lá cờ đuôi nheo 🏁 cuối màn để thu nhận từ vựng vào thần thức và mở ải mới!</p>
+    <!-- 1. MODAL HƯỚNG DẪN MỞ MÀN -->
+    <div class="modal-overlay" id="intro-modal">
+        <div class="modal-card">
+            <h2 style="color: #f472b6; margin-bottom: 10px; font-weight: 700;">🏮 HƯỚNG DẪN CÁCH CHƠI</h2>
+            <div style="text-align: left; background: #0f1422; padding: 16px; border-radius: 12px; font-size: 13px; line-height: 1.6; margin-bottom: 20px; color: #cbd5e1;">
+                <p>1. <b>Di chuyển:</b> Dùng cụm phím <b>[⬅] [⬆] [➡]</b> ở góc dưới bên phải hoặc mũi tên trên bàn phím.</p>
+                <p>2. <b>Phá giải thử thách:</b> Bấm thẻ chữ Hán để triệu hồi vật thể bắc cầu, làm tan băng, chèo thuyền hoặc mở cổng thành.</p>
+                <p>3. <b>Mục tiêu:</b> Chạm vào cờ đỏ 🏁 để thu nạp từ vựng vào trí nhớ và mở khóa ải kế tiếp!</p>
             </div>
-            <button class="btn-launch-play" onclick="closeWelcomeAndStart()">BẮT ĐẦU PHIÊU LƯU (START) ➔</button>
+            <button class="btn-action btn-primary" onclick="closeIntro()">ĐÃ HIỂU — BẮT ĐẦU CHƠI (START) ➔</button>
         </div>
     </div>
 
-    <!-- 4. VICTORY MODAL -->
-    <div class="modal-shade" id="victory-modal" style="display: none;">
-        <div class="retro-dialog" style="border-color: #38e68b; box-shadow: inset -4px -4px 0 #072414, inset 4px 4px 0 #9affcf, 0 10px 40px rgba(56, 230, 139, 0.3);">
-            <div class="retro-title" style="color: #48e078;">✨ QUA ẢI THÀNH CÔNG! ✨</div>
-            <p style="font-size: 13px; color: #d0f7df; margin-bottom: 14px;">Bạn đã thu nạp thành công các Hán tự sau vào trí nhớ:</p>
-            <div class="tokens-recap" id="victory-token-list"></div>
+    <!-- 2. MODAL QUA ẢI THƯỜNG -->
+    <div class="modal-overlay" id="victory-modal" style="display: none;">
+        <div class="modal-card" style="border-color: #10b981;">
+            <h2 style="color: #34d399; margin-bottom: 6px; font-weight: 700;">🎉 QUA ẢI THÀNH CÔNG!</h2>
+            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px;">Bạn đã thu nạp thành công các Hán tự sau vào trí nhớ:</p>
+            <div id="modal-words" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 22px;"></div>
             <div style="display: flex; gap: 14px; justify-content: center;">
-                <button class="pixel-btn" style="border-color: #998ec4; color: #d6ceff; padding: 10px 20px;" onclick="retryStageAction()">🔄 CHINH PHỤC LẠI</button>
-                <button class="btn-launch-play" style="background: linear-gradient(180deg, #38e68b 0%, #158b4d 100%); border-color: #8bffc6;" onclick="nextStageAction()">TIẾP TỤC ẢI KẾ ➔</button>
+                <button class="btn-action" style="background: #334155; color: #e2e8f0;" onclick="replayCurrentStage()">🔄 CHINH PHỤC LẠI</button>
+                <button class="btn-action btn-primary" onclick="proceedNextStage()">TIẾP TỤC ẢI TIẾP THEO ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. CHIẾU CHỈ TRẠNG NGUYÊN (KHI PHÁ ĐẢO ẢI 5) -->
+    <div class="modal-overlay" id="grand-victory-modal" style="display: none;">
+        <div class="scroll-card">
+            <div class="scroll-badge">🏆 CHIẾU CHỈ KHẢO THÍ HÁN TỰ THẦN KÝ</div>
+            <h2 style="color: #fbbf24; font-size: 24px; font-weight: 800; margin-bottom: 6px;">SẮC PHONG DANH HIỆU</h2>
+            <div style="font-size: 18px; font-weight: 800; color: #f472b6; margin-bottom: 14px; letter-spacing: 0.5px;">
+                "HÁN TỰ ĐỆ NHẤT THẦN BÚT — THÁNH BẺ LÁI HSK 1"
+            </div>
+            
+            <div style="background: rgba(15, 20, 34, 0.85); border: 1px dashed #f59e0b; border-radius: 12px; padding: 14px; text-align: left; font-size: 13px; line-height: 1.6; color: #fde68a; margin-bottom: 20px;">
+                <p>📜 <b>Chiến tích:</b> Đã dùng bàn ghế vượt nham thạch, ném lửa thiêu băng, vượt trùng giang và phá tung đại thành!</p>
+                <p>🎖️ <b>Đánh giá:</b> <b>Cấp độ S+</b> (Trí lực vô biên, kỹ năng ứng biến thượng thừa).</p>
+                <p>✨ <b>Đặc ân:</b> Mở khóa <b>Skin Trạng Nguyên Áo Đỏ Mũ Cánh Chuồn</b> & <b>Chế độ Nghịch Tự Do (Sandbox)</b>!</p>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button class="btn-action" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #1e1b4b; font-weight: 800;" onclick="claimGrandReward()">NHẬN DANH HIỆU & MỞ KHÓA SKIN ➔</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // ==================== BỘ ÂM THANH CỔ TRANH (GUZHENG SYNTH) ====================
+    // ==================== BỘ ÂM THANH CỔ TRANH ====================
     let audioCtx = null;
     let isMusicPlaying = false;
     let musicInterval = null;
+    const guzhengNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
 
-    // Ngũ cung Cung-Thương-Giốc-Chủy-Vũ
-    const guzhengNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
-
-    function initAudioEngine() {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
+    function initAudio() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
     }
 
-    function pluckGuzheng(freq) {
+    function pluckNote(freq) {
         if (!audioCtx) return;
         const now = audioCtx.currentTime;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(freq, now);
-
         gain.gain.setValueAtTime(0.001, now);
-        gain.gain.exponentialRampToValueAtTime(0.19, now + 0.025);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
-
+        gain.gain.exponentialRampToValueAtTime(0.18, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-
         osc.start(now);
-        osc.stop(now + 1.8);
+        osc.stop(now + 1.6);
     }
 
-    function toggleGuzhengEngine() {
-        initAudioEngine();
+    function toggleMusic() {
+        initAudio();
         const btn = document.getElementById('music-btn');
         if (isMusicPlaying) {
             clearInterval(musicInterval);
             isMusicPlaying = false;
             btn.innerText = '🎵 BẬT NHẠC TRANH';
-            btn.style.borderColor = '#ff4b82';
-            btn.style.color = '#ff94bb';
+            btn.style.background = '#2e1065';
         } else {
             isMusicPlaying = true;
-            btn.innerText = '🔊 TẮT NHẠC TRANH';
-            btn.style.borderColor = '#38e68b';
-            btn.style.color = '#38e68b';
+            btn.innerText = '🔊 TẮT NHẠC';
+            btn.style.background = '#059669';
             musicInterval = setInterval(() => {
-                const note = guzhengNotes[Math.floor(Math.random() * guzhengNotes.length)];
-                pluckGuzheng(note);
-                if (Math.random() > 0.45) {
-                    setTimeout(() => {
-                        if (isMusicPlaying) {
-                            pluckGuzheng(guzhengNotes[Math.floor(Math.random() * guzhengNotes.length)]);
-                        }
-                    }, 300);
-                }
-            }, 820);
+                pluckNote(guzhengNotes[Math.floor(Math.random() * guzhengNotes.length)]);
+            }, 800);
         }
     }
 
-    function speakChinese(text) {
+    function speak(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const u = new SpeechSynthesisUtterance(text);
             u.lang = 'zh-CN';
-            u.rate = 0.88;
             window.speechSynthesis.speak(u);
         }
     }
 
-    // ==================== CƠ SỞ DỮ LIỆU CÁC ẢI ====================
+    // ==================== DỮ LIỆU CÁC ẢI ====================
+    let isScholarSkin = false; // Trạng thái mở khóa Skin Trạng Nguyên
+    let isSandboxUnlocked = false;
+
     const stagesData = {
         1: {
             title: "Ải 1: Thảo Nguyên Hoang Dã",
-            desc: "💡 Nhiệm vụ: Di chuyển, triệu hồi 水 (Nước) và 苹果 (Táo) để thu nạp từ vựng, rồi chạm cờ đuôi nheo 🏁.",
+            desc: "💡 Nhiệm vụ: Di chuyển, triệu hồi 水 (Nước) và 苹果 (Táo) để nạp năng lượng rồi chạm cờ đỏ 🏁.",
             theme: "grass",
-            skyColor: ["#142542", "#244066"],
-            groundColor: "#1d3827",
-            groundBorder: "#347348",
+            skyColor: ["#142850", "#27496d"],
+            groundColor: "#1e392a",
+            grassColor: "#2e7d32",
             deck: [
-                { char: "水", pinyin: "shuǐ", vn: "Nước", color: "#38bdf8", type: "item", w: 48, h: 44 },
-                { char: "苹果", pinyin: "píngguǒ", vn: "Táo", color: "#ff4d6a", type: "item", w: 56, h: 44 }
+                { char: "水", pinyin: "shuǐ", vn: "Nước", color: "#38bdf8", type: "item" },
+                { char: "苹果", pinyin: "píngguǒ", vn: "Táo", color: "#ef4444", type: "item" }
             ],
-            platforms: [{ x: 0, y: 310, w: 880, h: 70 }],
+            platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
             obstacles: [],
-            goal: { x: 800, y: 255, w: 30, h: 55 }
+            goal: { x: 780, y: 265, w: 30, h: 45 }
         },
         2: {
             title: "Ải 2: Vực Thẳm Nham Thạch",
-            desc: "💡 Thử thách: Vực sâu chia cắt địa hình! Thả 桌子 (Bàn) làm cầu và 椅子 (Ghế) làm bậc thang để leo lên vách núi chạm cờ 🏁.",
+            desc: "💡 Thử thách: Vực sâu chia cắt! Thả 桌子 (Bàn) làm cầu và 椅子 (Ghế) làm bậc thang để leo lên vách núi chạm cờ 🏁.",
             theme: "lava",
-            skyColor: ["#2d1117", "#4a1215"],
-            groundColor: "#262121",
-            groundBorder: "#693a28",
+            skyColor: ["#2d1115", "#450a0a"],
+            groundColor: "#292524",
+            grassColor: "#78350f",
             deck: [
-                { char: "桌子", pinyin: "zhuōzi", vn: "Cái bàn", color: "#b36224", type: "bridge", w: 145, h: 42 },
-                { char: "椅子", pinyin: "yǐzi", vn: "Cái ghế", color: "#d97706", type: "step", w: 60, h: 64 }
+                { char: "桌子", pinyin: "zhuōzi", vn: "Cái bàn", color: "#b45309", type: "bridge" },
+                { char: "椅子", pinyin: "yǐzi", vn: "Cái ghế", color: "#d97706", type: "step" }
             ],
             platforms: [
-                { x: 0, y: 310, w: 230, h: 70 },
-                { x: 530, y: 210, w: 350, h: 170 } // Vách núi cao
+                { x: 0, y: 310, w: 230, h: 50 },
+                { x: 520, y: 210, w: 340, h: 150 }
             ],
             obstacles: [
-                { type: "pit", x: 230, w: 300, y: 345, h: 35, label: "🔥 VỰC NHAM THẠCH" }
+                { type: "pit", x: 230, w: 290, y: 345, h: 15, label: "🔥 VỰC NHAM THẠCH NGUY HIỂM" }
             ],
-            goal: { x: 800, y: 155, w: 30, h: 55 }
+            goal: { x: 780, y: 165, w: 30, h: 45 }
         },
         3: {
             title: "Ải 3: Băng Tuyết Sơn Rét Buốt",
-            desc: "💡 Thử thách: Tảng băng lớn chặn lối! Triệu hồi 火 (Lửa) để làm tan chảy băng, rồi dùng 家 (Mái nhà) che chắn để tới đích 🏁.",
+            desc: "💡 Thử thách: Tảng băng lớn chặn đường! Triệu hồi 火 (Lửa) để làm tan chảy tảng băng rồi tới đích 🏁.",
             theme: "snow",
-            skyColor: ["#121b2d", "#22314d"],
-            groundColor: "#323b4e",
-            groundBorder: "#d4e4f7",
+            skyColor: ["#0f172a", "#1e293b"],
+            groundColor: "#334155",
+            grassColor: "#e2e8f0",
             deck: [
-                { char: "火", pinyin: "huǒ", vn: "Lửa", color: "#f97316", type: "fire", w: 52, h: 48 },
-                { char: "家", pinyin: "jiā", vn: "Mái nhà", color: "#6366f1", type: "house", w: 110, h: 86 }
+                { char: "火", pinyin: "huǒ", vn: "Lửa", color: "#f97316", type: "fire" },
+                { char: "家", pinyin: "jiā", vn: "Mái nhà", color: "#6366f1", type: "house" }
             ],
-            platforms: [{ x: 0, y: 310, w: 880, h: 70 }],
+            platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
             obstacles: [
-                { type: "ice_wall", x: 450, y: 180, w: 56, h: 130, hp: 1, label: "BĂNG" }
+                { type: "ice_wall", x: 440, y: 190, w: 50, h: 120, hp: 1, label: "BĂNG" }
             ],
-            goal: { x: 800, y: 255, w: 30, h: 55 }
+            goal: { x: 780, y: 265, w: 30, h: 45 }
+        },
+        4: {
+            title: "Ải 4: Bến Thuyền Sông Lớn",
+            desc: "💡 Thử thách: Dòng sông sâu ngăn lối! Triệu hồi 船 (Thuyền) làm cầu nổi và cứu chú 猫 (Mèo) rồi chạm cờ 🏁.",
+            theme: "river",
+            skyColor: ["#082f49", "#0369a1"],
+            groundColor: "#1e293b",
+            grassColor: "#0284c7",
+            deck: [
+                { char: "船", pinyin: "chuán", vn: "Thuyền", color: "#0284c7", type: "boat" },
+                { char: "猫", pinyin: "māo", vn: "Mèo", color: "#fb923c", type: "item" }
+            ],
+            platforms: [
+                { x: 0, y: 310, w: 220, h: 50 },
+                { x: 580, y: 310, w: 280, h: 50 }
+            ],
+            obstacles: [
+                { type: "water", x: 220, w: 360, y: 320, h: 40, label: "🌊 DÒNG SÔNG SÂU" }
+            ],
+            goal: { x: 780, y: 265, w: 30, h: 45 }
+        },
+        5: {
+            title: "Ải 5: Hoàng Thành Khảo Thí",
+            desc: "💡 Thử thách cuối: Cửa thành khóa kín! Triệu hồi 书 (Sách) và 大 (Đại khổng lồ) để mở cổng đại thành 🏁.",
+            theme: "city",
+            skyColor: ["#3b0764", "#581c87"],
+            groundColor: "#312e81",
+            grassColor: "#fbbf24",
+            deck: [
+                { char: "书", pinyin: "shū", vn: "Sách", color: "#a855f7", type: "book" },
+                { char: "大", pinyin: "dà", vn: "To / Lớn", color: "#e11d48", type: "large_key" }
+            ],
+            platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
+            obstacles: [
+                { type: "gate", x: 450, y: 150, w: 45, h: 160, hp: 1, label: "CỔNG THÀNH" }
+            ],
+            goal: { x: 780, y: 265, w: 30, h: 45 }
+        },
+        // Ải 99: Chế độ Sandbox tự do nghịch
+        99: {
+            title: "Ải Bí Mật: Nghịch Tự Do (Chaos Sandbox)",
+            desc: "🔥 Chế độ tự do: Triệu hồi không giới hạn toàn bộ chữ Hán để nghịch ngợm vật lý!",
+            theme: "city",
+            skyColor: ["#18181b", "#27272a"],
+            groundColor: "#3f3f46",
+            grassColor: "#e4e4e7",
+            deck: [
+                { char: "水", pinyin: "shuǐ", vn: "Nước", color: "#38bdf8", type: "item" },
+                { char: "苹果", pinyin: "píngguǒ", vn: "Táo", color: "#ef4444", type: "item" },
+                { char: "桌子", pinyin: "zhuōzi", vn: "Bàn", color: "#b45309", type: "bridge" },
+                { char: "椅子", pinyin: "yǐzi", vn: "Ghế", color: "#d97706", type: "step" },
+                { char: "火", pinyin: "huǒ", vn: "Lửa", color: "#f97316", type: "fire" },
+                { char: "船", pinyin: "chuán", vn: "Thuyền", color: "#0284c7", type: "boat" },
+                { char: "猫", pinyin: "māo", vn: "Mèo", color: "#fb923c", type: "item" },
+                { char: "大", pinyin: "dà", vn: "Đại", color: "#e11d48", type: "large_key" }
+            ],
+            platforms: [{ x: 0, y: 310, w: 860, h: 50 }],
+            obstacles: [],
+            goal: { x: 780, y: 265, w: 30, h: 45 }
         }
     };
 
@@ -690,113 +586,82 @@
     let completedStages = new Set();
     let masteredVocabulary = new Map();
 
-    // ==================== ENGINE TRÒ CHƠI & ĐỒ HỌA PIXEL CHIBI ====================
-    const canvas = document.getElementById('pixelCanvas');
+    // ==================== ENGINE TRÒ CHƠI ====================
+    const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    ctx.imageRendering = "pixelated";
-
     let player, platforms, obstacles, goal, summonedObjects = [];
-    let particles = [];
     let walkCycle = 0;
-    let idleTimer = 0;
-    let isBlinking = false;
-    let blinkTimer = 0;
     const keys = {};
 
     window.addEventListener('keydown', e => keys[e.code] = true);
     window.addEventListener('keyup', e => keys[e.code] = false);
 
-    function handleKey(code, val) {
+    function setKey(code, val) {
         keys[code] = val;
     }
 
-    function loadStageState(stageNum) {
+    function startStageGame(stageNum) {
         const s = stagesData[stageNum] || stagesData[1];
-        showView('view-game');
-        document.getElementById('stage-desc-text').innerText = s.desc;
+        showScreen('view-game');
+        document.getElementById('stage-quest-desc').innerText = s.desc;
 
-        const tray = document.getElementById('deck-card-tray');
-        tray.innerHTML = '';
+        const deckContainer = document.getElementById('deck-buttons');
+        deckContainer.innerHTML = '';
         s.deck.forEach(c => {
             const btn = document.createElement('button');
-            btn.className = 'deck-card-btn';
+            btn.className = 'deck-btn';
             btn.innerHTML = `${c.char} <span class="py">${c.pinyin}</span>`;
-            btn.onclick = () => spawnSummonedObject(c);
-            tray.appendChild(btn);
+            btn.onclick = () => summonObject(c);
+            deckContainer.appendChild(btn);
         });
 
         platforms = s.platforms;
         obstacles = JSON.parse(JSON.stringify(s.obstacles));
         goal = s.goal;
-
-        // Player proportions (Chibi head-to-body ratio)
         player = {
             x: 60,
-            y: 230,
-            w: 30,
-            h: 56,
+            y: 240,
+            w: 24,
+            h: 52,
             vx: 0,
             vy: 0,
             facing: 1,
             grounded: false
         };
         summonedObjects = [];
-        particles = [];
-        walkCycle = 0;
     }
 
-    function createSparkleParticles(x, y, color, count = 8) {
-        for (let i = 0; i < count; i++) {
-            particles.push({
-                x: x,
-                y: y,
-                vx: (Math.random() - 0.5) * 5,
-                vy: (Math.random() - 1.2) * 4,
-                color: color,
-                size: Math.random() > 0.5 ? 4 : 3,
-                life: 25
-            });
-        }
-    }
-
-    function spawnSummonedObject(card) {
-        speakChinese(card.char);
+    function summonObject(card) {
+        speak(card.char);
+        let w = 55, h = 42;
+        if (card.char === "桌子") { w = 145; h = 42; }
+        if (card.char === "椅子") { w = 60; h = 65; }
+        if (card.char === "家") { w = 110; h = 90; }
+        if (card.char === "船") { w = 160; h = 40; }
+        if (card.char === "大") { w = 70; h = 70; }
 
         summonedObjects.push({
             x: Math.min(Math.max(player.x + 60, 150), 720),
             y: 20,
-            w: card.w,
-            h: card.h,
+            w: w,
+            h: h,
             vy: 3,
             char: card.char,
             color: card.color,
-            type: card.type,
-            landed: false
+            type: card.type
         });
     }
 
-    function updateGamePhysics() {
+    function updateGame() {
         const gravity = 0.38;
 
-        // 1. Idle & Blink timers for cute Chibi expression
-        idleTimer += 0.05;
-        blinkTimer++;
-        if (blinkTimer > 180 && Math.random() < 0.03) {
-            isBlinking = true;
-            if (blinkTimer > 195) {
-                isBlinking = false;
-                blinkTimer = 0;
-            }
-        }
-
-        // 2. Horizontal Movement
         let isMoving = false;
         if (keys['ArrowLeft'] || keys['KeyA']) {
-            player.vx = -4.2;
+            player.vx = -4;
             player.facing = -1;
             isMoving = true;
         } else if (keys['ArrowRight'] || keys['KeyD']) {
-            player.vx = 4.2;
+            player.vx = 4;
             player.facing = 1;
             isMoving = true;
         } else {
@@ -804,28 +669,14 @@
         }
 
         if (isMoving && player.grounded) {
-            walkCycle += 0.35;
-            if (Math.random() < 0.25) {
-                // Dust particles
-                particles.push({
-                    x: player.x + (player.facing === 1 ? 4 : 26),
-                    y: player.y + player.h - 2,
-                    vx: -player.facing * 1.5,
-                    vy: -0.5,
-                    color: "#7e749c",
-                    size: 3,
-                    life: 12
-                });
-            }
+            walkCycle += 0.25;
         } else {
             walkCycle = 0;
         }
 
-        // 3. Jump
         if ((keys['ArrowUp'] || keys['KeyW'] || keys['Space']) && player.grounded) {
-            player.vy = -10.6;
+            player.vy = -10.5;
             player.grounded = false;
-            createSparkleParticles(player.x + player.w / 2, player.y + player.h, "#ffcc00", 5);
         }
 
         player.vy += gravity;
@@ -833,7 +684,6 @@
         player.y += player.vy;
         player.grounded = false;
 
-        // 4. Platform Collision
         platforms.forEach(p => {
             if (player.x + player.w > p.x && player.x < p.x + p.w) {
                 if (player.y + player.h > p.y && player.y + player.h < p.y + p.h && player.vy > 0) {
@@ -844,9 +694,8 @@
             }
         });
 
-        // 5. Obstacle Collision
         obstacles.forEach(obs => {
-            if (obs.type === "ice_wall" && obs.hp > 0) {
+            if ((obs.type === "ice_wall" || obs.type === "gate") && obs.hp > 0) {
                 if (player.x + player.w > obs.x && player.x < obs.x + obs.w &&
                     player.y + player.h > obs.y && player.y < obs.y + obs.h) {
                     player.x = obs.x - player.w;
@@ -854,14 +703,12 @@
             }
         });
 
-        // Respawn if falling into pit
-        if (player.y > 410) {
+        if (player.y > 400) {
             player.x = 60;
-            player.y = 230;
+            player.y = 240;
             player.vy = 0;
         }
 
-        // 6. Summoned Objects Dynamics
         summonedObjects.forEach((obj, idx) => {
             obj.vy += gravity;
             obj.y += obj.vy;
@@ -871,48 +718,49 @@
                     if (obj.y + obj.h > p.y && obj.y + obj.h < p.y + p.h) {
                         obj.y = p.y - obj.h;
                         obj.vy = 0;
-                        if (!obj.landed) {
-                            obj.landed = true;
-                            createSparkleParticles(obj.x + obj.w / 2, obj.y + obj.h, obj.color, 10);
-                        }
                     }
                 }
             });
 
-            if (obj.y + obj.h >= 355) {
+            if (obj.type === 'boat' && obj.y + obj.h >= 325) {
+                obj.y = 325 - obj.h;
+                obj.vy = 0;
+            } else if (obj.y + obj.h >= 355) {
                 obj.y = 355 - obj.h;
                 obj.vy = 0;
-                if (!obj.landed) {
-                    obj.landed = true;
-                    createSparkleParticles(obj.x + obj.w / 2, obj.y + obj.h, obj.color, 10);
-                }
             }
 
-            // Ice wall melt interaction with Fire 火
             if (obj.type === 'fire') {
                 obstacles.forEach(obs => {
                     if (obs.type === "ice_wall" && obs.hp > 0) {
-                        if (obj.x + obj.w > obs.x && obj.x < obs.x + obs.w &&
-                            obj.y + obj.h > obs.y) {
+                        if (obj.x + obj.w > obs.x && obj.x < obs.x + obs.w && obj.y + obj.h > obs.y) {
                             obs.hp = 0;
-                            speakChinese("融化");
-                            createSparkleParticles(obs.x + obs.w / 2, obs.y + obs.h / 2, "#90e0ef", 24);
+                            speak("融化");
                             summonedObjects.splice(idx, 1);
                         }
                     }
                 });
             }
 
-            // Food collect in Stage 1
-            if (obj.type === 'item') {
+            if (obj.type === 'large_key') {
+                obstacles.forEach(obs => {
+                    if (obs.type === "gate" && obs.hp > 0) {
+                        if (obj.x + obj.w > obs.x && obj.x < obs.x + obs.w && obj.y + obj.h > obs.y) {
+                            obs.hp = 0;
+                            speak("开门");
+                            summonedObjects.splice(idx, 1);
+                        }
+                    }
+                });
+            }
+
+            if (obj.type === 'item' || obj.type === 'book') {
                 if (player.x + player.w > obj.x && player.x < obj.x + obj.w &&
                     player.y + player.h > obj.y && player.y < obj.y + obj.h) {
-                    speakChinese(obj.char);
-                    createSparkleParticles(obj.x + obj.w / 2, obj.y + obj.h / 2, "#ffd166", 12);
+                    speak(obj.char);
                     summonedObjects.splice(idx, 1);
                 }
             } else {
-                // Stepping stone mechanics
                 if (player.x + player.w > obj.x && player.x < obj.x + obj.w) {
                     if (player.y + player.h > obj.y && player.y + player.h < obj.y + obj.h && player.vy > 0) {
                         player.y = obj.y - player.h;
@@ -923,388 +771,311 @@
             }
         });
 
-        // 7. Update Particles
-        for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            p.life--;
-            if (p.life <= 0) particles.splice(i, 1);
-        }
-
-        // 8. Goal Reach
         if (player.x + player.w > goal.x && player.x < goal.x + goal.w &&
             player.y + player.h > goal.y && player.y < goal.y + goal.h) {
-            triggerVictoryCondition();
+            triggerVictory();
         }
     }
 
-    function drawPixelChibi(x, y, facing, walkCycle, idleTimer, isBlinking, isJumping) {
+    // ==================== ĐỒ HỌA BỐI CẢNH & NHÂN VẬT ====================
+    let snowFlakes = Array.from({length: 40}, () => ({ x: Math.random() * 860, y: Math.random() * 360, r: Math.random() * 2.5 + 1 }));
+
+    function drawHumanPlayer(x, y, facing, walkAnim) {
         ctx.save();
-        ctx.translate(x + 15, y + 28);
+        ctx.translate(x + 12, y + 26);
         if (facing === -1) ctx.scale(-1, 1);
 
-        // Breathing bounce effect (Idle)
-        const breatheY = isJumping ? 0 : Math.sin(idleTimer) * 1.5;
-        const legSwing = Math.sin(walkCycle) * 7;
+        const legSwing = Math.sin(walkAnim) * 8;
 
-        // --- 1. CHÂN CHIBI NGẮN (PIXEL SHORT LEGS) ---
-        ctx.fillStyle = "#1e1b30";
-        if (isJumping) {
-            // Co chân khi nhảy lên
-            ctx.fillRect(-8, 16, 6, 6);
-            ctx.fillRect(2, 16, 6, 6);
-        } else {
-            // Bước chân lẹp bẹp
-            ctx.fillRect(-8, 18 + legSwing, 6, 8 - legSwing);
-            ctx.fillRect(2, 18 - legSwing, 6, 8 + legSwing);
-            // Giày hài cổ trang viền trắng
-            ctx.fillStyle = "#e2d9f3";
-            ctx.fillRect(-8, 24 + legSwing, 6, 2);
-            ctx.fillRect(2, 24 - legSwing, 6, 2);
+        // Nếu đã mở khóa Skin Trạng Nguyên: Nở hoa sen vàng dưới chân khi chạy
+        if (isScholarSkin && Math.abs(legSwing) > 3) {
+            ctx.fillStyle = "#fbbf24";
+            ctx.beginPath();
+            ctx.arc(-2, 24, 3, 0, Math.PI * 2);
+            ctx.fill();
         }
 
-        // --- 2. ÁO HÁN PHỤC CHIBI (TÚI BẦU DỄ THƯƠNG) ---
-        ctx.fillStyle = "#38bdf8"; // Xanh ngọc Hán phục
-        ctx.fillRect(-11, 4 + breatheY, 22, 16);
-        // Viền vạt áo
-        ctx.fillStyle = "#0284c7";
-        ctx.fillRect(-11, 18 + breatheY, 22, 2);
+        ctx.fillStyle = "#1e293b";
+        ctx.fillRect(-6, 12, 5, 14 + legSwing);
+        ctx.fillRect(1, 12, 5, 14 - legSwing);
 
-        // Đai lưng đỏ hoàng cung
-        ctx.fillStyle = "#ef4444";
-        ctx.fillRect(-11, 11 + breatheY, 22, 4);
-        // Ngọc bội bội đai vàng lấp lánh
-        ctx.fillStyle = "#ffd866";
-        ctx.fillRect(-2, 12 + breatheY, 4, 6);
+        // Trang phục: Áo Đỏ Trạng Nguyên hoặc Áo Lam Hiệp Khách
+        ctx.fillStyle = isScholarSkin ? "#dc2626" : "#38bdf8";
+        ctx.beginPath();
+        ctx.roundRect(-9, -8, 18, 22, [4, 4, 2, 2]);
+        ctx.fill();
 
-        // --- 3. DẢI LỤA BAY BỔNG PHÍA SAU ĐẦU (FLYING RIBBONS) ---
-        const ribbonWave = Math.sin(idleTimer * 2 + walkCycle) * 4;
-        ctx.fillStyle = "#ff6097";
-        ctx.fillRect(-15, -10 + ribbonWave, 6, 12);
-        ctx.fillRect(-19, -4 + ribbonWave * 1.2, 5, 14);
+        // Đai lưng vàng óng
+        ctx.fillStyle = isScholarSkin ? "#fbbf24" : "#ef4444";
+        ctx.fillRect(-9, 4, 18, 4);
 
-        // --- 4. ĐẦU CHIBI TO TRÒN TỶ LỆ 1:1 ---
-        // Khuôn mặt bầu bĩnh màu da
-        ctx.fillStyle = "#ffe0bd";
-        ctx.fillRect(-13, -19 + breatheY, 26, 24);
-        ctx.fillRect(-11, -21 + breatheY, 22, 28);
+        // Khuôn mặt
+        ctx.fillStyle = "#fed7aa";
+        ctx.beginPath();
+        ctx.arc(0, -16, 8, 0, Math.PI * 2);
+        ctx.fill();
 
-        // Đôi má hồng blush (Siêu cute)
-        ctx.fillStyle = "rgba(255, 120, 150, 0.65)";
-        ctx.fillRect(-11, -5 + breatheY, 5, 4);
-        ctx.fillRect(6, -5 + breatheY, 5, 4);
+        // Tóc & Mũ cánh chuồn Trạng Nguyên
+        ctx.fillStyle = "#0f172a";
+        ctx.beginPath();
+        ctx.arc(0, -18, 8, Math.PI, Math.PI * 2);
+        ctx.fill();
 
-        // MẮT CHIBI ANIME LONG LANH (BIG ANIME EYES)
-        if (isBlinking) {
-            // Mắt chớp dạng gạch ngang vui vẻ (^_^)
-            ctx.fillStyle = "#1c142b";
-            ctx.fillRect(-8, -9 + breatheY, 6, 2);
-            ctx.fillRect(2, -9 + breatheY, 6, 2);
+        if (isScholarSkin) {
+            // Mũ cánh chuồn Trạng Nguyên
+            ctx.fillStyle = "#1e1b4b";
+            ctx.fillRect(-8, -26, 16, 8);
+            // Hai cánh chuồn xòe ngang hai bên
+            ctx.fillStyle = "#fbbf24";
+            ctx.fillRect(-16, -24, 8, 3);
+            ctx.fillRect(8, -24, 8, 3);
         } else {
-            // Tròng mắt đen to
-            ctx.fillStyle = "#1c142b";
-            ctx.fillRect(-8, -12 + breatheY, 6, 8);
-            ctx.fillRect(2, -12 + breatheY, 6, 8);
-            // Đồng tử phản chiếu ánh sáng lấp lánh (Sparkle pupil)
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(-7, -12 + breatheY, 3, 3);
-            ctx.fillRect(3, -12 + breatheY, 3, 3);
-            ctx.fillRect(-5, -7 + breatheY, 2, 2);
-            ctx.fillRect(5, -7 + breatheY, 2, 2);
+            // Búi tóc cổ phong bình thường
+            ctx.beginPath();
+            ctx.arc(facing * -2, -26, 4, 0, Math.PI * 2);
+            ctx.fill();
         }
 
-        // Nụ cười chúm chím
-        ctx.fillStyle = "#c84361";
-        ctx.fillRect(-1, -2 + breatheY, 2, 2);
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(2, -17, 2.5, 2.5);
 
-        // --- 5. TÓC CỔ PHONG & BÚI TÓC TRÂM CÀI (TOP-KNOT) ---
-        ctx.fillStyle = "#1e182a";
-        // Mái ngố bồng bềnh
-        ctx.fillRect(-13, -21 + breatheY, 26, 6);
-        ctx.fillRect(-13, -16 + breatheY, 4, 10);
-        ctx.fillRect(9, -16 + breatheY, 4, 10);
-
-        // Búi tóc trên đỉnh đầu
-        ctx.fillRect(-5, -29 + breatheY, 10, 8);
-        // Trâm cài tóc ngọc đỏ
-        ctx.fillStyle = "#ff4060";
-        ctx.fillRect(-7, -26 + breatheY, 14, 3);
-        ctx.fillStyle = "#ffd866";
-        ctx.fillRect(7, -27 + breatheY, 3, 5);
-
-        // --- 6. TAY CHIBI (Vẫy tay khi nhảy / Đung đưa khi chạy) ---
-        ctx.fillStyle = "#38bdf8";
-        if (isJumping) {
-            ctx.fillRect(10, -5 + breatheY, 6, 6);
-            ctx.fillStyle = "#ffe0bd";
-            ctx.fillRect(12, -9 + breatheY, 4, 5);
-        } else {
-            ctx.fillRect(-2, 7 + breatheY, 5, 10 - legSwing);
-            ctx.fillStyle = "#ffe0bd";
-            ctx.fillRect(-2, 15 + breatheY - legSwing, 5, 4);
-        }
+        ctx.fillStyle = isScholarSkin ? "#b91c1c" : "#0284c7";
+        ctx.fillRect(-2, -4, 4, 14 - legSwing);
 
         ctx.restore();
     }
 
-    let snowFall = Array.from({length: 45}, () => ({
-        x: Math.random() * 880,
-        y: Math.random() * 380,
-        size: Math.random() > 0.6 ? 3 : 2,
-        speed: Math.random() * 1.5 + 1
-    }));
-
-    function renderPixelWorld() {
+    function renderGame() {
         const s = stagesData[currentStage] || stagesData[1];
 
-        // 1. Pixel Gradient Backdrop
-        const grad = ctx.createLinearGradient(0, 0, 0, 380);
+        const grad = ctx.createLinearGradient(0, 0, 0, 360);
         grad.addColorStop(0, s.skyColor[0]);
         grad.addColorStop(1, s.skyColor[1]);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 2. Stars / Atmosphere
-        ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-        for (let i = 0; i < 25; i++) {
-            ctx.fillRect((i * 37) % 880, (i * 19) % 180, 2, 2);
-        }
-
-        // Snowflakes in Stage 3
         if (s.theme === "snow") {
-            ctx.fillStyle = "#ffffff";
-            snowFall.forEach(f => {
-                ctx.fillRect(f.x, f.y, f.size, f.size);
-                f.y += f.speed;
-                f.x += 0.4;
-                if (f.y > 380) f.y = 0;
-                if (f.x > 880) f.x = 0;
+            ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+            snowFlakes.forEach(f => {
+                ctx.beginPath();
+                ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+                ctx.fill();
+                f.y += 1.5;
+                f.x += 0.5;
+                if (f.y > 360) f.y = 0;
+                if (f.x > 860) f.x = 0;
             });
         }
 
-        // 3. Obstacles (Pit Lava / Pixel Ice Wall)
         obstacles.forEach(obs => {
             if (obs.type === "pit") {
-                // Lava Pit
-                ctx.fillStyle = "#ff3b19";
+                ctx.fillStyle = "#450a0a";
                 ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
-                // Lava bubbles
-                ctx.fillStyle = "#ffe600";
-                for (let bx = obs.x + 8; bx < obs.x + obs.w - 8; bx += 28) {
-                    const bubble = Math.sin(idleTimer * 3 + bx) * 4;
-                    ctx.fillRect(bx, obs.y + 4 + bubble, 8, 8);
-                }
+                ctx.fillStyle = "#ef4444";
+                ctx.font = "700 11px 'Be Vietnam Pro', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(obs.label, obs.x + obs.w / 2, obs.y + 11);
+            } else if (obs.type === "water") {
+                ctx.fillStyle = "#0284c7";
+                ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 11px sans-serif";
-                ctx.fillText(obs.label, obs.x + 10, obs.y + 22);
+                ctx.font = "700 12px 'Be Vietnam Pro', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(obs.label, obs.x + obs.w / 2, obs.y + 24);
             } else if (obs.type === "ice_wall" && obs.hp > 0) {
-                // Pixel Ice Wall with cracks
-                ctx.fillStyle = "#99e5ff";
-                ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
-                ctx.fillStyle = "#48bfe3";
-                ctx.fillRect(obs.x + 4, obs.y + 4, obs.w - 8, obs.h - 8);
-                // Pixel Ice Highlights & Cracks
-                ctx.fillStyle = "#ffffff";
-                ctx.fillRect(obs.x + 6, obs.y + 10, 6, 24);
-                ctx.fillRect(obs.x + 14, obs.y + 50, 4, 30);
+                ctx.fillStyle = "rgba(147, 197, 253, 0.85)";
+                ctx.beginPath();
+                ctx.roundRect(obs.x, obs.y, obs.w, obs.h, 8);
+                ctx.fill();
+                ctx.strokeStyle = "#ffffff";
+                ctx.lineWidth = 2;
+                ctx.stroke();
                 ctx.fillStyle = "#1e3a8a";
-                ctx.font = "bold 13px 'Nunito', sans-serif";
+                ctx.font = "700 14px 'Be Vietnam Pro', sans-serif";
                 ctx.textAlign = "center";
                 ctx.fillText("🧊 BĂNG", obs.x + obs.w / 2, obs.y + obs.h / 2);
-                ctx.textAlign = "left";
+            } else if (obs.type === "gate" && obs.hp > 0) {
+                ctx.fillStyle = "#831843";
+                ctx.beginPath();
+                ctx.roundRect(obs.x, obs.y, obs.w, obs.h, 6);
+                ctx.fill();
+                ctx.strokeStyle = "#fbbf24";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                ctx.fillStyle = "#fef08a";
+                ctx.font = "700 13px 'Be Vietnam Pro', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("🚪 KHÓA", obs.x + obs.w / 2, obs.y + obs.h / 2);
             }
         });
 
-        // 4. Pixel Platforms & Terrain
         platforms.forEach(p => {
             ctx.fillStyle = s.groundColor;
             ctx.fillRect(p.x, p.y, p.w, p.h);
-            ctx.fillStyle = s.groundBorder;
+            ctx.fillStyle = s.grassColor;
             ctx.fillRect(p.x, p.y, p.w, 8);
-
-            // Little pixel grass / tufts
-            if (s.theme === "grass") {
-                ctx.fillStyle = "#55b967";
-                for (let gx = p.x + 12; gx < p.x + p.w; gx += 32) {
-                    ctx.fillRect(gx, p.y - 4, 4, 4);
-                    ctx.fillRect(gx + 4, p.y - 2, 4, 2);
-                }
-            }
         });
 
-        // 5. CỜ ĐÍCH PIXEL ĐUÔI NHEO VẪY TRONG GIÓ (PIXEL PENNANT FLAG)
-        const flagWave = Math.sin(idleTimer * 4) * 4;
-        ctx.fillStyle = "#4a406f"; // Cán cờ
-        ctx.fillRect(goal.x, goal.y, 6, goal.h);
-        ctx.fillStyle = "#ffd866"; // Chóp cờ vàng
-        ctx.fillRect(goal.x - 2, goal.y - 4, 10, 5);
+        ctx.fillStyle = "#ef4444";
+        ctx.fillRect(goal.x, goal.y, 25, 18);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(goal.x, goal.y, 4, 45);
 
-        // Lá cờ đuôi nheo đỏ
-        ctx.fillStyle = "#ff4757";
-        ctx.beginPath();
-        ctx.moveTo(goal.x + 6, goal.y + 4);
-        ctx.lineTo(goal.x + 36 + flagWave, goal.y + 16);
-        ctx.lineTo(goal.x + 28 + flagWave, goal.y + 24);
-        ctx.lineTo(goal.x + 36 + flagWave, goal.y + 32);
-        ctx.lineTo(goal.x + 6, goal.y + 40);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = "#ffb8b8";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // 6. Summoned Retro Word Blocks
         summonedObjects.forEach(obj => {
-            // Pixel block frame
-            ctx.fillStyle = "#1e1b30";
-            ctx.fillRect(obj.x - 2, obj.y - 2, obj.w + 4, obj.h + 4);
-
             ctx.fillStyle = obj.color;
-            ctx.fillRect(obj.x, obj.y, obj.w, obj.h);
+            ctx.beginPath();
+            ctx.roundRect(obj.x, obj.y, obj.w, obj.h, 8);
+            ctx.fill();
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+            ctx.stroke();
 
-            // Shading
-            ctx.fillStyle = "rgba(255,255,255,0.4)";
-            ctx.fillRect(obj.x + 3, obj.y + 3, obj.w - 6, 4);
-            ctx.fillStyle = "rgba(0,0,0,0.3)";
-            ctx.fillRect(obj.x + 3, obj.y + obj.h - 6, obj.w - 6, 4);
-
-            // Chinese character
             ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 16px 'ZCOOL KuaiLe', sans-serif";
+            ctx.font = "700 16px 'Noto Serif SC', 'Be Vietnam Pro', sans-serif";
             ctx.textAlign = "center";
             ctx.fillText(obj.char, obj.x + obj.w / 2, obj.y + obj.h / 2 + 6);
-            ctx.textAlign = "left";
         });
 
-        // 7. Particles
-        particles.forEach(p => {
-            ctx.fillStyle = p.color;
-            ctx.fillRect(p.x, p.y, p.size, p.size);
-        });
-
-        // 8. Render Pixel Chibi Hero
-        const isJumping = !player.grounded;
-        drawPixelChibi(player.x, player.y, player.facing, walkCycle, idleTimer, isBlinking, isJumping);
+        drawHumanPlayer(player.x, player.y, player.facing, walkCycle);
     }
 
-    let isVictoryScreenOpen = false;
+    // ==================== TIẾP TỤC & THÀNH TỰU PHÁ ĐẢO ====================
+    let victoryTriggered = false;
 
-    function triggerVictoryCondition() {
-        if (isVictoryScreenOpen) return;
-        isVictoryScreenOpen = true;
-        speakChinese("太好了");
+    function triggerVictory() {
+        if (victoryTriggered) return;
+        victoryTriggered = true;
+        speak("太好了");
 
-        completedStages.add(currentStage);
-        if (currentStage < 5) unlockedStages.add(currentStage + 1);
+        if (currentStage !== 99) {
+            completedStages.add(currentStage);
+            if (currentStage < 5) unlockedStages.add(currentStage + 1);
 
-        const curStageInfo = stagesData[currentStage];
-        const recapBox = document.getElementById('victory-token-list');
-        recapBox.innerHTML = '';
+            const curStageInfo = stagesData[currentStage];
+            curStageInfo.deck.forEach(c => masteredVocabulary.set(c.char, { pinyin: c.pinyin, vn: c.vn }));
+        }
 
-        curStageInfo.deck.forEach(c => {
-            masteredVocabulary.set(c.char, { pinyin: c.pinyin, vn: c.vn });
-            const item = document.createElement('div');
-            item.className = 'recap-chip';
-            item.innerHTML = `
-                <div class="ch">${c.char}</div>
-                <div class="p">${c.pinyin}</div>
-                <div class="m">${c.vn}</div>
-            `;
-            recapBox.appendChild(item);
-        });
-
-        document.getElementById('victory-modal').style.display = 'flex';
-    }
-
-    function retryStageAction() {
-        document.getElementById('victory-modal').style.display = 'none';
-        isVictoryScreenOpen = false;
-        loadStageState(currentStage);
-    }
-
-    function nextStageAction() {
-        document.getElementById('victory-modal').style.display = 'none';
-        isVictoryScreenOpen = false;
-        if (currentStage < 3) {
-            currentStage++;
-            loadStageState(currentStage);
+        // Nếu vượt qua Ải 5 (Phá đảo game): Mở Chiếu thư Trạng Nguyên!
+        if (currentStage === 5) {
+            document.getElementById('grand-victory-modal').style.display = 'flex';
         } else {
-            returnToOverworld();
+            // Mở modal qua ải thường
+            const curStageInfo = stagesData[currentStage];
+            const modalWords = document.getElementById('modal-words');
+            modalWords.innerHTML = '';
+
+            curStageInfo.deck.forEach(c => {
+                const item = document.createElement('div');
+                item.style.background = '#1e293b';
+                item.style.border = '1px solid #10b981';
+                item.style.padding = '8px 14px';
+                item.style.borderRadius = '8px';
+                item.innerHTML = `<div style="font-size:22px; font-weight:700; color:#f472b6; font-family:'Noto Serif SC', sans-serif;">${c.char}</div>
+                                  <div style="font-size:11px; color:#38bdf8;">${c.pinyin}</div>
+                                  <div style="font-size:12px; font-weight:600; color:#cbd5e1;">${c.vn}</div>`;
+                modalWords.appendChild(item);
+            });
+
+            document.getElementById('victory-modal').style.display = 'flex';
         }
     }
 
-    function showView(viewId) {
-        document.querySelectorAll('.view-layer').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
+    function claimGrandReward() {
+        document.getElementById('grand-victory-modal').style.display = 'none';
+        victoryTriggered = false;
+        isScholarSkin = true; // Kích hoạt Skin Trạng Nguyên
+        isSandboxUnlocked = true; // Mở khóa Sandbox
+        document.getElementById('sandbox-banner').style.display = 'flex';
+        backToMap();
     }
 
-    function returnToOverworld() {
-        showView('view-map');
-        refreshOverworldUI();
+    function replayCurrentStage() {
+        document.getElementById('victory-modal').style.display = 'none';
+        victoryTriggered = false;
+        startStageGame(currentStage);
     }
 
-    function refreshOverworldUI() {
-        document.getElementById('vocab-total-count').innerText = masteredVocabulary.size;
+    function proceedNextStage() {
+        document.getElementById('victory-modal').style.display = 'none';
+        victoryTriggered = false;
+        if (currentStage < 5) {
+            currentStage++;
+            startStageGame(currentStage);
+        } else {
+            backToMap();
+        }
+    }
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function backToMap() {
+        showScreen('view-map');
+        updateMapUI();
+    }
+
+    function updateMapUI() {
+        document.getElementById('mastered-count').innerText = masteredVocabulary.size;
 
         for (let i = 1; i <= 5; i++) {
-            const node = document.getElementById(`map-node-${i}`);
+            const node = document.getElementById(`node-${i}`);
             if (!node) continue;
             node.classList.remove('unlocked', 'completed', 'locked');
 
             if (completedStages.has(i)) {
                 node.classList.add('completed');
-                node.querySelector('.stop-block').innerText = '✓';
+                node.querySelector('.node-circle').innerText = '✓';
             } else if (unlockedStages.has(i)) {
                 node.classList.add('unlocked');
-                node.querySelector('.stop-block').innerText = i;
+                node.querySelector('.node-circle').innerText = i;
             } else {
                 node.classList.add('locked');
-                node.querySelector('.stop-block').innerText = '🔒';
+                node.querySelector('.node-circle').innerText = '🔒';
             }
         }
 
-        const tokensRack = document.getElementById('vault-tokens-container');
+        const vaultGrid = document.getElementById('vault-list');
         if (masteredVocabulary.size === 0) {
-            tokensRack.innerHTML = '<span style="font-size: 12px; color: #6d648f; font-style: italic;">Chưa có từ nào được giải phóng. Hãy vượt qua Ải 1!</span>';
+            vaultGrid.innerHTML = '<span style="font-size: 12px; color: #64748b; font-style: italic;">Chưa có từ nào. Hãy vượt qua Ải 1 để mở khóa!</span>';
         } else {
-            tokensRack.innerHTML = '';
+            vaultGrid.innerHTML = '';
             masteredVocabulary.forEach((val, char) => {
                 const item = document.createElement('div');
-                item.className = 'vault-token';
-                item.innerHTML = `<span class="hz">${char}</span> <span class="sub">${val.pinyin} (${val.vn})</span> 🔊`;
-                item.onclick = () => speakChinese(char);
-                tokensRack.appendChild(item);
+                item.className = 'vault-item';
+                item.innerHTML = `<b style="font-family:'Noto Serif SC', sans-serif;">${char}</b> <span>${val.pinyin} (${val.vn})</span> 🔊`;
+                item.onclick = () => speak(char);
+                vaultGrid.appendChild(item);
             });
         }
     }
 
-    function openStage(num) {
-        if (!unlockedStages.has(num)) {
-            alert("Ải này đang bị phong ấn! Hãy hoàn thành ải trước đó nhé.");
+    function selectStage(num) {
+        if (num !== 99 && !unlockedStages.has(num)) {
+            alert("Ải này đang bị khóa! Bạn cần chinh phục ải trước đã.");
             return;
         }
         currentStage = num;
-        loadStageState(num);
+        startStageGame(num);
     }
 
-    function closeWelcomeAndStart() {
-        initAudioEngine();
-        document.getElementById('welcome-modal').style.display = 'none';
-        toggleGuzhengEngine();
-        refreshOverworldUI();
+    function closeIntro() {
+        initAudio();
+        document.getElementById('intro-modal').style.display = 'none';
+        toggleMusic();
     }
 
-    function mainGameLoop() {
-        if (document.getElementById('view-game').classList.contains('active') && !isVictoryScreenOpen) {
-            updateGamePhysics();
-            renderPixelWorld();
+    function loop() {
+        if (document.getElementById('view-game').classList.contains('active') && !victoryTriggered) {
+            updateGame();
+            renderGame();
         }
-        requestAnimationFrame(mainGameLoop);
+        requestAnimationFrame(loop);
     }
 
-    refreshOverworldUI();
-    mainGameLoop();
+    updateMapUI();
+    loop();
 </script>
 
 </body>
