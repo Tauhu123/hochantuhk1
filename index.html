@@ -79,7 +79,7 @@
             transition: width 0.3s;
         }
 
-        /* Tabs Menu & Chọn Cấp Độ HSK */
+        /* Tabs Menu */
         .tier-tabs {
             display: flex;
             width: 100%;
@@ -153,7 +153,6 @@
         .castle-name { font-size: 14px; font-weight: 800; color: #831843; }
         .castle-quest { font-size: 11px; color: #db2777; margin-top: 4px; font-weight: 600; }
 
-        /* DANH SÁCH BÀI KHẢO THÍ */
         .vault-archive {
             width: 100%;
             background: #fff;
@@ -185,6 +184,49 @@
         .pink-node .hz { font-family: 'Noto Serif SC', sans-serif; font-size: 20px; font-weight: 900; color: #9d174d; }
         .pink-node .py { font-size: 10px; color: #ec4899; font-weight: 700; }
 
+        /* KHUNG NHÂN VẬT ANIME CHIBI TÍCH HỢP */
+        .princess-avatar-wrapper {
+            position: relative;
+            width: 130px;
+            height: 170px;
+            margin: 0 auto 10px auto;
+            border-radius: 20px;
+            background: radial-gradient(circle, #fce7f3 40%, #fbcfe8 100%);
+            border: 3px solid #f472b6;
+            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.3);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .princess-sprite {
+            position: absolute;
+            width: 390px;
+            height: 170px;
+            background-image: url('congchua.jfif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            transition: all 0.3s ease;
+        }
+        /* Phụ kiện đè lên búp bê */
+        .princess-head-gear {
+            position: absolute;
+            top: 2px;
+            font-size: 32px;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            animation: floatGently 3s ease-in-out infinite;
+        }
+        .princess-hand-item {
+            position: absolute;
+            bottom: 30px;
+            right: 8px;
+            font-size: 26px;
+            z-index: 12;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+        }
+
         /* BẢNG KHẢO THÍ HSK */
         .exam-arena {
             width: 100%;
@@ -211,17 +253,11 @@
             background: linear-gradient(180deg, #fdf2f8 0%, #fff 100%);
             border: 2px dashed #f472b6;
             border-radius: 18px;
-            padding: 16px;
+            padding: 14px;
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
-        .princess-display-box {
-            font-size: 60px;
-            margin-bottom: 6px;
-            animation: floatPrincess 3s ease-in-out infinite;
-        }
-        .princess-title { font-size: 15px; font-weight: 900; color: #be185d; }
-        .princess-quote { font-size: 12px; color: #831843; margin-top: 4px; font-style: italic; }
+        .princess-title { font-size: 14px; font-weight: 900; color: #be185d; }
 
         .exam-scroll {
             background: #fffdf5;
@@ -244,12 +280,26 @@
         .exam-question { font-size: 15px; font-weight: 700; color: #451a03; line-height: 1.6; }
         .exam-blank { color: #ec4899; border-bottom: 3px solid #ec4899; padding: 0 8px; font-weight: 900; font-size: 17px; }
         .exam-vn-trans { font-size: 12px; color: #78350f; margin-top: 6px; font-weight: 600; }
+        
+        .grammar-fun-tip {
+            background: #fdf4ff;
+            border: 1px dashed #d946ef;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #86198f;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
 
         .royal-reward-box {
             background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
             border: 2px dashed #ec4899;
             border-radius: 16px;
-            padding: 14px;
+            padding: 12px;
             text-align: center;
             display: none;
             animation: popReward 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -317,7 +367,7 @@
             justify-content: center;
         }
         .doll-stage {
-            width: 310px;
+            width: 320px;
             background: #fff;
             border: 3px solid #f472b6;
             border-radius: 22px;
@@ -328,24 +378,6 @@
             box-shadow: 0 10px 30px rgba(244, 114, 182, 0.2);
             text-align: center;
         }
-        .doll-composite {
-            position: relative;
-            width: 140px;
-            height: 180px;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fdf2f8;
-            border-radius: 50%;
-            border: 3px dashed #fbcfe8;
-        }
-        .layer-icon { position: absolute; }
-        #doll-headwear { top: 10px; font-size: 32px; z-index: 5; }
-        #doll-avatar { font-size: 65px; z-index: 3; }
-        #doll-dress { bottom: 10px; font-size: 34px; z-index: 4; }
-        #doll-handheld { right: 8px; bottom: 35px; font-size: 28px; z-index: 6; }
-
         .closet-organizer {
             flex: 1;
             min-width: 320px;
@@ -385,7 +417,7 @@
         .closet-item.locked { opacity: 0.45; cursor: not-allowed; }
 
         .shake-board { animation: shake 0.35s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes floatPrincess { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes floatGently { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
         @keyframes popReward { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes shake {
             10%, 90% { transform: translate3d(-2px, 0, 0); }
@@ -408,10 +440,8 @@
             box-shadow: 0 0 60px rgba(251, 191, 36, 0.7);
             position: relative; animation: throneGlow 2s infinite alternate;
         }
-        .throne-stage { font-size: 70px; margin-bottom: 10px; animation: princessAscend 2.5s ease-out; }
         .firework-particle { position: absolute; font-size: 24px; animation: burst 1.5s infinite; }
         @keyframes throneGlow { 0% { box-shadow: 0 0 40px rgba(251,191,36,0.5); } 100% { box-shadow: 0 0 70px rgba(244,114,182,0.9); } }
-        @keyframes princessAscend { 0% { transform: translateY(40px) scale(0.7); opacity: 0; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -444,7 +474,7 @@
     <div class="screen-layer active" id="layer-map">
         <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h2 style="font-size: 17px; font-weight: 900; color: #9d174d;" id="tier-map-title">🗺️ BẢN ĐỒ MỞ RỘNG BỜ CÕI • HSK 1</h2>
-            <span style="font-size: 12px; color: #db2777; font-weight: 700;">Hạ bút thi cử ➔ Thu phục thành trì ➔ Mở khóa phục sức Dress-up</span>
+            <span style="font-size: 12px; color: #db2777; font-weight: 700;">Hạ bút thi cử ➔ Thu phục thành trì ➔ Mở khóa phục sức</span>
         </div>
 
         <div class="conquest-map" id="map-castles-box"></div>
@@ -471,9 +501,13 @@
             <div class="princess-pod">
                 <div>
                     <div class="royal-doll">
-                        <div class="princess-display-box" id="princess-avatar-box">👸</div>
-                        <div class="princess-title" id="princess-suit-title">Trang Phục: Đang Tự Phối Đồ</div>
-                        <div class="princess-quote" id="princess-quote-text">"Bút hạ khai thiên hà, chữ thành định bờ cõi!"</div>
+                        <!-- HÌNH CÔNG CHÚA ANIME CHIBI CHÍNH DIỆN -->
+                        <div class="princess-avatar-wrapper">
+                            <div class="princess-sprite" id="exam-princess-sprite"></div>
+                            <div class="princess-head-gear" id="exam-doll-headwear">👑</div>
+                            <div class="princess-hand-item" id="exam-doll-handheld">🪄</div>
+                        </div>
+                        <div class="princess-title" id="princess-suit-title">Công Chúa Cung Đình</div>
                     </div>
 
                     <div class="exam-scroll">
@@ -483,6 +517,11 @@
                         </div>
                         <div class="exam-vn-trans" id="exam-vn-translation">
                             Hôm nay tôi mệt quá, muốn đi ngủ sớm một chút.
+                        </div>
+                        <!-- KHU VỰC HIỂN THỊ MẸO NGỮ PHÁP -->
+                        <div class="grammar-fun-tip" id="grammar-tip-box">
+                            <span>💡</span>
+                            <span id="grammar-tip-text">Bí kíp: Nhìn ngữ cảnh để nhớ từ tự nhiên, không cần nhồi nhét công thức!</span>
                         </div>
                     </div>
 
@@ -516,7 +555,7 @@
         </div>
     </div>
 
-    <!-- 3. PHÒNG THỬ ĐỒ HOÀNG GIA DRESS-UP (STYLE IDRESSUP) -->
+    <!-- 3. PHÒNG THỬ ĐỒ HOÀNG GIA DRESS-UP -->
     <div class="screen-layer" id="layer-wardrobe">
         <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <button class="btn-return" onclick="returnToPalaceMap()">
@@ -527,25 +566,22 @@
         </div>
 
         <div class="wardrobe-container">
-            <!-- Sân Khấu Búp Bê Nữ Đế Tương Tác -->
             <div class="doll-stage">
-                <div class="doll-composite">
-                    <div class="layer-icon" id="doll-headwear">👑</div>
-                    <div class="layer-icon" id="doll-avatar">👸</div>
-                    <div class="layer-icon" id="doll-dress">👗</div>
-                    <div class="layer-icon" id="doll-handheld">🪄</div>
+                <div class="princess-avatar-wrapper" style="width: 160px; height: 210px;">
+                    <div class="princess-sprite" id="wardrobe-princess-sprite" style="width: 480px; height: 210px;"></div>
+                    <div class="princess-head-gear" id="wardrobe-doll-headwear" style="top: 4px; font-size: 38px;">👑</div>
+                    <div class="princess-hand-item" id="wardrobe-doll-handheld" style="bottom: 35px; right: 12px; font-size: 32px;">🪄</div>
                 </div>
                 <div style="font-size: 15px; font-weight: 900; color: #be185d;" id="dressed-doll-title">Nữ Đế Cẩm Y Hoa Lệ</div>
                 <p style="font-size: 12px; color: #831843; margin-top: 4px;">Bộ cánh phối sẽ xuất hiện trong Lễ Đăng Ngai Vàng!</p>
             </div>
 
-            <!-- Tủ Phục Sức Đa Tầng -->
             <div class="closet-organizer">
                 <div class="closet-category-title">👑 Vương Miện & Cài Đầu</div>
                 <div class="closet-grid" id="closet-headwear-box"></div>
 
-                <div class="closet-category-title">👗 Y Phục & Váy Hoàng Cung</div>
-                <div class="closet-grid" id="closet-dress-box"></div>
+                <div class="closet-category-title">🌸 Góc Nhìn & Dáng Điệu Y Phục</div>
+                <div class="closet-grid" id="closet-pose-box"></div>
 
                 <div class="closet-category-title">🪄 Pháp Khí Cầm Tay</div>
                 <div class="closet-grid" id="closet-handheld-box"></div>
@@ -564,7 +600,13 @@
             <div style="font-size: 13px; font-weight: 900; color: #fef08a; letter-spacing: 2px;">
                 👑 CINEMATIC CUTSCENE: ĐẠI LỄ ĐĂNG NGAI VÀNG
             </div>
-            <div class="throne-stage" id="cinematic-throne-doll">👸🏰🪑</div>
+            
+            <div class="princess-avatar-wrapper" style="width: 170px; height: 220px; margin: 15px auto; border-color: #fbbf24;">
+                <div class="princess-sprite" id="throne-princess-sprite" style="width: 510px; height: 220px;"></div>
+                <div class="princess-head-gear" id="throne-doll-headwear" style="top: 6px; font-size: 40px;">👑</div>
+                <div class="princess-hand-item" id="throne-doll-handheld" style="bottom: 38px; right: 14px; font-size: 34px;">🪄</div>
+            </div>
+
             <h2 style="color: #fbbf24; font-size: 26px; font-weight: 900; margin-bottom: 8px;">ĐĂNG QUANG NỮ ĐẾ HSK MASTER</h2>
             <div style="font-size: 17px; font-weight: 900; color: #fbcfe8; margin-bottom: 16px;">
                 CÔNG CHÚA CHÍNH THỨC TRỞ THÀNH BẬC THẦY HSK 3 CỬU NGŨ CHÍ TÔN!
@@ -582,7 +624,6 @@
 </div>
 
 <script>
-    // ==================== BỘ ÂM THANH ====================
     let audioCtx = null;
     let isMusicOn = true;
     function playZither(f = 523.25) {
@@ -614,30 +655,26 @@
         }
     }
 
-    // ==================== TỦ ĐỒ DRESS-UP & TRANG PHỤC ====================
-    let currentDressed = {
-        headwear: "👑",
-        avatar: "👸",
-        dress: "👗",
-        handheld: "🪄"
+    // ==================== TỦ ĐỒ DRESS-UP & CÔNG CHÚA ANIME ====================
+    let currentDressed = { 
+        headwear: "👑", 
+        poseOffset: "center center", // Cắt đúng góc nhìn của ảnh
+        handheld: "🪄" 
     };
 
     const wardrobeItems = {
         headwear: [
             { id: "h1", icon: "👑", name: "Vương Miện Kim Cương", unlockAt: 0 },
-            { id: "h2", icon: "🌸", name: "Trâm Cài Đào Hoa Các", unlockAt: 5 },
+            { id: "h2", icon: "🌸", name: "Trâm Cài Đào Hoa", unlockAt: 5 },
             { id: "h3", icon: "🎀", name: "Nơ Bướm Hồng Phấn", unlockAt: 15 },
-            { id: "h4", icon: "🦚", name: "Mũ Khổng Tước Hoàng Triều", unlockAt: 30 },
+            { id: "h4", icon: "🦚", name: "Mũ Khổng Tước", unlockAt: 30 },
             { id: "h5", icon: "❄️", name: "Băng Tinh Miện", unlockAt: 50 },
-            { id: "h6", icon: "🏮", name: "Cung Miện Nữ Đế Cửu Ngũ", unlockAt: 70 }
+            { id: "h6", icon: "🏮", name: "Cung Miện Nữ Đế", unlockAt: 70 }
         ],
-        dress: [
-            { id: "d1", icon: "👗", name: "Váy Dạ Hội Hồng Pastel", unlockAt: 0 },
-            { id: "d2", icon: "👘", name: "Cẩm Bào Lụa Tô Châu", unlockAt: 10 },
-            { id: "d3", icon: "👚", name: "Áo Đũi Ngư Nữ Giang Nam", unlockAt: 25 },
-            { id: "d4", icon: "🥻", name: "Chiến Bào Hồng Giáp Mộc Lan", unlockAt: 40 },
-            { id: "d5", icon: "🧥", name: "Áo Choàng Lông Thỏ Bạch Tuyết", unlockAt: 55 },
-            { id: "d6", icon: "🥼", name: "Long Bào Nữ Đế Thêu Chỉ Vàng", unlockAt: 75 }
+        pose: [
+            { id: "p1", icon: "👸", name: "Nhìn Thẳng Duyên Dáng", offset: "left center", unlockAt: 0 },
+            { id: "p2", icon: "🪭", name: "Nghiêng Mình Cầm Quạt", offset: "center center", unlockAt: 10 },
+            { id: "p3", icon: "🌸", name: "Bóng Lưng Kiều Diễm", offset: "right center", unlockAt: 25 }
         ],
         handheld: [
             { id: "w1", icon: "🪄", name: "Đũa Thần Bút Pháp", unlockAt: 0 },
@@ -660,15 +697,15 @@
                     icon: "🌸",
                     suit: "Hoàng Bào Gấm Hoa Đào",
                     questions: [
-                        { hz: "好", py: "hǎo", vn: "Tốt / Chào", sentence: "你___！很高兴认识你。", trans: "Chào bạn! Rất vui được quen biết bạn.", blankHint: "hǎo" },
-                        { hz: "水", py: "shuǐ", vn: "Nước", sentence: "天气很热，请给我一杯___。", trans: "Trời rất nóng, xin cho tôi một cốc nước.", blankHint: "shuǐ" },
-                        { hz: "吃", py: "chī", vn: "Ăn", sentence: "你想___什么中国菜？", trans: "Bạn muốn ăn món Trung Quốc nào?", blankHint: "chī" },
-                        { hz: "大", py: "dà", vn: "To / Lớn", sentence: "这个苹果真___！", trans: "Quả táo này thật là to!", blankHint: "dà" },
-                        { hz: "人", py: "rén", vn: "Người", sentence: "商店里有很多___。", trans: "Trong cửa hàng có rất nhiều người.", blankHint: "rén" },
-                        { hz: "喝", py: "hē", vn: "Uống", sentence: "医生说要多___温水。", trans: "Bác sĩ dặn phải uống nhiều nước ấm.", blankHint: "hē" },
-                        { hz: "几", py: "jǐ", vn: "Mấy / Bao nhiêu", sentence: "现在___点了？", trans: "Bây giờ là mấy giờ rồi?", blankHint: "jǐ" },
-                        { hz: "不", py: "bù", vn: "Không", sentence: "我___是老师，我是学生。", trans: "Tôi không phải là giáo viên, tôi là học sinh.", blankHint: "bù" },
-                        { hz: "在", py: "zài", vn: "Ở / Đang", sentence: "我现___学校的图书馆里。", trans: "Tôi hiện đang ở trong thư viện của trường.", blankHint: "zài" }
+                        { hz: "好", py: "hǎo", vn: "Tốt / Chào", sentence: "你___！很高兴认识你。", trans: "Chào bạn! Rất vui được quen biết bạn.", blankHint: "hǎo", tip: "Mẹo: Ghép Người (你) + Tốt (好) thành lời chào lịch sự nhất quả đất!" },
+                        { hz: "水", py: "shuǐ", vn: "Nước", sentence: "天气很热，请给我一杯___。", trans: "Trời rất nóng, xin cho tôi một cốc nước.", blankHint: "shuǐ", tip: "Mẹo: Thấy 'một cốc' (一杯) thì chữ điền vào chắc chắn là đồ uống (Nước/Trà)!" },
+                        { hz: "吃", py: "chī", vn: "Ăn", sentence: "你想___什么中国菜？", trans: "Bạn muốn ăn món Trung Quốc nào?", blankHint: "chī", tip: "Mẹo: Đằng sau có 'món ăn' (中国菜) thì trước đó phải là động từ Ăn (吃)!" },
+                        { hz: "大", py: "dà", vn: "To / Lớn", sentence: "这个苹果真___！", trans: "Quả táo này thật là to!", blankHint: "dà", tip: "Mẹo: Chữ 真 (thật là) luôn đi với tính từ cảm thán (To, Đẹp, Ngon)!" },
+                        { hz: "人", py: "rén", vn: "Người", sentence: "商店里有很多___。", trans: "Trong cửa hàng có rất nhiều người.", blankHint: "rén", tip: "Mẹo: 'Rất nhiều' (很多) + Người (人) = Chỗ đông đúc nhộn nhịp!" },
+                        { hz: "喝", py: "hē", vn: "Uống", sentence: "医生说要多___温水。", trans: "Bác sĩ dặn phải uống nhiều nước ấm.", blankHint: "hē", tip: "Mẹo: 'Đa' (多) + Động từ = Khuyên làm việc gì đó nhiều hơn (uống nhiều nước)!" },
+                        { hz: "几", py: "jǐ", vn: "Mấy / Bao nhiêu", sentence: "现在___点了？", trans: "Bây giờ là mấy giờ rồi?", blankHint: "jǐ", tip: "Mẹo: Muốn hỏi giờ giấc chỉ cần nhét chữ 'Mấy' (几) trước chữ Giờ (点)!" },
+                        { hz: "不", py: "bù", vn: "Không", sentence: "我___是老师，我是学生。", trans: "Tôi không phải là giáo viên, tôi là học sinh.", blankHint: "bù", tip: "Mẹo: Muốn phủ định 'Không phải' cứ ghép thẳng: 不 + 是 = Không phải!" },
+                        { hz: "在", py: "zài", vn: "Ở / Đang", sentence: "我现___学校的图书馆里。", trans: "Tôi hiện đang ở trong thư viện của trường.", blankHint: "zài", tip: "Mẹo: Thấy địa điểm (thư viện, nhà) thì dùng chữ Ở (在) làm cầu nối!" }
                     ]
                 },
                 {
@@ -677,15 +714,15 @@
                     icon: "🏯",
                     suit: "Y phục Thêu Phượng Hoàng",
                     questions: [
-                        { hz: "书", py: "shū", vn: "Sách", sentence: "桌子上有一本汉语___。", trans: "Trên bàn có một cuốn sách tiếng Trung.", blankHint: "shū" },
-                        { hz: "猫", py: "māo", vn: "Mèo", sentence: "那只小___在椅子下睡觉。", trans: "Con mèo nhỏ kia đang ngủ dưới ghế.", blankHint: "māo" },
-                        { hz: "去", py: "qù", vn: "Đi", sentence: "明天我要___北京旅游。", trans: "Ngày mai tôi muốn đi Bắc Kinh du lịch.", blankHint: "qù" },
-                        { hz: "钱", py: "qián", vn: "Tiền", sentence: "这个杯子多少___？", trans: "Cái cốc này bao nhiêu tiền?", blankHint: "qián" },
-                        { hz: "见", py: "jiàn", vn: "Gặp", sentence: "明天学校___！", trans: "Ngày mai gặp lại ở trường nhé!", blankHint: "jiàn" },
-                        { hz: "买", py: "mǎi", vn: "Mua", sentence: "我想去商店___两件衣服。", trans: "Tôi muốn đến cửa hàng mua hai bộ quần áo.", blankHint: "mǎi" },
-                        { hz: "月", py: "yuè", vn: "Tháng", sentence: "今天是八___十五号。", trans: "Hôm nay là ngày 15 tháng 8.", blankHint: "yuè" },
-                        { hz: "住", py: "zhù", vn: "Sống / Ở", sentence: "你___在哪儿？", trans: "Bạn sống ở đâu?", blankHint: "zhù" },
-                        { hz: "叫", py: "jiào", vn: "Tên là / Kêu", sentence: "我的中国朋友___李华。", trans: "Bạn người Trung Quốc của tôi tên là Lý Hoa.", blankHint: "jiào" }
+                        { hz: "书", py: "shū", vn: "Sách", sentence: "桌子上有一本汉语___。", trans: "Trên bàn có một cuốn sách tiếng Trung.", blankHint: "shū", tip: "Mẹo: Thấy lượng từ 'Một cuốn/quyển' (一本) là tự tin điền Sách (书)!" },
+                        { hz: "猫", py: "māo", vn: "Mèo", sentence: "那只小___在椅子下睡觉。", trans: "Con mèo nhỏ kia đang ngủ dưới ghế.", blankHint: "māo", tip: "Mẹo: 'Một con' (一只) thường dành cho thú cưng xinh xắn như Mèo, Chó!" },
+                        { hz: "去", py: "qù", vn: "Đi", sentence: "明天我要___北京旅游。", trans: "Ngày mai tôi muốn đi Bắc Kinh du lịch.", blankHint: "qù", tip: "Mẹo: Đi đến một địa danh nào đó: 去 + Nơi chốn (Bắc Kinh)!" },
+                        { hz: "钱", py: "qián", vn: "Tiền", sentence: "这个杯子多少___？", trans: "Cái cốc này bao nhiêu tiền?", blankHint: "qián", tip: "Mẹo hỏi giá siêu kinh điển: Bao nhiêu (多少) + Tiền (钱)!" },
+                        { hz: "见", py: "jiàn", vn: "Gặp", sentence: "明天学校___！", trans: "Ngày mai gặp lại ở trường nhé!", blankHint: "jiàn", tip: "Mẹo: Hẹn gặp ở đâu: Thời gian/Địa điểm + Gặp (见)!" },
+                        { hz: "买", py: "mǎi", vn: "Mua", sentence: "我想去商店___两件衣服。", trans: "Tôi muốn đến cửa hàng mua hai bộ quần áo.", blankHint: "mǎi", tip: "Mẹo: Đến cửa hàng (商店) mục đích chính là Mua (买) đồ!" },
+                        { hz: "月", py: "yuè", vn: "Tháng", sentence: "今天是八___十五号。", trans: "Hôm nay là ngày 15 tháng 8.", blankHint: "yuè", tip: "Mẹo ngày tháng: Đơn vị to đứng trước (Tháng 月 trước, Ngày 号 sau)!" },
+                        { hz: "住", py: "zhù", vn: "Sống / Ở", sentence: "你___在哪儿？", trans: "Bạn sống ở đâu?", blankHint: "zhù", tip: "Mẹo: Hỏi nơi cư trú lâu dài dùng chữ Trú/Ở (住)!" },
+                        { hz: "叫", py: "jiào", vn: "Tên là / Kêu", sentence: "我的中国朋友___李华。", trans: "Bạn người Trung Quốc của tôi tên là Lý Hoa.", blankHint: "jiào", tip: "Mẹo giới thiệu tên: Chủ ngữ + 叫 + Tên riêng!" }
                     ]
                 },
                 {
@@ -694,14 +731,14 @@
                     icon: "🛶",
                     suit: "Thủy Thần Yếm Lam Khí",
                     questions: [
-                        { hz: "上", py: "shàng", vn: "Trên / Đi lên", sentence: "我们八点___课。", trans: "Chúng tôi tám giờ lên lớp.", blankHint: "shàng" },
-                        { hz: "下", py: "xià", vn: "Dưới / Rơi (mưa)", sentence: "外面正在___大雨呢。", trans: "Bên ngoài đang mưa to đấy.", blankHint: "xià" },
-                        { hz: "写", py: "xiě", vn: "Viết", sentence: "你会___这个汉字吗？", trans: "Bạn biết viết chữ Hán này không?", blankHint: "xiě" },
-                        { hz: "字", py: "zì", vn: "Chữ", sentence: "你的汉___写得很漂亮。", trans: "Chữ Hán của bạn viết rất đẹp.", blankHint: "zì" },
-                        { hz: "听", py: "tīng", vn: "Nghe", sentence: "请大家认真___我说。", trans: "Xin mọi người lắng nghe tôi nói.", blankHint: "tīng" },
-                        { hz: "说", py: "shuō", vn: "Nói", sentence: "他汉语___得非常流利。", trans: "Anh ấy nói tiếng Trung rất lưu loát.", blankHint: "shuō" },
-                        { hz: "家", py: "jiā", vn: "Nhà", sentence: "我想回___休息了。", trans: "Tôi muốn về nhà nghỉ ngơi rồi.", blankHint: "jiā" },
-                        { hz: "看", py: "kàn", vn: "Xem / Nhìn", sentence: "星期天我想在宿舍___书。", trans: "Chủ nhật tôi muốn ở ký túc xá xem sách.", blankHint: "kàn" }
+                        { hz: "上", py: "shàng", vn: "Lên lớp (上课)", sentence: "我们八点___课。", trans: "Chúng tôi tám giờ lên lớp.", blankHint: "shàng", tip: "Mẹo: Vào học là 'Lên lớp' (上课), tan học là 'Xuống lớp' (下课)!" },
+                        { hz: "下", py: "xià", vn: "Rơi (mưa)", sentence: "外面正在___大雨呢。", trans: "Bên ngoài đang mưa to đấy.", blankHint: "xià", tip: "Mẹo: Mưa từ trên trời rơi xuống nên dùng chữ Xuống (下雨)!" },
+                        { hz: "写", py: "xiě", vn: "Viết", sentence: "你会___这个汉字吗？", trans: "Bạn biết viết chữ Hán này không?", blankHint: "xiě", tip: "Mẹo: Thấy 'Chữ Hán' (汉字) thì hành động đi kèm là Viết (写)!" },
+                        { hz: "字", py: "zì", vn: "Chữ", sentence: "你的汉___写得很漂亮。", trans: "Chữ Hán của bạn viết rất đẹp.", blankHint: "zì", tip: "Mẹo: Chữ Hán luôn đi thành cặp đôi: Hán (汉) + Tự (字)!" },
+                        { hz: "听", py: "tīng", vn: "Nghe", sentence: "请大家认真___我说。", trans: "Xin mọi người lắng nghe tôi nói.", blankHint: "tīng", tip: "Mẹo: Nói thì bằng mồm, còn lắng nhận thì dùng tai Nghe (听)!" },
+                        { hz: "说", py: "shuō", vn: "Nói", sentence: "他汉语___得非常流利。", trans: "Anh ấy nói tiếng Trung rất lưu loát.", blankHint: "shuō", tip: "Mẹo: Nói một ngôn ngữ nào đó: 说 + Tiếng Trung/Tiếng Anh!" },
+                        { hz: "家", py: "jiā", vn: "Nhà", sentence: "我想回___休息了。", trans: "Tôi muốn về nhà nghỉ ngơi rồi.", blankHint: "jiā", tip: "Mẹo: 'Hồi' (回) là quay về, về đâu? Về Nhà (家) là ấm áp nhất!" },
+                        { hz: "看", py: "kàn", vn: "Xem / Nhìn", sentence: "星期天我想在宿舍___书。", trans: "Chủ nhật tôi muốn ở ký túc xá xem sách.", blankHint: "kàn", tip: "Mẹo: Đọc sách / xem phim / ngắm cảnh người Trung đều dùng chữ Xem (看)!" }
                     ]
                 }
             ]
@@ -715,15 +752,15 @@
                     icon: "🗡️",
                     suit: "Giáp Trụ Hồng Phấn Chiến Tướng",
                     questions: [
-                        { hz: "等", py: "děng", vn: "Chờ đợi", sentence: "请在外面稍___一下。", trans: "Xin hãy ở bên ngoài chờ một lát.", blankHint: "děng" },
-                        { hz: "快", py: "kuài", vn: "Nhanh", sentence: "火车站很近，走得很___。", trans: "Ga tàu rất gần, đi bộ rất nhanh.", blankHint: "kuài" },
-                        { hz: "慢", py: "màn", vn: "Chậm", sentence: "老师，请说得___一点儿。", trans: "Thưa thầy, xin hãy nói chậm lại một chút.", blankHint: "màn" },
-                        { hz: "给", py: "gěi", vn: "Cho / Đưa", sentence: "妈妈___我买了一件新衣服。", trans: "Mẹ mua cho tôi một bộ quần áo mới.", blankHint: "gěi" },
-                        { hz: "懂", py: "dǒng", vn: "Hiểu", sentence: "你说的话我都听___了。", trans: "Lời bạn nói tôi đều nghe hiểu rồi.", blankHint: "dǒng" },
-                        { hz: "过", py: "guò", vn: "Từng / Qua", sentence: "我去___两次中国。", trans: "Tôi từng đi Trung Quốc hai lần rồi.", blankHint: "guò" },
-                        { hz: "问", py: "wèn", vn: "Hỏi", sentence: "我可以___你一个问题吗？", trans: "Tôi có thể hỏi bạn một câu hỏi không?", blankHint: "wèn" },
-                        { hz: "题", py: "tí", vn: "Đề bài / Câu hỏi", sentence: "这道考___不太容易做。", trans: "Đề thi này không dễ làm chút nào.", blankHint: "tí" },
-                        { hz: "着", py: "zhe", vn: "Đang (hành động tiếp diễn)", sentence: "门开___呢，请直接进来吧。", trans: "Cửa đang mở đấy, xin cứ tự nhiên vào.", blankHint: "zhe" }
+                        { hz: "等", py: "děng", vn: "Chờ đợi", sentence: "请在外面稍___一下。", trans: "Xin hãy ở bên ngoài chờ một lát.", blankHint: "děng", tip: "Mẹo: Thấy 'một lát' (一下) đằng sau thường là động tác ngắn như Đợi (等一下)!" },
+                        { hz: "快", py: "kuài", vn: "Nhanh", sentence: "火车站很近，走得很___。", trans: "Ga tàu rất gần, đi bộ rất nhanh.", blankHint: "kuài", tip: "Mẹo: Đi bộ mà gần thì thời gian phải Nhanh (快)!" },
+                        { hz: "慢", py: "màn", vn: "Chậm", sentence: "老师，请说得___一点儿。", trans: "Thưa thầy, xin hãy nói chậm lại một chút.", blankHint: "màn", tip: "Mẹo: Nghe không kịp thì xin người ta nói Chậm lại (慢一点)!" },
+                        { hz: "给", py: "gěi", vn: "Cho / Đưa", sentence: "妈妈___我买了一件新衣服。", trans: "Mẹ mua cho tôi một bộ quần áo mới.", blankHint: "gěi", tip: "Mẹo: Làm cái gì 'Cho ai đó' cứ nhớ cấu trúc: A 给 B + Hành động!" },
+                        { hz: "懂", py: "dǒng", vn: "Hiểu", sentence: "你说的话我都听___了。", trans: "Lời bạn nói tôi đều nghe hiểu rồi.", blankHint: "dǒng", tip: "Mẹo bổ ngữ kết quả: Nghe (听) + Hiểu (懂) = Tiếp thu trọn vẹn!" },
+                        { hz: "过", py: "guò", vn: "Từng (trải nghiệm)", sentence: "我去___两次中国。", trans: "Tôi từng đi Trung Quốc hai lần rồi.", blankHint: "guò", tip: "Mẹo: Động từ + 过 = Từng trải qua việc gì đó trong đời!" },
+                        { hz: "问", py: "wèn", vn: "Hỏi", sentence: "我可以___你一个问题吗？", trans: "Tôi có thể hỏi bạn một câu hỏi không?", blankHint: "wèn", tip: "Mẹo ghép đôi: Có thắc mắc thì phải Hỏi (问) câu hỏi (问题)!" },
+                        { hz: "题", py: "tí", vn: "Đề bài / Câu hỏi", sentence: "这道考___不太容易做。", trans: "Đề thi này không dễ làm chút nào.", blankHint: "tí", tip: "Mẹo: Bài thi cử hoặc câu đố trong tiếng Trung gọi là Đề (考题/问题)!" },
+                        { hz: "着", py: "zhe", vn: "Đang (trạng thái)", sentence: "门开___呢，请直接进来吧。", trans: "Cửa đang mở đấy, xin cứ tự nhiên vào.", blankHint: "zhe", tip: "Mẹo: Cửa cứ giữ nguyên trạng thái mở: Mở (开) + 着 = Đang mở sẵn!" }
                     ]
                 },
                 {
@@ -732,15 +769,15 @@
                     icon: "❄️",
                     suit: "Áo Choàng Lông Thỏ Bạch Tuyết",
                     questions: [
-                        { hz: "贵", py: "guì", vn: "Đắt đỏ", sentence: "这条红裙子太___了。", trans: "Chiếc váy đỏ này đắt quá rồi.", blankHint: "guì" },
-                        { hz: "忙", py: "máng", vn: "Bận rộn", sentence: "你最近在___什么呢？", trans: "Dạo gần đây bạn đang bận gì thế?", blankHint: "máng" },
-                        { hz: "累", py: "lèi", vn: "Mệt mỏi", sentence: "今天走了一整天，太___了。", trans: "Hôm nay đi bộ cả ngày, mệt quá rồi.", blankHint: "lèi" },
-                        { hz: "远", py: "yuǎn", vn: "Xa xôi", sentence: "我家离公司不太___。", trans: "Nhà tôi cách công ty không xa lắm.", blankHint: "yuǎn" },
-                        { hz: "穿", py: "chuān", vn: "Mặc đồ", sentence: "天气冷了，多___一件大衣吧。", trans: "Trời lạnh rồi, mặc thêm một chiếc áo khoác đi.", blankHint: "chuān" },
-                        { hz: "错", py: "cuò", vn: "Sai sót", sentence: "这道题你做___了。", trans: "Câu hỏi này bạn làm sai rồi.", blankHint: "cuò" },
-                        { hz: "白", py: "bái", vn: "Trắng", sentence: "窗外下起了___雪。", trans: "Ngoài cửa sổ tuyết trắng đã rơi.", blankHint: "bái" },
-                        { hz: "晴", py: "qíng", vn: "Nắng ráo", sentence: "明天天气很好，是个___天。", trans: "Ngày mai thời tiết rất đẹp, là một ngày nắng ráo.", blankHint: "qíng" },
-                        { hz: "洗", py: "xǐ", vn: "Rửa / Giặt", sentence: "饭前记得要___手。", trans: "Trước khi ăn nhớ phải rửa tay.", blankHint: "xǐ" }
+                        { hz: "贵", py: "guì", vn: "Đắt đỏ", sentence: "这条红裙子太___了。", trans: "Chiếc váy đỏ này đắt quá rồi.", blankHint: "guì", tip: "Mẹo: Đồ xịn sò trong cung đình giá cao thì kêu lên: Quá Đắt (太贵了)!" },
+                        { hz: "忙", py: "máng", vn: "Bận rộn", sentence: "你最近在___什么呢？", trans: "Dạo gần đây bạn đang bận gì thế?", blankHint: "máng", tip: "Mẹo: Hỏi thăm bạn bè dạo này vất vả: Bận việc gì (在忙什么)!" },
+                        { hz: "累", py: "lèi", vn: "Mệt mỏi", sentence: "今天走了一整天，太___了。", trans: "Hôm nay đi bộ cả ngày, mệt quá rồi.", blankHint: "lèi", tip: "Mẹo: Đi bộ viễn chinh suốt ngày thì cơ thể sẽ Mệt (累) rã rời!" },
+                        { hz: "远", py: "yuǎn", vn: "Xa xôi", sentence: "我家离公司不太___。", trans: "Nhà tôi cách công ty không xa lắm.", blankHint: "yuǎn", tip: "Mẹo khoảng cách: Không Xa (不太远) / Rất Gần (很近)!" },
+                        { hz: "穿", py: "chuān", vn: "Mặc đồ", sentence: "天气冷了，多___一件大衣吧。", trans: "Trời lạnh rồi, mặc thêm một chiếc áo khoác đi.", blankHint: "chuān", tip: "Mẹo: Áo quần, giày dép đội lên thân thể dùng động từ Mặc/Xỏ (穿)!" },
+                        { hz: "错", py: "cuò", vn: "Sai sót", sentence: "这道题你做___了。", trans: "Câu hỏi này bạn làm sai rồi.", blankHint: "cuò", tip: "Mẹo: Làm đúng là 做对, làm nhầm làm trật là 做错 (Làm sai)!" },
+                        { hz: "白", py: "bái", vn: "Trắng", sentence: "窗外下起了___雪。", trans: "Ngoài cửa sổ tuyết trắng đã rơi.", blankHint: "bái", tip: "Mẹo: Màu sắc của bông tuyết mùa đông là Bạch (白 - Trắng)!" },
+                        { hz: "晴", py: "qíng", vn: "Nắng ráo", sentence: "明天天气很好，是个___天。", trans: "Ngày mai thời tiết rất đẹp, là một ngày nắng ráo.", blankHint: "qíng", tip: "Mẹo: Trời quang mây tạnh có mặt trời chiếu sáng là ngày Nắng (晴天)!" },
+                        { hz: "洗", py: "xǐ", vn: "Rửa / Giặt", sentence: "饭前记得要___手。", trans: "Trước khi ăn nhớ phải rửa tay.", blankHint: "xǐ", tip: "Mẹo giữ vệ sinh: Trước khi ăn cơm phải Rửa (洗) tay sạch sẽ!" }
                     ]
                 },
                 {
@@ -749,14 +786,14 @@
                     icon: "🌶️",
                     suit: "Trang Phục Thục Nữ Tứ Xuyên",
                     questions: [
-                        { hz: "比", py: "bǐ", vn: "So với (câu chữ 比)", sentence: "今天的天气___昨天更冷。", trans: "Thời tiết hôm nay lạnh hơn hôm qua.", blankHint: "bǐ" },
-                        { hz: "笑", py: "xiào", vn: "Cười", sentence: "听了这个笑话，大家都___了。", trans: "Nghe xong câu chuyện cười, mọi người đều cười rộ lên.", blankHint: "xiào" },
-                        { hz: "送", py: "sòng", vn: "Tặng / Tiễn", sentence: "生日那天，朋友___了我一块手表。", trans: "Ngày sinh nhật, bạn bè tặng tôi một chiếc đồng hồ.", blankHint: "sòng" },
-                        { hz: "帮", py: "bāng", vn: "Giúp đỡ", sentence: "你能___我拿一下包吗？", trans: "Bạn có thể giúp tôi cầm cái túi một lát không?", blankHint: "bāng" },
-                        { hz: "走", py: "zǒu", vn: "Đi bộ", sentence: "散步有助于健康，我们___吧。", trans: "Đi dạo có lợi cho sức khỏe, chúng ta đi bộ nhé.", blankHint: "zǒu" },
-                        { hz: "跑", py: "pǎo", vn: "Chạy", sentence: "弟弟喜欢在操场上___步。", trans: "Em trai thích chạy bộ trên sân tập.", blankHint: "pǎo" },
-                        { hz: "新", py: "xīn", vn: "Mới", sentence: "祝你___年快乐！", trans: "Chúc bạn năm mới vui vẻ!", blankHint: "xīn" },
-                        { hz: "常", py: "cháng", vn: "Thường xuyên (常常)", sentence: "周末我___常去图书馆借书。", trans: "Cuối tuần tôi thường xuyên đến thư viện mượn sách.", blankHint: "cháng" }
+                        { hz: "比", py: "bǐ", vn: "So với (câu chữ 比)", sentence: "今天的天气___昨天更冷。", trans: "Thời tiết hôm nay lạnh hơn hôm qua.", blankHint: "bǐ", tip: "Mẹo so sánh: Muốn đọ 2 thứ với nhau: [Vật A] + 比 + [Vật B] + Tính từ!" },
+                        { hz: "笑", py: "xiào", vn: "Cười", sentence: "听了这个笑话，大家都___了。", trans: "Nghe xong câu chuyện cười, mọi người đều cười rộ lên.", blankHint: "xiào", tip: "Mẹo: Chuyện cười (笑话) kể ra là để mọi người cùng Cười (笑)!" },
+                        { hz: "送", py: "sòng", vn: "Tặng / Tiễn", sentence: "生日那天，朋友___了我一块手表。", trans: "Ngày sinh nhật, bạn bè tặng tôi một chiếc đồng hồ.", blankHint: "sòng", tip: "Mẹo sinh nhật: Bạn bè đến chơi mang quà đến Tặng (送) cho mình!" },
+                        { hz: "帮", py: "bāng", vn: "Giúp đỡ", sentence: "你能___我拿一下包吗？", trans: "Bạn có thể giúp tôi cầm cái túi một lát không?", blankHint: "bāng", tip: "Mẹo nhờ vả: Nhờ ai việc gì cứ mở đầu bằng: Bạn có thể Giúp (帮) tôi...!" },
+                        { hz: "走", py: "zǒu", vn: "Đi bộ", sentence: "散步有助于健康，我们___吧。", trans: "Đi dạo có lợi cho sức khỏe, chúng ta đi bộ nhé.", blankHint: "zǒu", tip: "Mẹo: Đi dạo bộ nhẹ nhàng thư thả là động tác Đi (走)!" },
+                        { hz: "跑", py: "pǎo", vn: "Chạy", sentence: "弟弟喜欢在操场上___步。", trans: "Em trai thích chạy bộ trên sân tập.", blankHint: "pǎo", tip: "Mẹo thể thao: Chạy nhanh trên sân tập là môn Chạy bộ (跑步)!" },
+                        { hz: "新", py: "xīn", vn: "Mới", sentence: "祝你___年快乐！", trans: "Chúc bạn năm mới vui vẻ!", blankHint: "xīn", tip: "Mẹo chúc tết: Chúc bạn Năm (年) + Mới (新) ngập tràn niềm vui!" },
+                        { hz: "常", py: "cháng", vn: "Thường xuyên (常常)", sentence: "周末我___常去图书馆借书。", trans: "Cuối tuần tôi thường xuyên đến thư viện mượn sách.", blankHint: "cháng", tip: "Mẹo thói quen: Việc làm lặp đi lặp lại hàng tuần là Thường xuyên (常常)!" }
                     ]
                 }
             ]
@@ -770,15 +807,15 @@
                     icon: "🏮",
                     suit: "Cẩm Y Dạ Hành Bát Quái",
                     questions: [
-                        { hz: "把", py: "bǎ", vn: "Câu chữ 把", sentence: "请___窗户关上，外面风大。", trans: "Hãy đóng cửa sổ lại, bên ngoài gió to.", blankHint: "bǎ" },
-                        { hz: "被", py: "bèi", vn: "Bị / Được", sentence: "桌子上的西瓜___弟弟吃了。", trans: "Dưa hấu trên bàn đã bị em trai ăn rồi.", blankHint: "bèi" },
-                        { hz: "敢", py: "gǎn", vn: "Dám", sentence: "天太黑了，我不太___一个人出门。", trans: "Trời tối quá, tôi không dám ra ngoài một mình.", blankHint: "gǎn" },
-                        { hz: "完", py: "wán", vn: "Xong / Hết", sentence: "今天的作业我已经做___了。", trans: "Bài tập hôm nay tôi đã làm xong rồi.", blankHint: "wán" },
-                        { hz: "愿", py: "yuàn", vn: "Sẵn lòng", sentence: "你___意跟我一起去旅行吗？", trans: "Bạn có sẵn lòng cùng tôi đi du lịch không?", blankHint: "yuàn" },
-                        { hz: "带", py: "dài", vn: "Mang theo", sentence: "出门记得___伞，今天会下雨。", trans: "Ra ngoài nhớ mang theo ô, hôm nay sẽ mưa.", blankHint: "dài" },
-                        { hz: "接", py: "jiē", vn: "Đón / Nhận", sentence: "下午三点我要去机场___人。", trans: "Ba giờ chiều tôi phải ra sân bay đón người.", blankHint: "jiē" },
-                        { hz: "放", py: "fàng", vn: "Đặt / Để", sentence: "请把书___在书架上。", trans: "Xin hãy đặt sách lên trên giá sách.", blankHint: "fàng" },
-                        { hz: "换", py: "huàn", vn: "Đổi / Thay", sentence: "这件衣服有点小，我想___一件大的。", trans: "Bộ quần áo này hơi chật, tôi muốn đổi một chiếc to hơn.", blankHint: "huàn" }
+                        { hz: "把", py: "bǎ", vn: "Câu chữ 把", sentence: "请___窗户关上，外面风大。", trans: "Hãy đóng cửa sổ lại, bên ngoài gió to.", blankHint: "bǎ", tip: "Mẹo chữ 把: Cứ nhớ công thức 'Túm lấy cái gì đó + Xử lý nó' (Túm cửa sổ + Đóng lại)!" },
+                        { hz: "被", py: "bèi", vn: "Bị / Được (bị động)", sentence: "桌子上的西瓜___弟弟吃了。", trans: "Dưa hấu trên bàn đã bị em trai ăn rồi.", blankHint: "bèi", tip: "Mẹo chữ 被: Bị hại / Gặp xui xẻo: Quả dưa hấu Bị (被) thằng em xơi tái!" },
+                        { hz: "敢", py: "gǎn", vn: "Dám", sentence: "天太黑了，我不太___一个人出门。", trans: "Trời tối quá, tôi không dám ra ngoài một mình.", blankHint: "gǎn", tip: "Mẹo tâm lý: Sợ hãi không có dũng khí thì kêu: Không Dám (不敢)!" },
+                        { hz: "完", py: "wán", vn: "Xong / Hết", sentence: "今天的作业我已经做___了。", trans: "Bài tập hôm nay tôi đã làm xong rồi.", blankHint: "wán", tip: "Mẹo hoàn thành: Làm (做) + Xong (完) = Đóng tập nghỉ ngơi!" },
+                        { hz: "愿", py: "yuàn", vn: "Sẵn lòng", sentence: "你___意跟我一起去旅行吗？", trans: "Bạn có sẵn lòng cùng tôi đi du lịch không?", blankHint: "yuàn", tip: "Mẹo rủ rê: Muốn hỏi người ta có tình nguyện đi cùng không: Sẵn lòng (愿意)!" },
+                        { hz: "带", py: "dài", vn: "Mang theo", sentence: "出门记得___伞，今天会下雨。", trans: "Ra ngoài nhớ mang theo ô, hôm nay sẽ mưa.", blankHint: "dài", tip: "Mẹo đồ đạc: Đem theo đồ vật bên mình là Mang (带) theo!" },
+                        { hz: "接", py: "jiē", vn: "Đón / Nhận", sentence: "下午三点我要去机场___人。", trans: "Ba giờ chiều tôi phải ra sân bay đón người.", blankHint: "jiē", tip: "Mẹo giao tiếp: Ra bến xe/sân bay đón bạn bè hoặc nghe máy là Đón (接)!" },
+                        { hz: "放", py: "fàng", vn: "Đặt / Để", sentence: "请把书___在书架上。", trans: "Xin hãy đặt sách lên trên giá sách.", blankHint: "fàng", tip: "Mẹo đồ vật: Hạ đồ đạc đặt yên một chỗ là Để/Đặt (放)!" },
+                        { hz: "换", py: "huàn", vn: "Đổi / Thay", sentence: "这件衣服有点小，我想___一件大的。", trans: "Bộ quần áo này hơi chật, tôi muốn đổi một chiếc to hơn.", blankHint: "huàn", tip: "Mẹo mua sắm: Đồ không vừa ý đem ra tiệm Đổi (换) cái mới!" }
                     ]
                 },
                 {
@@ -787,15 +824,15 @@
                     icon: "📜",
                     suit: "Cung Đình Thượng Thư Quan Bào",
                     questions: [
-                        { hz: "虽", py: "suī", vn: "Tuy rằng (虽然...但是...)", sentence: "___然天气很冷，但他还是去跑步了。", trans: "Tuy rằng thời tiết rất lạnh, nhưng anh ấy vẫn đi chạy bộ.", blankHint: "suī" },
-                        { hz: "因", py: "yīn", vn: "Bởi vì (因为)", sentence: "___为下雨，比赛推迟了。", trans: "Bởi vì trời mưa nên trận đấu bị hoãn lại.", blankHint: "yīn" },
-                        { hz: "而", py: "ér", vn: "Mà / Hơn nữa (而且)", sentence: "她不但聪明，___且很努力。", trans: "Cô ấy không những thông minh mà còn rất nỗ lực.", blankHint: "ér" },
-                        { hz: "越", py: "yuè", vn: "Càng... càng... (越...越...)", sentence: "风___刮___大。", trans: "Gió thổi càng lúc càng mạnh.", blankHint: "yuè" },
-                        { hz: "跟", py: "gēn", vn: "Cùng / Với", sentence: "我想___你商量一件事。", trans: "Tôi muốn bàn bạc với bạn một việc.", blankHint: "gēn" },
-                        { hz: "得", py: "de", vn: "Trợ từ kết cấu 得", sentence: "妹妹跑___比谁都快。", trans: "Em gái chạy nhanh hơn bất kỳ ai.", blankHint: "de" },
-                        { hz: "差", py: "chà", vn: "Kém / Kém cỏi", sentence: "这次考试他的成绩很___。", trans: "Kỳ thi lần này thành tích của anh ấy rất kém.", blankHint: "chà" },
-                        { hz: "极", py: "jí", vn: "Cực kỳ (...极了)", sentence: "这道中国菜好吃___了！", trans: "Món ăn Trung Quốc này ngon cực kỳ!", blankHint: "jí" },
-                        { hz: "除", py: "chú", vn: "Ngoài ra (除了...以外)", sentence: "___了他，大家都按时参加了会议。", trans: "Ngoài anh ấy ra, mọi người đều tham gia cuộc họp đúng giờ.", blankHint: "chú" }
+                        { hz: "虽", py: "suī", vn: "Tuy rằng (虽然...但是...)", sentence: "___然天气很冷，但他还是去跑步了。", trans: "Tuy rằng thời tiết rất lạnh, nhưng anh ấy vẫn đi chạy bộ.", blankHint: "suī", tip: "Mẹo cặp bài trùng: Thấy vế sau có 但是 (nhưng mà) thì vế đầu 100% là 虽然 (Tuy rằng)!" },
+                        { hz: "因", py: "yīn", vn: "Bởi vì (因为)", sentence: "___为下雨，比赛推迟了。", trans: "Bởi vì trời mưa nên trận đấu bị hoãn lại.", blankHint: "yīn", tip: "Mẹo nguyên nhân: Giải thích lý do bắt đầu bằng Bởi vì (因为)!" },
+                        { hz: "而", py: "ér", vn: "Mà / Hơn nữa (而且)", sentence: "她不但聪明，___且很努力。", trans: "Cô ấy không những thông minh mà còn rất nỗ lực.", blankHint: "ér", tip: "Mẹo nhân đôi ưu điểm: Đã có 'Không những' (不但) thì phải đi với 'Hơn nữa' (而且)!" },
+                        { hz: "越", py: "yuè", vn: "Càng... càng... (越...越...)", sentence: "风___刮___大。", trans: "Gió thổi càng lúc càng mạnh.", blankHint: "yuè", tip: "Mẹo tăng tiến cấp độ: Càng thế này lại Càng thế kia: 越...越...!" },
+                        { hz: "跟", py: "gēn", vn: "Cùng / Với", sentence: "我想___你商量一件事。", trans: "Tôi muốn bàn bạc với bạn một việc.", blankHint: "gēn", tip: "Mẹo song hành: Tôi Cùng (跟) Bạn làm việc gì đó!" },
+                        { hz: "得", py: "de", vn: "Trợ từ kết cấu 得", sentence: "妹妹跑___比谁都快。", trans: "Em gái chạy nhanh hơn bất kỳ ai.", blankHint: "de", tip: "Mẹo khen chê: Động từ + 得 + Khen chê thế nào (Chạy nhanh, hát hay, nhảy đẹp)!" },
+                        { hz: "差", py: "chà", vn: "Kém / Kém cỏi", sentence: "这次考试他的成绩很___。", trans: "Kỳ thi lần này thành tích của anh ấy rất kém.", blankHint: "chà", tip: "Mẹo đánh giá: Kết quả thi cử không tốt thì gọi là Kém (差)!" },
+                        { hz: "极", py: "jí", vn: "Cực kỳ (...极了)", sentence: "这道中国菜好吃___了！", trans: "Món ăn Trung Quốc này ngon cực kỳ!", blankHint: "jí", tip: "Mẹo khen đỉnh chóp: Tính từ + 极了 = Ngon tuyệt đỉnh, đẹp hết nấc!" },
+                        { hz: "除", py: "chú", vn: "Ngoài ra (除了...以外)", sentence: "___了他，大家都按时参加了会议。", trans: "Ngoài anh ấy ra, mọi người đều tham gia cuộc họp đúng giờ.", blankHint: "chú", tip: "Mẹo loại trừ: Trừ ai đó ra: 除了 (Ngoài ra) + Ai đó + 以外!" }
                     ]
                 },
                 {
@@ -804,15 +841,15 @@
                     icon: "👑",
                     suit: "Long Bào Nữ Đế Cửu Ngũ Chí Tôn",
                     questions: [
-                        { hz: "容", py: "róng", vn: "Dễ dàng (容易)", sentence: "学好一门外语并不___易。", trans: "Học tốt một ngoại ngữ không hề dễ dàng.", blankHint: "róng" },
-                        { hz: "简", py: "jiǎn", vn: "Đơn giản (简单)", sentence: "这个问题其实很___单。", trans: "Vấn đề này thật ra rất đơn giản.", blankHint: "jiǎn" },
-                        { hz: "难", py: "nán", vn: "Khó khăn", sentence: "汉字虽然有点儿___，但我喜欢。", trans: "Chữ Hán tuy hơi khó, nhưng tôi thích.", blankHint: "nán" },
-                        { hz: "变", py: "biàn", vn: "Biến đổi", sentence: "几年没见，你的___化真大！", trans: "Mấy năm không gặp, sự thay đổi của bạn thật lớn!", blankHint: "biàn" },
-                        { hz: "成", py: "chéng", vn: "Thành công", sentence: "经过努力，我们终于获得了___功。", trans: "Trải qua nỗ lực, chúng ta cuối cùng đã đạt được thành công.", blankHint: "chéng" },
-                        { hz: "信", py: "xìn", vn: "Tin tưởng", sentence: "你要相___自己的能力。", trans: "Bạn phải tin tưởng vào năng lực của chính mình.", blankHint: "xìn" },
-                        { hz: "关", py: "guān", vn: "Đóng / Quan hệ", sentence: "进门后请把门___好。", trans: "Sau khi vào phòng xin hãy đóng cửa cẩn thận.", blankHint: "guān" },
-                        { hz: "办", py: "bàn", vn: "Làm / Giải quyết (办法)", sentence: "别担心，我们一定能想出___法。", trans: "Đừng lo, chúng ta nhất định sẽ nghĩ ra cách giải quyết.", blankHint: "bàn" },
-                        { hz: "总", py: "zǒng", vn: "Luôn luôn (总是)", sentence: "他上课___是迟到。", trans: "Anh ấy đi học luôn luôn đến muộn.", blankHint: "zǒng" }
+                        { hz: "容", py: "róng", vn: "Dễ dàng (容易)", sentence: "学好一门外语并不___易。", trans: "Học tốt một ngoại ngữ không hề dễ dàng.", blankHint: "róng", tip: "Mẹo độ khó: Không Dễ (不容易) / Rất Dễ (很容易)!" },
+                        { hz: "简", py: "jiǎn", vn: "Đơn giản (简单)", sentence: "这个问题其实很___单。", trans: "Vấn đề này thật ra rất đơn giản.", blankHint: "jiǎn", tip: "Mẹo giải đề: Đề thi không phức tạp thì gọi là Đơn giản (简单)!" },
+                        { hz: "难", py: "nán", vn: "Khó khăn", sentence: "汉字虽然有点儿___，但我喜欢。", trans: "Chữ Hán tuy hơi khó, nhưng tôi thích.", blankHint: "nán", tip: "Mẹo vượt khó: Chữ Hán tuy Khó (难) nhưng có công chúa luyện là dễ ngay!" },
+                        { hz: "变", py: "biàn", vn: "Biến đổi", sentence: "几年没见，你的___化真大！", trans: "Mấy năm không gặp, sự thay đổi của bạn thật lớn!", blankHint: "biàn", tip: "Mẹo khen ngợi: Lâu ngày gặp lại thấy bạn bè Thay đổi (变化) ngoạn mục!" },
+                        { hz: "成", py: "chéng", vn: "Thành công", sentence: "经过努力，我们终于获得了___功。", trans: "Trải qua nỗ lực, chúng ta cuối cùng đã đạt được thành công.", blankHint: "chéng", tip: "Mẹo đích đến: Cố gắng hết mình sẽ gặt hái được Thành công (成功)!" },
+                        { hz: "信", py: "xìn", vn: "Tin tưởng", sentence: "你要相___自己的能力。", trans: "Bạn phải tin tưởng vào năng lực của chính mình.", blankHint: "xìn", tip: "Mẹo truyền cảm hứng: Phải luôn Tin tưởng (相信) vào bản thân mình!" },
+                        { hz: "关", py: "guān", vn: "Đóng cửa (关门)", sentence: "进门后请把门___好。", trans: "Sau khi vào phòng xin hãy đóng cửa cẩn thận.", blankHint: "guān", tip: "Mẹo hành động: Vào nhà thì Đóng (关) cửa lại kẻo gió lùa!" },
+                        { hz: "办", py: "bàn", vn: "Cách làm (办法)", sentence: "别担心，我们一定能想出___法。", trans: "Đừng lo, chúng ta nhất định sẽ nghĩ ra cách giải quyết.", blankHint: "bàn", tip: "Mẹo gỡ rối: Khi gặp bế tắc hãy cùng nhau nghĩ Cách (办法)!" },
+                        { hz: "总", py: "zǒng", vn: "Luôn luôn (总是)", sentence: "他上课___是迟到。", trans: "Anh ấy đi học luôn luôn đến muộn.", blankHint: "zǒng", tip: "Mẹo tần suất: Thói quen xấu diễn ra suốt ngày dùng chữ Luôn luôn (总是)!" }
                     ]
                 }
             ]
@@ -828,6 +865,7 @@
     function initGame() {
         switchTier(1);
         updateRoyalProgress();
+        updateDollDisplay();
     }
 
     function switchTier(tierNum) {
@@ -903,14 +941,15 @@
         showScreen('layer-exam');
 
         document.getElementById('exam-stage-counter').innerText = `${c.name} • Đề Khảo Thí ${qIdx + 1} / ${c.questions.length}`;
-        document.getElementById('princess-avatar-box').innerText = currentDressed.avatar;
-        document.getElementById('princess-suit-title').innerText = `Công Chúa Đang Phối: ${currentDressed.headwear} + ${currentDressed.dress}`;
+        document.getElementById('princess-suit-title').innerText = `Công Chúa Cung Đình`;
 
         const styledSentence = q.sentence.replace(q.hz, `<span class="exam-blank">___ (${q.blankHint})</span>`);
         document.getElementById('exam-chinese-sentence').innerHTML = styledSentence;
         document.getElementById('exam-vn-translation').innerText = q.trans;
         document.getElementById('target-py').innerText = q.py;
         document.getElementById('target-vn').innerText = q.vn;
+        
+        document.getElementById('grammar-tip-text').innerText = q.tip || "Mẹo: Điền chữ đúng ngữ cảnh giao tiếp tự nhiên!";
 
         document.getElementById('royal-reward-card').style.display = 'none';
         document.getElementById('btn-next-quest').style.display = 'none';
@@ -957,8 +996,8 @@
                 document.getElementById('exam-chinese-sentence').innerHTML = solvedSentence;
 
                 document.getElementById('reward-gift-icon').innerText = "👗";
-                document.getElementById('reward-gift-title').innerText = `ĐÃ GIẢI MÃ CHỮ "${q.hz}" THÀNH CÔNG!`;
-                document.getElementById('reward-gift-desc').innerText = `Tu vi tăng tiến! Đã mở khóa thêm nhiều phục sức lộng lẫy trong Phòng Thử Đồ!`;
+                document.getElementById('reward-gift-title').innerText = `ĐÃ THU PHỤC THÀNH TRÌ!`;
+                document.getElementById('reward-gift-desc').innerText = `Khảo thí thành công chữ "${q.hz}"! Đã mở khóa thêm nhiều phục sức lộng lẫy trong Phòng Thử Đồ!`;
                 document.getElementById('royal-reward-card').style.display = 'block';
                 document.getElementById('btn-next-quest').style.display = 'inline-block';
 
@@ -966,7 +1005,6 @@
 
                 // NẾU PHÁ ĐẢO TOÀN BỘ 75+ ĐỀ THI HSK -> KÍCH HOẠT CUTSCENE ĐĂNG NGAI VÀNG!
                 if (conqueredSet.size >= 75) {
-                    document.getElementById('cinematic-throne-doll').innerText = `${currentDressed.avatar}${currentDressed.headwear}🪑`;
                     document.getElementById('cinematic-throne').style.display = 'flex';
                 }
             }
@@ -999,7 +1037,7 @@
         loadCastle(activeCastleIdx);
     }
 
-    // ==================== PHÒNG THỬ ĐỒ HOÀNG GIA DRESS-UP ====================
+    // ==================== PHÒNG THỬ ĐỒ DRESS-UP ====================
     function openWardrobe() {
         document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('tab-wardrobe').classList.add('active');
@@ -1012,7 +1050,7 @@
         const count = conqueredSet.size;
         let unlockedTotal = 0;
 
-        ['headwear', 'dress', 'handheld'].forEach(category => {
+        ['headwear', 'pose', 'handheld'].forEach(category => {
             const container = document.getElementById(`closet-${category}-box`);
             container.innerHTML = '';
             wardrobeItems[category].forEach(item => {
@@ -1020,12 +1058,18 @@
                 if (isUnlocked) unlockedTotal++;
 
                 const pill = document.createElement('div');
-                pill.className = `closet-item ${isUnlocked ? '' : 'locked'} ${currentDressed[category] === item.icon ? 'selected' : ''}`;
+                const isSelected = (category === 'pose' && currentDressed.poseOffset === item.offset) ||
+                                   (category !== 'pose' && currentDressed[category] === item.icon);
+                pill.className = `closet-item ${isUnlocked ? '' : 'locked'} ${isSelected ? 'selected' : ''}`;
                 pill.innerHTML = `<span>${item.icon}</span> <span>${item.name} ${isUnlocked ? '' : `(Cần ${item.unlockAt} chữ)`}</span>`;
 
                 if (isUnlocked) {
                     pill.onclick = () => {
-                        currentDressed[category] = item.icon;
+                        if (category === 'pose') {
+                            currentDressed.poseOffset = item.offset;
+                        } else {
+                            currentDressed[category] = item.icon;
+                        }
                         playZither(660);
                         renderClosetCategories();
                         updateDollDisplay();
@@ -1035,15 +1079,30 @@
             });
         });
 
-        document.getElementById('wardrobe-unlocked-count').innerText = `Đã Mở: ${unlockedTotal} / 18 Phục Sức`;
+        document.getElementById('wardrobe-unlocked-count').innerText = `Đã Mở: ${unlockedTotal} / 15 Phục Sức`;
     }
 
     function updateDollDisplay() {
-        document.getElementById('doll-headwear').innerText = currentDressed.headwear;
-        document.getElementById('doll-avatar').innerText = currentDressed.avatar;
-        document.getElementById('doll-dress').innerText = currentDressed.dress;
-        document.getElementById('doll-handheld').innerText = currentDressed.handheld;
-        document.getElementById('dressed-doll-title').innerText = `Công Chúa: ${currentDressed.headwear} + ${currentDressed.dress} + ${currentDressed.handheld}`;
+        // Cập nhật vị trí ảnh công chúa (Sprite Offset)
+        const sprites = ['exam-princess-sprite', 'wardrobe-princess-sprite', 'throne-princess-sprite'];
+        sprites.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.backgroundPosition = currentDressed.poseOffset;
+        });
+
+        // Cập nhật phụ kiện đầu
+        ['exam-doll-headwear', 'wardrobe-doll-headwear', 'throne-doll-headwear'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = currentDressed.headwear;
+        });
+
+        // Cập nhật phụ kiện tay
+        ['exam-doll-handheld', 'wardrobe-doll-handheld', 'throne-doll-handheld'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = currentDressed.handheld;
+        });
+
+        document.getElementById('dressed-doll-title').innerText = `Công Chúa: ${currentDressed.headwear} + ${currentDressed.handheld}`;
     }
 
     function updateRoyalProgress() {
