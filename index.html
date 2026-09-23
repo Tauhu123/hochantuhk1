@@ -3,19 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoàng Nữ Viễn Chinh: Master HSK 1-2-3 & Dress-up</title>
-    <!-- Phông tiếng Việt chuẩn & Hán tự thư pháp -->
+    <title>Hoàng Nữ Viễn Chinh: HSK 1-3 & Chibi Dress-up</title>
+    <!-- Google Fonts: Be Vietnam Pro & Noto Serif SC -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800;900&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
     <!-- Hanzi Writer Library -->
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        royalPink: '#f472b6',
+                        royalRose: '#ec4899',
+                        royalWine: '#be185d',
+                        goldGlow: '#fbbf24',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Be Vietnam Pro', sans-serif; user-select: none; }
+        * { box-sizing: border-box; font-family: 'Be Vietnam Pro', sans-serif; user-select: none; }
         body {
-            background: #fdf2f8;
+            background-color: #fdf2f8;
             background-image: radial-gradient(#fbcfe8 2px, transparent 2px);
-            background-size: 28px 28px;
+            background-size: 26px 26px;
             color: #4a044e;
             min-height: 100vh;
             display: flex;
@@ -23,942 +38,889 @@
             align-items: center;
             padding: 12px;
         }
-        .royal-palace {
-            width: 100%;
-            max-width: 1000px;
-            background: #fff5f8;
-            border: 4px solid #f472b6;
-            border-radius: 28px;
-            box-shadow: 0 15px 45px rgba(236, 72, 153, 0.25), 0 0 0 6px #fbcfe8;
+        .royal-card-shadow {
+            box-shadow: 0 16px 40px rgba(236, 72, 153, 0.22), 0 0 0 5px #fbcfe8;
+        }
+        .chibi-avatar-frame {
+            position: relative;
+            width: 140px;
+            height: 180px;
+            margin: 0 auto;
+            border-radius: 24px;
+            background: radial-gradient(circle, #fff 35%, #fce7f3 100%);
+            border: 3px solid #f472b6;
+            box-shadow: 0 8px 18px rgba(244, 114, 182, 0.25);
             overflow: hidden;
             display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        /* Top Bar Hoàng Tộc */
-        .royal-top-bar {
-            background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%);
-            padding: 14px 22px;
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border-bottom: 3px solid #be185d;
-            flex-wrap: wrap;
-            gap: 12px;
-            color: #ffffff;
         }
-        .crown-tag {
-            background: #fff1f2;
-            border: 2px solid #fbbf24;
-            color: #be123c;
-            font-size: 12px;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-        .territory-stats {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13px;
-            font-weight: 800;
-        }
-        .progress-slot {
-            width: 130px;
-            height: 12px;
-            background: #fbcfe8;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid #ffffff;
-        }
-        .progress-gold-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #fbbf24, #f59e0b);
-            transition: width 0.3s;
-        }
-
-        /* Tabs Menu */
-        .tier-tabs {
-            display: flex;
-            width: 100%;
-            background: #fce7f3;
-            border-bottom: 2px solid #fbcfe8;
-            padding: 8px 16px 0 16px;
-            gap: 8px;
-            overflow-x: auto;
-        }
-        .tier-btn {
-            background: #fdf2f8;
-            border: 2px solid #fbcfe8;
-            border-bottom: none;
-            padding: 10px 18px;
-            border-radius: 14px 14px 0 0;
-            font-size: 13px;
-            font-weight: 800;
-            color: #9d174d;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-        .tier-btn.active {
-            background: #fff;
-            border-color: #f472b6;
-            color: #be185d;
-            box-shadow: 0 -4px 10px rgba(244, 114, 182, 0.2);
-            transform: translateY(-2px);
-        }
-        .btn-wardrobe-tab {
-            background: linear-gradient(135deg, #f472b6, #ec4899);
-            color: #ffffff !important;
-            border-color: #db2777;
-        }
-
-        .screen-layer { display: none; padding: 22px; flex-direction: column; align-items: center; }
-        .screen-layer.active { display: flex; }
-
-        /* BẢN ĐỒ VIỄN CHINH */
-        .conquest-map {
-            width: 100%;
-            background: radial-gradient(circle at center, #ffffff 0%, #fdf2f8 100%);
-            border: 3px dashed #f472b6;
-            border-radius: 22px;
-            padding: 24px 18px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 12px;
-            overflow-x: auto;
-        }
-        .castle-node {
-            min-width: 160px;
-            background: #fff;
-            border: 3px solid #fbcfe8;
-            border-radius: 18px;
-            padding: 14px 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 6px 0 #fce7f3;
-        }
-        .castle-node:hover { transform: translateY(-4px); border-color: #f472b6; }
-        .castle-node.conquered { border-color: #fbbf24; background: #fffbeb; box-shadow: 0 6px 0 #fef3c7; }
-        .castle-node.active-castle { border-color: #ec4899; box-shadow: 0 6px 0 #fbcfe8, 0 0 16px rgba(236,72,153,0.3); }
-        .castle-icon { font-size: 34px; margin-bottom: 6px; }
-        .castle-name { font-size: 14px; font-weight: 800; color: #831843; }
-        .castle-quest { font-size: 11px; color: #db2777; margin-top: 4px; font-weight: 600; }
-
-        .vault-archive {
-            width: 100%;
-            background: #fff;
-            border: 2px solid #fbcfe8;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.1);
-        }
-        .word-pink-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
-            gap: 10px;
-            margin-top: 14px;
-            max-height: 240px;
-            overflow-y: auto;
-            padding-right: 6px;
-        }
-        .pink-node {
-            background: #fff5f8;
-            border: 2px solid #fbcfe8;
-            border-radius: 12px;
-            padding: 8px 4px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .pink-node:hover { border-color: #f472b6; transform: translateY(-2px); }
-        .pink-node.learned { border-color: #fbbf24; background: #fefce8; }
-        .pink-node .hz { font-family: 'Noto Serif SC', sans-serif; font-size: 20px; font-weight: 900; color: #9d174d; }
-        .pink-node .py { font-size: 10px; color: #ec4899; font-weight: 700; }
-
-        /* KHUNG NHÂN VẬT ANIME CHIBI TÍCH HỢP */
-        .princess-avatar-wrapper {
-            position: relative;
+        .chibi-svg-canvas {
             width: 130px;
             height: 170px;
-            margin: 0 auto 10px auto;
-            border-radius: 20px;
-            background: radial-gradient(circle, #fce7f3 40%, #fbcfe8 100%);
-            border: 3px solid #f472b6;
-            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.3);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
-        .princess-sprite {
-            position: absolute;
-            width: 390px;
-            height: 170px;
-            background-image: url('congchua.jfif');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            transition: all 0.3s ease;
+        .shake-animation {
+            animation: royalShake 0.35s cubic-bezier(.36,.07,.19,.97) both;
         }
-        /* Phụ kiện đè lên búp bê */
-        .princess-head-gear {
-            position: absolute;
-            top: 2px;
-            font-size: 32px;
-            z-index: 10;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-            animation: floatGently 3s ease-in-out infinite;
-        }
-        .princess-hand-item {
-            position: absolute;
-            bottom: 30px;
-            right: 8px;
-            font-size: 26px;
-            z-index: 12;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
-        }
-
-        /* BẢNG KHẢO THÍ HSK */
-        .exam-arena {
-            width: 100%;
-            display: flex;
-            gap: 24px;
-            align-items: stretch;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .princess-pod {
-            flex: 1;
-            min-width: 310px;
-            background: #fff;
-            border: 3px solid #fbcfe8;
-            border-radius: 22px;
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            box-shadow: 0 6px 15px rgba(244, 114, 182, 0.15);
-        }
-        .royal-doll {
-            background: linear-gradient(180deg, #fdf2f8 0%, #fff 100%);
-            border: 2px dashed #f472b6;
-            border-radius: 18px;
-            padding: 14px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .princess-title { font-size: 14px; font-weight: 900; color: #be185d; }
-
-        .exam-scroll {
-            background: #fffdf5;
-            border: 2px solid #fbbf24;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: inset 0 0 10px rgba(251, 191, 36, 0.1);
-        }
-        .exam-badge {
-            display: inline-block;
-            background: #f59e0b;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-        }
-        .exam-question { font-size: 15px; font-weight: 700; color: #451a03; line-height: 1.6; }
-        .exam-blank { color: #ec4899; border-bottom: 3px solid #ec4899; padding: 0 8px; font-weight: 900; font-size: 17px; }
-        .exam-vn-trans { font-size: 12px; color: #78350f; margin-top: 6px; font-weight: 600; }
-        
-        .grammar-fun-tip {
-            background: #fdf4ff;
-            border: 1px dashed #d946ef;
-            border-radius: 10px;
-            padding: 8px 12px;
-            margin-top: 10px;
-            font-size: 12px;
-            color: #86198f;
-            line-height: 1.5;
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
-        }
-
-        .royal-reward-box {
-            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
-            border: 2px dashed #ec4899;
-            border-radius: 16px;
-            padding: 12px;
-            text-align: center;
-            display: none;
-            animation: popReward 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .jade-writer-card {
-            background: #fff;
-            border: 3px solid #f472b6;
-            border-radius: 22px;
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 320px;
-            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.2);
-        }
-        #writer-board {
-            background: #ffffff;
-            border: 4px solid #f472b6;
-            border-radius: 18px;
-            box-shadow: inset 0 0 12px rgba(244, 114, 182, 0.15);
-            cursor: crosshair;
-        }
-
-        .action-tray {
-            display: flex;
-            gap: 10px;
-            margin-top: 16px;
-            width: 100%;
-            justify-content: center;
-        }
-        .btn-pink {
-            border: none;
-            padding: 10px 18px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.15s;
-            box-shadow: 0 4px 0 #be185d;
-        }
-        .btn-pink:active { transform: translateY(3px); box-shadow: none; }
-        .btn-demo { background: #38bdf8; color: #0c4a6e; box-shadow: 0 4px 0 #0284c7; }
-        .btn-clear { background: #fbbf24; color: #78350f; box-shadow: 0 4px 0 #d97706; }
-        .btn-conquer { background: #10b981; color: #022c22; box-shadow: 0 4px 0 #047857; display: none; }
-        .btn-return {
-            background: #fdf2f8;
-            border: 2px solid #f472b6;
-            color: #be185d;
-            padding: 8px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 3px 0 #fbcfe8;
-        }
-        .btn-return:hover { background: #fce7f3; }
-
-        /* PHÒNG THỬ ĐỒ DRESS-UP (STYLE IDRESSUP) */
-        .wardrobe-container {
-            width: 100%;
-            display: flex;
-            gap: 22px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .doll-stage {
-            width: 320px;
-            background: #fff;
-            border: 3px solid #f472b6;
-            border-radius: 22px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.2);
-            text-align: center;
-        }
-        .closet-organizer {
-            flex: 1;
-            min-width: 320px;
-            background: #fff;
-            border: 2px solid #fbcfe8;
-            border-radius: 22px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.1);
-        }
-        .closet-category-title {
-            font-size: 13px;
-            font-weight: 800;
-            color: #9d174d;
-            margin-bottom: 8px;
-            margin-top: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .closet-grid { display: flex; gap: 10px; flex-wrap: wrap; }
-        .closet-item {
-            background: #fdf2f8;
-            border: 2px solid #fbcfe8;
-            border-radius: 14px;
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #831843;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.15s;
-        }
-        .closet-item:hover { border-color: #f472b6; transform: translateY(-2px); }
-        .closet-item.selected { border-color: #ec4899; background: #fce7f3; box-shadow: 0 0 10px rgba(236,72,153,0.3); }
-        .closet-item.locked { opacity: 0.45; cursor: not-allowed; }
-
-        .shake-board { animation: shake 0.35s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes floatGently { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        @keyframes popReward { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes shake {
+        @keyframes royalShake {
             10%, 90% { transform: translate3d(-2px, 0, 0); }
             20%, 80% { transform: translate3d(4px, 0, 0); }
             30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
             40%, 60% { transform: translate3d(5px, 0, 0); }
         }
-
-        /* CUTSCENE ĐĂNG NGAI VÀNG */
-        .cinematic-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, #500724 0%, #1f020f 100%);
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 200; padding: 25px; overflow: hidden;
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
         }
-        .throne-hall {
-            width: 100%; max-width: 650px; text-align: center;
-            background: radial-gradient(circle at center, #9d174d 0%, #4a044e 80%);
-            border: 5px double #fbbf24; border-radius: 28px; padding: 30px;
-            box-shadow: 0 0 60px rgba(251, 191, 36, 0.7);
-            position: relative; animation: throneGlow 2s infinite alternate;
+        .floating-crown { animation: crownFloat 2.5s ease-in-out infinite; }
+        .tab-active {
+            background: #ffffff !important;
+            border-color: #f472b6 !important;
+            color: #be185d !important;
+            transform: translateY(-2px);
+            box-shadow: 0 -4px 10px rgba(244, 114, 182, 0.2);
         }
-        .firework-particle { position: absolute; font-size: 24px; animation: burst 1.5s infinite; }
-        @keyframes throneGlow { 0% { box-shadow: 0 0 40px rgba(251,191,36,0.5); } 100% { box-shadow: 0 0 70px rgba(244,114,182,0.9); } }
     </style>
 </head>
 <body>
 
-<div class="royal-palace">
-    <!-- Top Bar Hoàng Tộc -->
-    <div class="royal-top-bar">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <h1 style="font-size: 16px; font-weight: 900;">👑 HOÀNG NỮ VIỄN CHINH • MASTER HSK 1-2-3</h1>
-            <span class="crown-tag" id="princess-rank">Tước Vị: Tiểu Quận Chúa</span>
+<div class="w-full max-w-5xl bg-[#fff5f8] border-4 border-pink-400 rounded-3xl royal-card-shadow overflow-hidden flex flex-col relative">
+    <!-- Top Royal Bar -->
+    <div class="bg-gradient-to-r from-pink-400 via-pink-500 to-rose-600 px-5 py-3 text-white flex justify-between items-center border-b-2 border-rose-700 flex-wrap gap-3">
+        <div class="flex items-center gap-3">
+            <h1 class="text-base sm:text-lg font-black tracking-wide flex items-center gap-2">
+                <span>👑</span> HOÀNG NỮ VIỄN CHINH • MASTER HSK
+            </h1>
+            <span class="bg-rose-50 text-rose-700 border border-amber-300 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm" id="crown-title-badge">
+                Tiểu Quận Chúa
+            </span>
         </div>
-        <div class="territory-stats">
-            <span>Bờ Cõi: <b id="conquered-stat" style="color:#fef08a;">0</b> / 80 Khảo Thí</span>
-            <div class="progress-slot">
-                <div class="progress-gold-fill" id="royal-progress-fill"></div>
+        <div class="flex items-center gap-3 text-xs font-bold">
+            <span>Bờ Cõi: <b id="stat-progress-count" class="text-amber-200">0</b>/50 Ải</span>
+            <div class="w-28 h-3 bg-pink-200 rounded-full overflow-hidden border border-white">
+                <div id="stat-progress-bar" class="h-full bg-gradient-to-r from-amber-300 to-amber-500 w-0 transition-all duration-300"></div>
             </div>
-            <button onclick="toggleMusic()" style="background:#be185d; border:1px solid #fbcfe8; color:#fff; padding:4px 12px; border-radius:10px; font-size:11px; font-weight:800; cursor:pointer;">🎵 NHẠC TRANH</button>
-        </div>
-    </div>
-
-    <!-- Tabs Cấp Độ HSK & Tab Phòng Thử Đồ -->
-    <div class="tier-tabs">
-        <button class="tier-btn active" id="tab-tier-1" onclick="switchTier(1)">🌸 HSK 1: Nam Chiếu Giang Nam (3 Thành)</button>
-        <button class="tier-btn" id="tab-tier-2" onclick="switchTier(2)">🏯 HSK 2: Thục Đạo Mạc Bắc (3 Thành)</button>
-        <button class="tier-btn" id="tab-tier-3" onclick="switchTier(3)">👑 HSK 3: Định Đô Trung Nguyên (3 Thành)</button>
-        <button class="tier-btn btn-wardrobe-tab" id="tab-wardrobe" onclick="openWardrobe()">👗 PHÒNG THỬ ĐỒ HOÀNG GIA</button>
-    </div>
-
-    <!-- 1. MÀN HÌNH BẢN ĐỒ VIỄN CHINH -->
-    <div class="screen-layer active" id="layer-map">
-        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <h2 style="font-size: 17px; font-weight: 900; color: #9d174d;" id="tier-map-title">🗺️ BẢN ĐỒ MỞ RỘNG BỜ CÕI • HSK 1</h2>
-            <span style="font-size: 12px; color: #db2777; font-weight: 700;">Hạ bút thi cử ➔ Thu phục thành trì ➔ Mở khóa phục sức</span>
-        </div>
-
-        <div class="conquest-map" id="map-castles-box"></div>
-
-        <div class="vault-archive">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <b style="color: #9d174d; font-size: 14px;" id="current-castle-header">Thành Trì: Đang nạp...</b>
-                <span style="font-size: 12px; color: #f472b6; font-weight: 700;">✨ Bấm vào bài thi để công chúa thân chinh hạ bút</span>
-            </div>
-            <div class="word-pink-grid" id="castle-words-grid"></div>
-        </div>
-    </div>
-
-    <!-- 2. MÀN HÌNH KHẢO THÍ & ĐỀ THI HSK THỰC CHIẾN -->
-    <div class="screen-layer" id="layer-exam">
-        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <button class="btn-return" onclick="returnToPalaceMap()">
-                <span>⬅</span> Trở Về Bản Đồ Cương Thổ
+            <button onclick="toggleSound()" id="sound-btn" class="bg-rose-800/60 hover:bg-rose-800 text-pink-100 px-3 py-1 rounded-lg border border-pink-300 transition-colors">
+                🎵 Âm Thanh: Bật
             </button>
-            <div style="font-size: 13px; font-weight: 800; color: #be185d;" id="exam-stage-counter">Thành Trì 1 • Bài Khảo Thí 1</div>
-        </div>
-
-        <div class="exam-arena">
-            <div class="princess-pod">
-                <div>
-                    <div class="royal-doll">
-                        <!-- HÌNH CÔNG CHÚA ANIME CHIBI CHÍNH DIỆN -->
-                        <div class="princess-avatar-wrapper">
-                            <div class="princess-sprite" id="exam-princess-sprite"></div>
-                            <div class="princess-head-gear" id="exam-doll-headwear">👑</div>
-                            <div class="princess-hand-item" id="exam-doll-handheld">🪄</div>
-                        </div>
-                        <div class="princess-title" id="princess-suit-title">Công Chúa Cung Đình</div>
-                    </div>
-
-                    <div class="exam-scroll">
-                        <div class="exam-badge" id="exam-badge-type">ĐỀ THI HSK THỰC CHIẾN (选词填空)</div>
-                        <div class="exam-question" id="exam-chinese-sentence">
-                            我今天太 <span class="exam-blank" id="blank-highlight">___ (lèi)</span> 了，想早点儿睡觉。
-                        </div>
-                        <div class="exam-vn-trans" id="exam-vn-translation">
-                            Hôm nay tôi mệt quá, muốn đi ngủ sớm một chút.
-                        </div>
-                        <!-- KHU VỰC HIỂN THỊ MẸO NGỮ PHÁP -->
-                        <div class="grammar-fun-tip" id="grammar-tip-box">
-                            <span>💡</span>
-                            <span id="grammar-tip-text">Bí kíp: Nhìn ngữ cảnh để nhớ từ tự nhiên, không cần nhồi nhét công thức!</span>
-                        </div>
-                    </div>
-
-                    <div class="royal-reward-box" id="royal-reward-card">
-                        <div style="font-size: 36px;" id="reward-gift-icon">💎</div>
-                        <div style="font-size: 14px; font-weight: 900; color: #be123c;" id="reward-gift-title">ĐÃ THU PHỤC THÀNH TRÌ!</div>
-                        <div style="font-size: 12px; color: #831843; margin-top: 4px;" id="reward-gift-desc">Lãnh thổ được mở rộng, dân chúng dâng tặng trang phục mới!</div>
-                    </div>
-                </div>
-
-                <div style="font-size: 11px; color: #db2777; font-style: italic; margin-top: 12px;">
-                    ⚠️ Lệnh Bút Hoàng Gia: Kéo đúng chiều từng nét theo thứ tự bút thuận. Sai một nét sẽ rung bảng báo lỗi!
-                </div>
-            </div>
-
-            <!-- Bảng Thư Pháp Ngọc Bích -->
-            <div class="jade-writer-card">
-                <div id="writer-board"></div>
-
-                <div style="text-align: center; margin-top: 12px;">
-                    <div style="font-size: 22px; font-weight: 900; color: #db2777;" id="target-py">lèi</div>
-                    <div style="font-size: 14px; font-weight: 700; color: #9d174d;" id="target-vn">Mệt mỏi (Luy)</div>
-                </div>
-
-                <div class="action-tray">
-                    <button class="btn-pink btn-demo" onclick="demonstrateStroke()">👁️ Xem Nét Mẫu</button>
-                    <button class="btn-pink btn-clear" onclick="clearSlate()">🔄 Viết Lại</button>
-                    <button class="btn-pink btn-conquer" id="btn-next-quest" onclick="stepNextExam()">Tiến Quân Tiếp ➔</button>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- 3. PHÒNG THỬ ĐỒ HOÀNG GIA DRESS-UP -->
-    <div class="screen-layer" id="layer-wardrobe">
-        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <button class="btn-return" onclick="returnToPalaceMap()">
+    <!-- Tier Navigation Tabs -->
+    <div class="flex bg-pink-100 border-b-2 border-pink-200 px-4 pt-2 gap-2 overflow-x-auto text-xs sm:text-sm font-extrabold text-pink-900">
+        <button class="px-4 py-2 rounded-t-xl bg-pink-50 border-2 border-pink-200 border-b-0 tab-active" id="tab-hsk1" onclick="switchMainTab('hsk1')">
+            🌸 HSK 1: Giang Nam
+        </button>
+        <button class="px-4 py-2 rounded-t-xl bg-pink-50 border-2 border-pink-200 border-b-0" id="tab-hsk2" onclick="switchMainTab('hsk2')">
+            🏯 HSK 2: Mạc Bắc
+        </button>
+        <button class="px-4 py-2 rounded-t-xl bg-pink-50 border-2 border-pink-200 border-b-0" id="tab-hsk3" onclick="switchMainTab('hsk3')">
+            👑 HSK 3: Trung Nguyên
+        </button>
+        <button class="px-4 py-2 rounded-t-xl bg-amber-100 text-amber-900 border-2 border-amber-300 border-b-0" id="tab-reading" onclick="switchMainTab('reading')">
+            📜 Tấu Chương Đọc Hiểu
+        </button>
+        <button class="px-4 py-2 rounded-t-xl bg-rose-500 text-white border-2 border-rose-600 border-b-0 ml-auto" id="tab-wardrobe" onclick="switchMainTab('wardrobe')">
+            👗 Phòng Thử Đồ Chibi
+        </button>
+    </div>
+
+    <!-- View 1: Bản Đồ Viễn Chinh HSK (Cương Thổ) -->
+    <div id="view-map" class="p-5 flex flex-col items-center">
+        <div class="w-full flex justify-between items-center mb-3">
+            <h2 class="text-base font-extrabold text-pink-900" id="map-header-title">🗺️ BẢN ĐỒ CƯƠNG THỔ</h2>
+            <span class="text-xs font-semibold text-rose-600">Viết đúng từng chữ để mở rộng bờ cõi & nhận trang phục</span>
+        </div>
+
+        <!-- Castle nodes horizontal list -->
+        <div class="w-full bg-gradient-to-r from-pink-50 via-white to-pink-50 border-2 border-dashed border-pink-400 rounded-2xl p-4 flex gap-4 overflow-x-auto mb-4" id="castles-scroll-box"></div>
+
+        <!-- Quest words list of active castle -->
+        <div class="w-full bg-white border-2 border-pink-200 rounded-2xl p-4 shadow-sm">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-sm font-bold text-pink-950 flex items-center gap-2" id="active-castle-label">
+                    <span>🏯</span> Thành Trì Đang Chọn: ...
+                </h3>
+                <span class="text-xs text-pink-600 font-bold">✨ Bấm vào thẻ để hạ bút tập viết</span>
+            </div>
+            <div class="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 gap-2.5 max-h-56 overflow-y-auto pr-1" id="words-badge-grid"></div>
+        </div>
+    </div>
+
+    <!-- View 2: Màn Hình Khảo Thí & Hanzi Writer -->
+    <div id="view-exam" class="hidden p-5 flex-col items-center">
+        <div class="w-full flex justify-between items-center mb-4">
+            <button onclick="returnToMap()" class="bg-pink-100 hover:bg-pink-200 text-pink-900 font-bold text-xs px-4 py-2 rounded-xl border border-pink-300 flex items-center gap-1.5 shadow-sm transition-all">
                 <span>⬅</span> Trở Về Bản Đồ
             </button>
-            <h2 style="font-size: 17px; font-weight: 900; color: #be185d;">👗 PHÒNG THAY ĐỒ BÚP BÊ NỮ ĐẾ</h2>
-            <div style="font-size: 12px; font-weight: 700; color: #db2777;" id="wardrobe-unlocked-count">Đã Mở: 6 / 18 Phục Sức</div>
+            <div class="text-xs sm:text-sm font-extrabold text-rose-700" id="exam-quest-counter">
+                Thành Trì 1 • Đề Khảo Thí 1/8
+            </div>
         </div>
 
-        <div class="wardrobe-container">
-            <div class="doll-stage">
-                <div class="princess-avatar-wrapper" style="width: 160px; height: 210px;">
-                    <div class="princess-sprite" id="wardrobe-princess-sprite" style="width: 480px; height: 210px;"></div>
-                    <div class="princess-head-gear" id="wardrobe-doll-headwear" style="top: 4px; font-size: 38px;">👑</div>
-                    <div class="princess-hand-item" id="wardrobe-doll-handheld" style="bottom: 35px; right: 12px; font-size: 32px;">🪄</div>
+        <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+            <!-- Left Column: Princess Preview & Sentence Context -->
+            <div class="md:col-span-6 bg-white border-2 border-pink-200 rounded-2xl p-4 flex flex-col justify-between shadow-sm">
+                <div>
+                    <!-- Princess Vector Sprite Preview -->
+                    <div class="bg-gradient-to-b from-pink-50 to-white rounded-xl p-3 border border-pink-200 text-center mb-3">
+                        <div class="chibi-avatar-frame" id="exam-chibi-frame">
+                            <!-- SVG Doll Rendered by JS -->
+                        </div>
+                        <div class="text-xs font-black text-rose-700 mt-2" id="exam-chibi-title">Công Chúa Cổ Phục Hoa Đào</div>
+                    </div>
+
+                    <!-- Exam Sentence Prompt -->
+                    <div class="bg-[#fffdf7] border-2 border-amber-300 rounded-xl p-3.5 shadow-inner">
+                        <div class="inline-block bg-amber-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full mb-1.5">
+                            ĐỀ THI HSK THỰC CHIẾN
+                        </div>
+                        <div class="text-base font-bold text-slate-800 leading-relaxed" id="exam-sentence-zh">
+                            我今天太 <span class="text-rose-600 border-b-2 border-rose-500 font-black px-1 text-lg">___ (lèi)</span> 了。
+                        </div>
+                        <div class="text-xs text-amber-900 font-semibold mt-1" id="exam-sentence-vn">
+                            Hôm nay tôi mệt quá rồi.
+                        </div>
+                        <!-- Natural Grammar Tip -->
+                        <div class="mt-2.5 bg-pink-50 border border-dashed border-pink-300 rounded-lg p-2 text-xs text-pink-900 flex items-start gap-1.5">
+                            <span>💡</span>
+                            <span id="exam-grammar-tip">Mẹo: Cụm 太...了 (Quá... rồi) luôn kẹp tính từ ở giữa để cảm thán!</span>
+                        </div>
+                    </div>
+
+                    <!-- Instant Reward Toast -->
+                    <div id="exam-reward-toast" class="hidden mt-3 bg-gradient-to-r from-pink-100 to-rose-100 border border-rose-400 rounded-xl p-3 text-center">
+                        <div class="text-xl" id="reward-toast-icon">🎁</div>
+                        <div class="text-xs font-black text-rose-800" id="reward-toast-title">ĐÃ THU PHỤC THÀNH TRÌ!</div>
+                        <div class="text-[11px] text-pink-900" id="reward-toast-desc">Mở khóa trang phục mới trong Tủ Đồ Chibi!</div>
+                    </div>
                 </div>
-                <div style="font-size: 15px; font-weight: 900; color: #be185d;" id="dressed-doll-title">Nữ Đế Cẩm Y Hoa Lệ</div>
-                <p style="font-size: 12px; color: #831843; margin-top: 4px;">Bộ cánh phối sẽ xuất hiện trong Lễ Đăng Ngai Vàng!</p>
+
+                <div class="text-[11px] text-pink-400 italic text-center mt-2">
+                    ⚠️ Lệnh bút thuận: Kéo đúng chiều từng nét. Kéo ngược hoặc sai nét sẽ rung bảng báo lỗi!
+                </div>
             </div>
 
-            <div class="closet-organizer">
-                <div class="closet-category-title">👑 Vương Miện & Cài Đầu</div>
-                <div class="closet-grid" id="closet-headwear-box"></div>
+            <!-- Right Column: Hanzi Writer Jade Board -->
+            <div class="md:col-span-6 bg-white border-2 border-pink-300 rounded-2xl p-5 flex flex-col items-center justify-center shadow-md">
+                <div id="hanzi-writer-box" class="bg-white border-4 border-pink-400 rounded-2xl shadow-inner cursor-crosshair"></div>
 
-                <div class="closet-category-title">🌸 Góc Nhìn & Dáng Điệu Y Phục</div>
-                <div class="closet-grid" id="closet-pose-box"></div>
+                <div class="text-center mt-3">
+                    <div class="text-2xl font-black text-rose-600 tracking-wide" id="target-word-py">lèi</div>
+                    <div class="text-xs font-bold text-pink-950 mt-0.5" id="target-word-vn">Mệt mỏi (Luy)</div>
+                </div>
 
-                <div class="closet-category-title">🪄 Pháp Khí Cầm Tay</div>
-                <div class="closet-grid" id="closet-handheld-box"></div>
+                <div class="flex gap-2.5 mt-4 w-full justify-center">
+                    <button onclick="demoStroke()" class="bg-sky-400 hover:bg-sky-500 text-sky-950 text-xs font-extrabold px-3.5 py-2 rounded-xl shadow transition-all">
+                        👁️ Nét Mẫu
+                    </button>
+                    <button onclick="resetStroke()" class="bg-amber-400 hover:bg-amber-500 text-amber-950 text-xs font-extrabold px-3.5 py-2 rounded-xl shadow transition-all">
+                        🔄 Viết Lại
+                    </button>
+                    <button id="btn-next-exam" onclick="nextExamQuest()" class="hidden bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow transition-all">
+                        Ải Kế Tiếp ➔
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 4. CUTSCENE VIDEO GAME: ĐẠI LỄ ĐĂNG NGAI VÀNG NỮ ĐẾ -->
-    <div class="cinematic-overlay" id="cinematic-throne">
-        <div class="firework-particle" style="top: 10%; left: 15%;">✨</div>
-        <div class="firework-particle" style="top: 15%; right: 20%;">🎆</div>
-        <div class="firework-particle" style="bottom: 20%; left: 10%;">🎇</div>
-        <div class="firework-particle" style="bottom: 15%; right: 15%;">🌟</div>
+    <!-- View 3: Tấu Chương Đọc Hiểu (Bài Báo HSK Thực Tế) -->
+    <div id="view-reading" class="hidden p-5 flex-col items-center">
+        <div class="w-full flex justify-between items-center mb-3">
+            <h2 class="text-base font-extrabold text-amber-900">📜 ĐẠI ĐIỆN TẤU CHƯƠNG: ĐỌC HIỂU NGỮ CẢNH</h2>
+            <button onclick="speakPassage()" class="bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold text-xs px-3 py-1.5 rounded-lg border border-amber-400 flex items-center gap-1 transition-colors">
+                🔊 Đọc Toàn Bài
+            </button>
+        </div>
 
-        <div class="throne-hall">
-            <div style="font-size: 13px; font-weight: 900; color: #fef08a; letter-spacing: 2px;">
-                👑 CINEMATIC CUTSCENE: ĐẠI LỄ ĐĂNG NGAI VÀNG
+        <!-- Passage selector tabs -->
+        <div class="w-full flex gap-2 overflow-x-auto pb-2 mb-3" id="passage-nav-tabs"></div>
+
+        <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <!-- Article Scroll Content -->
+            <div class="lg:col-span-7 bg-[#fffdf9] border-2 border-amber-300 rounded-2xl p-4 shadow-sm max-h-[500px] overflow-y-auto">
+                <h3 class="text-base font-black text-amber-950 border-b border-amber-200 pb-2 mb-3" id="passage-detail-title">
+                    ...
+                </h3>
+                <div class="space-y-3 text-slate-800">
+                    <div>
+                        <div class="text-[11px] font-bold text-amber-700 uppercase">Hán Tự:</div>
+                        <div class="font-serif text-base font-bold text-slate-900 leading-relaxed" id="passage-detail-hz"></div>
+                    </div>
+                    <div>
+                        <div class="text-[11px] font-bold text-sky-700 uppercase">Phiên Âm (Pinyin):</div>
+                        <div class="text-xs text-sky-800 leading-relaxed font-medium" id="passage-detail-py"></div>
+                    </div>
+                    <div>
+                        <div class="text-[11px] font-bold text-slate-500 uppercase">Dịch Nghĩa:</div>
+                        <div class="text-xs text-slate-600 leading-relaxed italic" id="passage-detail-vn"></div>
+                    </div>
+                </div>
+
+                <!-- Vocab & Grammar Highlights -->
+                <div class="mt-4 pt-3 border-t border-amber-200">
+                    <h4 class="text-xs font-extrabold text-amber-900 mb-2">📚 TỪ VỰNG & NGỮ PHÁP THEN CHỐT:</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs mb-3" id="passage-detail-vocab"></div>
+                    <div class="space-y-1" id="passage-detail-grammar"></div>
+                </div>
+            </div>
+
+            <!-- Mini Writing Verification for Reading Master -->
+            <div class="lg:col-span-5 bg-white border-2 border-pink-300 rounded-2xl p-4 flex flex-col items-center">
+                <div class="text-xs font-bold text-rose-800 mb-1">✍️ KHÓA ẤN BÀI ĐỌC (VIẾT TỪ KHÓA)</div>
+                <div class="text-[11px] text-slate-500 mb-2 text-center" id="reading-key-instruction">
+                    Viết đúng từ khóa của bài đọc để chứng minh đã hiểu trọn vẹn tấu chương!
+                </div>
+                <div id="reading-writer-box" class="bg-white border-2 border-pink-400 rounded-xl shadow-inner"></div>
+                <div class="text-center mt-2">
+                    <div class="text-lg font-black text-rose-600" id="reading-target-py">...</div>
+                    <div class="text-xs font-bold text-slate-700" id="reading-target-vn">...</div>
+                </div>
+                <div class="flex gap-2 mt-3 w-full justify-center">
+                    <button onclick="demoReadingStroke()" class="bg-sky-400 text-sky-950 text-xs font-bold px-3 py-1.5 rounded-lg shadow">👁️ Nét Mẫu</button>
+                    <button onclick="resetReadingStroke()" class="bg-amber-400 text-amber-950 text-xs font-bold px-3 py-1.5 rounded-lg shadow">🔄 Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View 4: Phòng Thử Đồ Búp Bê Hoàng Gia (Dress-up) -->
+    <div id="view-wardrobe" class="hidden p-5 flex-col items-center">
+        <div class="w-full flex justify-between items-center mb-4">
+            <h2 class="text-base font-extrabold text-rose-800">👗 PHÒNG THỬ ĐỒ BÚP BÊ NỮ ĐẾ</h2>
+            <span class="text-xs font-bold text-pink-600" id="wardrobe-count-pill">Đã Mở: 6/15 Phục Sức</span>
+        </div>
+
+        <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+            <!-- Stage Doll Box -->
+            <div class="md:col-span-4 bg-white border-2 border-pink-300 rounded-2xl p-5 flex flex-col items-center text-center shadow-sm">
+                <div class="chibi-avatar-frame w-40 h-52 mb-3" id="wardrobe-chibi-frame">
+                    <!-- SVG Princess Live Rendered -->
+                </div>
+                <div class="text-sm font-black text-rose-700" id="wardrobe-princess-tag">Cẩm Y Hoàng Nữ</div>
+                <p class="text-[11px] text-pink-900 mt-1">
+                    Trang phục công chúa phối sẽ xuất hiện uy nghiêm trên ngai vàng Đại Lễ Đăng Quang!
+                </p>
+            </div>
+
+            <!-- Categories and wardrobe closet -->
+            <div class="md:col-span-8 bg-white border-2 border-pink-200 rounded-2xl p-4 shadow-sm space-y-4">
+                <div>
+                    <h3 class="text-xs font-black text-pink-950 mb-2 flex items-center gap-1.5">
+                        <span>👑</span> VƯƠNG MIỆN & TRÂM CÀI (ĐẦU)
+                    </h3>
+                    <div class="flex gap-2 flex-wrap" id="wardrobe-grid-crown"></div>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-black text-pink-950 mb-2 flex items-center gap-1.5">
+                        <span>👘</span> CẨM BÀO & VÁY DẠ HỘI (TRANG PHỤC)
+                    </h3>
+                    <div class="flex gap-2 flex-wrap" id="wardrobe-grid-dress"></div>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-black text-pink-950 mb-2 flex items-center gap-1.5">
+                        <span>🪄</span> PHÁP BẢO & VẬT CẦM TAY (TAY CẦM)
+                    </h3>
+                    <div class="flex gap-2 flex-wrap" id="wardrobe-grid-weapon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cutscene Modal: Đại Lễ Đăng Ngai Vàng Nữ Đế -->
+    <div id="modal-throne" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex-col justify-center items-center p-4">
+        <div class="w-full max-w-lg bg-gradient-to-b from-[#831843] to-[#4a044e] border-4 border-amber-300 rounded-3xl p-6 text-center text-white relative shadow-2xl">
+            <div class="inline-block bg-amber-400 text-amber-950 text-xs font-black px-4 py-1 rounded-full mb-2 shadow">
+                👑 ĐẠI THỐNG NHẤT THIÊN HẠ • PHI THĂNG NỮ ĐẾ
             </div>
             
-            <div class="princess-avatar-wrapper" style="width: 170px; height: 220px; margin: 15px auto; border-color: #fbbf24;">
-                <div class="princess-sprite" id="throne-princess-sprite" style="width: 510px; height: 220px;"></div>
-                <div class="princess-head-gear" id="throne-doll-headwear" style="top: 6px; font-size: 40px;">👑</div>
-                <div class="princess-hand-item" id="throne-doll-handheld" style="bottom: 38px; right: 14px; font-size: 34px;">🪄</div>
-            </div>
+            <!-- Live Customized Chibi in Throne Frame -->
+            <div class="chibi-avatar-frame w-36 h-48 my-3 border-amber-300" id="throne-chibi-frame"></div>
 
-            <h2 style="color: #fbbf24; font-size: 26px; font-weight: 900; margin-bottom: 8px;">ĐĂNG QUANG NỮ ĐẾ HSK MASTER</h2>
-            <div style="font-size: 17px; font-weight: 900; color: #fbcfe8; margin-bottom: 16px;">
-                CÔNG CHÚA CHÍNH THỨC TRỞ THÀNH BẬC THẦY HSK 3 CỬU NGŨ CHÍ TÔN!
+            <h2 class="text-xl sm:text-2xl font-black text-amber-300 mb-1">ĐẠI LỄ ĐĂNG QUANG NGAI VÀNG</h2>
+            <div class="text-xs font-bold text-pink-200 mb-3">
+                BÁCH TÍNH THẦN PHỤC — HÁN TỰ QUANG VINH — VĂN ĐỊNH CÀN KHÔN
             </div>
-            <div style="background: rgba(255, 255, 255, 0.15); border: 2px dashed #fbbf24; border-radius: 16px; padding: 18px; text-align: left; font-size: 13px; line-height: 1.7; color: #fff; margin-bottom: 22px;">
-                <p>🌸 <b>Cương vực mở rộng:</b> Toàn bộ 9 Đại Thành Trì HSK 1, 2 và 3 đã thần phục dưới ngọn bút thần!</p>
-                <p>📜 <b>Khảo thí toàn thắng:</b> Vượt qua hơn 80 đề thi thực chiến với độ chính xác bút thuận 100%.</p>
-                <p>👗 <b>Thời trang Nữ Đế:</b> Khoác lên ngai vàng bộ trang phục hoàn mỹ do chính bạn thiết kế!</p>
+            <div class="bg-white/10 border border-dashed border-amber-300 rounded-xl p-3 text-left text-xs leading-relaxed text-amber-100 mb-4 space-y-1">
+                <p>🌸 <b>Cương Thổ Toàn Vẹn:</b> Đã chinh phục trọn vẹn 3 cấp bậc HSK 1, HSK 2 và HSK 3!</p>
+                <p>📜 <b>Bút Lực Toàn Năng:</b> Viết chuẩn xác 100% từng nét bút thuận mọi Hán tự khó.</p>
+                <p>👗 <b>Phục Sức Tối Thượng:</b> Ngự trên ngai vàng với bộ y phục lộng lẫy do chính người tự tay phối tạo.</p>
             </div>
-            <button onclick="closeCinematic()" class="btn-pink" style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color:#451a03; font-weight:900; padding:12px 30px; font-size:14px;">
-                TIẾP TỤC TUẦN THÚ & THỬ ĐỒ ➔
+            <button onclick="closeThroneModal()" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-amber-950 font-black text-xs px-6 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105">
+                TIẾP TỤC TUẦN THÚ BỜ CÕI ➔
             </button>
         </div>
     </div>
 </div>
 
 <script>
+    /* ==========================================================================
+       1. WEB AUDIO API SOUND GENERATOR (Không cần file mp3 ngoài)
+       ========================================================================== */
     let audioCtx = null;
-    let isMusicOn = true;
-    function playZither(f = 523.25) {
-        if (!isMusicOn) return;
+    let isSoundMuted = false;
+
+    function initAudio() {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    }
+
+    function playZitherTone(freq, duration = 0.5, type = 'triangle') {
+        if (isSoundMuted) return;
         try {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            initAudio();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            
             gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+            gain.gain.exponentialRampToValueAtTime(0.25, audioCtx.currentTime + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             osc.start();
-            osc.stop(audioCtx.currentTime + 0.8);
-        } catch(e){}
+            osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {}
     }
-    function toggleMusic() { isMusicOn = !isMusicOn; }
 
-    function speakZh(text) {
+    function toggleSound() {
+        isSoundMuted = !isSoundMuted;
+        document.getElementById('sound-btn').innerText = isSoundMuted ? '🔇 Âm Thanh: Tắt' : '🎵 Âm Thanh: Bật';
+    }
+
+    function speakChinese(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const u = new SpeechSynthesisUtterance(text);
             u.lang = 'zh-CN';
+            u.rate = 0.85;
             window.speechSynthesis.speak(u);
         }
     }
 
-    // ==================== TỦ ĐỒ DRESS-UP & CÔNG CHÚA ANIME ====================
-    let currentDressed = { 
-        headwear: "👑", 
-        poseOffset: "center center", // Cắt đúng góc nhìn của ảnh
-        handheld: "🪄" 
+    /* ==========================================================================
+       2. VECTOR SVG CHIBI ENGINE (Hình ảnh nét căng, không cần tải ảnh ngoài)
+       ========================================================================== */
+    const chibiPalette = {
+        hair: '#a37058',
+        hairHighlight: '#cf987f',
+        skin: '#ffecd9',
+        skinShadow: '#f8d2b8',
+        blush: '#fca5a5',
+        eyes: '#7c3aed',
+        dressPink: '#f472b6',
+        dressLight: '#fce7f3',
+        dressBlue: '#38bdf8',
+        dressGold: '#fbbf24',
+        dressDark: '#312e81'
     };
 
-    const wardrobeItems = {
-        headwear: [
-            { id: "h1", icon: "👑", name: "Vương Miện Kim Cương", unlockAt: 0 },
-            { id: "h2", icon: "🌸", name: "Trâm Cài Đào Hoa", unlockAt: 5 },
-            { id: "h3", icon: "🎀", name: "Nơ Bướm Hồng Phấn", unlockAt: 15 },
-            { id: "h4", icon: "🦚", name: "Mũ Khổng Tước", unlockAt: 30 },
-            { id: "h5", icon: "❄️", name: "Băng Tinh Miện", unlockAt: 50 },
-            { id: "h6", icon: "🏮", name: "Cung Miện Nữ Đế", unlockAt: 70 }
+    let userWardrobeSelection = {
+        crownId: 'c1',
+        dressId: 'd1',
+        weaponId: 'w1'
+    };
+
+    const wardrobeData = {
+        crown: [
+            { id: 'c1', name: 'Trâm Cài Hoa Đào', unlock: 0, icon: '🌸' },
+            { id: 'c2', name: 'Nơ Bướm Hồng Phấn', unlock: 4, icon: '🎀' },
+            { id: 'c3', name: 'Vương Miện Kim Cương', unlock: 10, icon: '👑' },
+            { id: 'c4', name: 'Khổng Tước Hoàng Miện', unlock: 20, icon: '🦚' }
         ],
-        pose: [
-            { id: "p1", icon: "👸", name: "Nhìn Thẳng Duyên Dáng", offset: "left center", unlockAt: 0 },
-            { id: "p2", icon: "🪭", name: "Nghiêng Mình Cầm Quạt", offset: "center center", unlockAt: 10 },
-            { id: "p3", icon: "🌸", name: "Bóng Lưng Kiều Diễm", offset: "right center", unlockAt: 25 }
+        dress: [
+            { id: 'd1', name: 'Cổ Phục Hoa Đào', unlock: 0, color: '#f472b6', trim: '#fbcfe8', icon: '👗' },
+            { id: 'd2', name: 'Thủy Lam Sa Y', unlock: 6, color: '#38bdf8', trim: '#bae6fd', icon: '👘' },
+            { id: 'd3', name: 'Hoàng Kim Cẩm Bào', unlock: 15, color: '#fbbf24', trim: '#fef08a', icon: '🥻' },
+            { id: 'd4', name: 'Dạ Hành Ma Nữ Bào', unlock: 25, color: '#4c1d95', trim: '#c084fc', icon: '🥼' }
         ],
-        handheld: [
-            { id: "w1", icon: "🪄", name: "Đũa Thần Bút Pháp", unlockAt: 0 },
-            { id: "w2", icon: "🍵", name: "Bát Trà Long Tỉnh", unlockAt: 8 },
-            { id: "w3", icon: "🗡️", name: "Thanh Hồng Bảo Kiếm", unlockAt: 20 },
-            { id: "w4", icon: "📜", name: "Thư Quyển Thánh Chỉ", unlockAt: 35 },
-            { id: "w5", icon: "🐱", name: "Linh Miêu Ngoan Ngoãn", unlockAt: 45 },
-            { id: "w6", icon: "👑", name: "Ngọc Tỷ Truyền Quốc", unlockAt: 65 }
+        weapon: [
+            { id: 'w1', name: 'Bút Thần Thư Pháp', unlock: 0, icon: '🪄' },
+            { id: 'w2', name: 'Bát Trà Long Tỉnh', unlock: 5, icon: '🍵' },
+            { id: 'w3', name: 'Thanh Hồng Kiếm', unlock: 12, icon: '🗡️' },
+            { id: 'w4', name: 'Ngọc Tỷ Truyền Quốc', unlock: 22, icon: '👑' }
         ]
     };
 
-    // ==================== KHO ĐỀ THI HSK 1, 2, 3 (MASTER EDITION) ====================
-    const hskTiers = {
-        1: {
-            name: "HSK 1: Nam Chiếu Giang Nam (Khởi Nghĩa)",
+    function renderChibiPrincessSVG() {
+        const dressItem = wardrobeData.dress.find(d => d.id === userWardrobeSelection.dressId) || wardrobeData.dress[0];
+        const dressMainColor = dressItem.color;
+        const dressTrimColor = dressItem.trim;
+
+        // Custom Crown Elements
+        let crownSVG = '';
+        if (userWardrobeSelection.crownId === 'c1') {
+            crownSVG = `
+                <!-- Trâm Hoa Đào -->
+                <circle cx="48" cy="46" r="6" fill="#f43f5e" />
+                <circle cx="48" cy="46" r="3" fill="#fef08a" />
+                <path d="M42,46 Q35,50 36,56" stroke="#f43f5e" stroke-width="2" fill="none"/>
+                <circle cx="82" cy="46" r="6" fill="#f43f5e" />
+                <circle cx="82" cy="46" r="3" fill="#fef08a" />
+                <path d="M88,46 Q95,50 94,56" stroke="#f43f5e" stroke-width="2" fill="none"/>
+            `;
+        } else if (userWardrobeSelection.crownId === 'c2') {
+            crownSVG = `
+                <!-- Nơ Bướm Hồng -->
+                <path d="M50,42 Q40,32 54,34 Q65,42 50,42 Z" fill="#ec4899" />
+                <path d="M80,42 Q90,32 76,34 Q65,42 80,42 Z" fill="#ec4899" />
+                <circle cx="65" cy="40" r="4" fill="#fbbf24" />
+            `;
+        } else if (userWardrobeSelection.crownId === 'c3') {
+            crownSVG = `
+                <!-- Vương Miện Kim Cương -->
+                <polygon points="50,42 54,28 65,36 76,28 80,42" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+                <circle cx="65" cy="30" r="3" fill="#38bdf8" />
+                <circle cx="54" cy="27" r="2" fill="#ef4444" />
+                <circle cx="76" cy="27" r="2" fill="#ef4444" />
+            `;
+        } else if (userWardrobeSelection.crownId === 'c4') {
+            crownSVG = `
+                <!-- Khổng Tước Miện -->
+                <path d="M65,36 Q60,18 65,12 Q70,18 65,36 Z" fill="#10b981" />
+                <circle cx="65" cy="18" r="3" fill="#38bdf8" />
+                <polygon points="46,42 65,32 84,42 65,38" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+            `;
+        }
+
+        // Custom Handheld Item
+        let handheldSVG = '';
+        if (userWardrobeSelection.weaponId === 'w1') {
+            // Cọ thần
+            handheldSVG = `
+                <rect x="94" y="90" width="4" height="28" rx="2" fill="#78350f" transform="rotate(25 94 90)"/>
+                <path d="M107,116 Q108,124 105,126 Q102,122 105,116 Z" fill="#f43f5e"/>
+            `;
+        } else if (userWardrobeSelection.weaponId === 'w2') {
+            // Tách trà
+            handheldSVG = `
+                <ellipse cx="98" cy="112" rx="7" ry="5" fill="#f8fafc" stroke="#38bdf8" stroke-width="1.5"/>
+                <path d="M93,108 Q98,102 96,96" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+            `;
+        } else if (userWardrobeSelection.weaponId === 'w3') {
+            // Kiếm
+            handheldSVG = `
+                <rect x="94" y="85" width="4" height="32" rx="1" fill="#e2e8f0" stroke="#64748b" transform="rotate(30 94 85)"/>
+                <rect x="90" y="100" width="14" height="4" rx="2" fill="#fbbf24" transform="rotate(30 94 100)"/>
+            `;
+        } else if (userWardrobeSelection.weaponId === 'w4') {
+            // Ngọc tỷ
+            handheldSVG = `
+                <rect x="90" y="102" width="16" height="14" rx="3" fill="#10b981" stroke="#047857" stroke-width="1.5"/>
+                <circle cx="98" cy="100" r="4" fill="#fbbf24"/>
+            `;
+        }
+
+        return `
+            <svg class="chibi-svg-canvas" viewBox="0 0 130 170" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="hairGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="${chibiPalette.hairHighlight}"/>
+                        <stop offset="100%" stop-color="${chibiPalette.hair}"/>
+                    </linearGradient>
+                    <radialGradient id="faceShade" cx="50%" cy="40%" r="50%">
+                        <stop offset="85%" stop-color="${chibiPalette.skin}"/>
+                        <stop offset="100%" stop-color="${chibiPalette.skinShadow}"/>
+                    </radialGradient>
+                </defs>
+
+                <!-- 1. Tóc Sau & Búi Tóc Hai Bên -->
+                <circle cx="36" cy="46" r="14" fill="url(#hairGrad)" />
+                <circle cx="94" cy="46" r="14" fill="url(#hairGrad)" />
+                <path d="M30,55 Q18,95 32,130 Q38,90 40,65 Z" fill="url(#hairGrad)" />
+                <path d="M100,55 Q112,95 98,130 Q92,90 90,65 Z" fill="url(#hairGrad)" />
+
+                <!-- 2. Thân Cơ Thể & Tay Áo Cổ Trang -->
+                <path d="M42,95 L26,118 Q25,124 32,125 L46,108 Z" fill="${dressMainColor}" />
+                <path d="M88,95 L104,118 Q105,124 98,125 L84,108 Z" fill="${dressMainColor}" />
+
+                <!-- Váy Xòe Cổ Phục -->
+                <path d="M46,92 Q30,135 28,154 Q65,160 102,154 Q100,135 84,92 Z" fill="${dressMainColor}" />
+                <!-- Nếp Gấp Váy Lớp Trong -->
+                <path d="M52,94 Q65,130 65,157 Q78,130 78,94 Z" fill="${dressTrimColor}" opacity="0.8" />
+                <!-- Thắt Lưng Hoàng Gia -->
+                <rect x="46" y="90" width="38" height="8" rx="2" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+                <circle cx="65" cy="94" r="3.5" fill="#f43f5e" />
+
+                <!-- Chân Giày Hài Hồng -->
+                <ellipse cx="54" cy="156" rx="6" ry="3" fill="#f43f5e" />
+                <ellipse cx="76" cy="156" rx="6" ry="3" fill="#f43f5e" />
+
+                <!-- 3. Khuôn Mặt Chibi Bầu Bĩnh -->
+                <circle cx="65" cy="62" r="26" fill="url(#faceShade)" />
+
+                <!-- Má Hồng Siêu Dễ Thương -->
+                <ellipse cx="48" cy="68" rx="5" ry="3" fill="${chibiPalette.blush}" opacity="0.6" />
+                <ellipse cx="82" cy="68" rx="5" ry="3" fill="${chibiPalette.blush}" opacity="0.6" />
+
+                <!-- Đôi Mắt Anime To Tròn Long Lanh -->
+                <ellipse cx="52" cy="61" rx="5.5" ry="7" fill="${chibiPalette.eyes}" />
+                <ellipse cx="78" cy="61" rx="5.5" ry="7" fill="${chibiPalette.eyes}" />
+                <!-- Điểm Sáng Mắt -->
+                <circle cx="50" cy="58" r="2.2" fill="#ffffff" />
+                <circle cx="76" cy="58" r="2.2" fill="#ffffff" />
+                <circle cx="53" cy="64" r="1.2" fill="#ffffff" />
+                <circle cx="79" cy="64" r="1.2" fill="#ffffff" />
+
+                <!-- Lông Mày & Miệng Cười Mỉm -->
+                <path d="M47,52 Q52,50 56,52" stroke="#78350f" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                <path d="M74,52 Q78,50 83,52" stroke="#78350f" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                <path d="M62,71 Q65,74 68,71" stroke="#e11d48" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+                <!-- 4. Mái Tóc Búp Bê & Phấn Tóc Phía Trước -->
+                <path d="M39,52 Q42,32 65,32 Q88,32 91,52 Q84,48 76,52 Q65,46 54,52 Q46,48 39,52 Z" fill="url(#hairGrad)" />
+
+                <!-- 5. Phụ Kiện Vương Miện & Tay Cầm -->
+                ${crownSVG}
+                ${handheldSVG}
+            </svg>
+        `;
+    }
+
+    function refreshAllChibiViews() {
+        const svgContent = renderChibiPrincessSVG();
+        const frames = ['exam-chibi-frame', 'wardrobe-chibi-frame', 'throne-chibi-frame'];
+        frames.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = svgContent;
+        });
+    }
+
+    /* ==========================================================================
+       3. NGÂN HÀNG KHẢO THÍ HSK 1, 2, 3 (CƯƠNG THỔ THÀNH TRÌ)
+       ========================================================================== */
+    const hskCurriculum = {
+        hsk1: {
+            title: "HSK 1: Nam Chiếu Giang Nam (Sơ Khai)",
             castles: [
                 {
-                    id: "1-1",
-                    name: "Thành Cô Tô",
+                    id: "c1_1",
+                    name: "Cô Tô Thành",
                     icon: "🌸",
-                    suit: "Hoàng Bào Gấm Hoa Đào",
-                    questions: [
-                        { hz: "好", py: "hǎo", vn: "Tốt / Chào", sentence: "你___！很高兴认识你。", trans: "Chào bạn! Rất vui được quen biết bạn.", blankHint: "hǎo", tip: "Mẹo: Ghép Người (你) + Tốt (好) thành lời chào lịch sự nhất quả đất!" },
-                        { hz: "水", py: "shuǐ", vn: "Nước", sentence: "天气很热，请给我一杯___。", trans: "Trời rất nóng, xin cho tôi một cốc nước.", blankHint: "shuǐ", tip: "Mẹo: Thấy 'một cốc' (一杯) thì chữ điền vào chắc chắn là đồ uống (Nước/Trà)!" },
-                        { hz: "吃", py: "chī", vn: "Ăn", sentence: "你想___什么中国菜？", trans: "Bạn muốn ăn món Trung Quốc nào?", blankHint: "chī", tip: "Mẹo: Đằng sau có 'món ăn' (中国菜) thì trước đó phải là động từ Ăn (吃)!" },
-                        { hz: "大", py: "dà", vn: "To / Lớn", sentence: "这个苹果真___！", trans: "Quả táo này thật là to!", blankHint: "dà", tip: "Mẹo: Chữ 真 (thật là) luôn đi với tính từ cảm thán (To, Đẹp, Ngon)!" },
-                        { hz: "人", py: "rén", vn: "Người", sentence: "商店里有很多___。", trans: "Trong cửa hàng có rất nhiều người.", blankHint: "rén", tip: "Mẹo: 'Rất nhiều' (很多) + Người (人) = Chỗ đông đúc nhộn nhịp!" },
-                        { hz: "喝", py: "hē", vn: "Uống", sentence: "医生说要多___温水。", trans: "Bác sĩ dặn phải uống nhiều nước ấm.", blankHint: "hē", tip: "Mẹo: 'Đa' (多) + Động từ = Khuyên làm việc gì đó nhiều hơn (uống nhiều nước)!" },
-                        { hz: "几", py: "jǐ", vn: "Mấy / Bao nhiêu", sentence: "现在___点了？", trans: "Bây giờ là mấy giờ rồi?", blankHint: "jǐ", tip: "Mẹo: Muốn hỏi giờ giấc chỉ cần nhét chữ 'Mấy' (几) trước chữ Giờ (点)!" },
-                        { hz: "不", py: "bù", vn: "Không", sentence: "我___是老师，我是学生。", trans: "Tôi không phải là giáo viên, tôi là học sinh.", blankHint: "bù", tip: "Mẹo: Muốn phủ định 'Không phải' cứ ghép thẳng: 不 + 是 = Không phải!" },
-                        { hz: "在", py: "zài", vn: "Ở / Đang", sentence: "我现___学校的图书馆里。", trans: "Tôi hiện đang ở trong thư viện của trường.", blankHint: "zài", tip: "Mẹo: Thấy địa điểm (thư viện, nhà) thì dùng chữ Ở (在) làm cầu nối!" }
+                    quests: [
+                        { hz: "好", py: "hǎo", vn: "Tốt / Chào", sentence: "你___！很高兴认识你。", trans: "Chào bạn! Rất vui được quen biết bạn.", tip: "Mẹo: Ghép Người (你) + Tốt (好) thành lời chào lịch sự nhất!" },
+                        { hz: "水", py: "shuǐ", vn: "Nước", sentence: "天气很热，请给我一杯___。", trans: "Trời rất nóng, xin cho tôi một cốc nước.", tip: "Mẹo: Thấy 'một cốc' (一杯) thì chữ điền vào chắc chắn là đồ uống (Nước/Trà)!" },
+                        { hz: "吃", py: "chī", vn: "Ăn", sentence: "你想___什么中国菜？", trans: "Bạn muốn ăn món Trung Quốc nào?", tip: "Mẹo: Đằng sau có 'món ăn' (中国菜) thì trước đó phải là Ăn (吃)!" },
+                        { hz: "大", py: "dà", vn: "To / Lớn", sentence: "这个苹果真___！", trans: "Quả táo này thật là to!", tip: "Mẹo: Chữ 真 (thật là) luôn đi với tính từ cảm thán (To, Đẹp, Ngon)!" }
                     ]
                 },
                 {
-                    id: "1-2",
+                    id: "c1_2",
                     name: "Kim Lăng Phủ",
                     icon: "🏯",
-                    suit: "Y phục Thêu Phượng Hoàng",
-                    questions: [
-                        { hz: "书", py: "shū", vn: "Sách", sentence: "桌子上有一本汉语___。", trans: "Trên bàn có một cuốn sách tiếng Trung.", blankHint: "shū", tip: "Mẹo: Thấy lượng từ 'Một cuốn/quyển' (一本) là tự tin điền Sách (书)!" },
-                        { hz: "猫", py: "māo", vn: "Mèo", sentence: "那只小___在椅子下睡觉。", trans: "Con mèo nhỏ kia đang ngủ dưới ghế.", blankHint: "māo", tip: "Mẹo: 'Một con' (一只) thường dành cho thú cưng xinh xắn như Mèo, Chó!" },
-                        { hz: "去", py: "qù", vn: "Đi", sentence: "明天我要___北京旅游。", trans: "Ngày mai tôi muốn đi Bắc Kinh du lịch.", blankHint: "qù", tip: "Mẹo: Đi đến một địa danh nào đó: 去 + Nơi chốn (Bắc Kinh)!" },
-                        { hz: "钱", py: "qián", vn: "Tiền", sentence: "这个杯子多少___？", trans: "Cái cốc này bao nhiêu tiền?", blankHint: "qián", tip: "Mẹo hỏi giá siêu kinh điển: Bao nhiêu (多少) + Tiền (钱)!" },
-                        { hz: "见", py: "jiàn", vn: "Gặp", sentence: "明天学校___！", trans: "Ngày mai gặp lại ở trường nhé!", blankHint: "jiàn", tip: "Mẹo: Hẹn gặp ở đâu: Thời gian/Địa điểm + Gặp (见)!" },
-                        { hz: "买", py: "mǎi", vn: "Mua", sentence: "我想去商店___两件衣服。", trans: "Tôi muốn đến cửa hàng mua hai bộ quần áo.", blankHint: "mǎi", tip: "Mẹo: Đến cửa hàng (商店) mục đích chính là Mua (买) đồ!" },
-                        { hz: "月", py: "yuè", vn: "Tháng", sentence: "今天是八___十五号。", trans: "Hôm nay là ngày 15 tháng 8.", blankHint: "yuè", tip: "Mẹo ngày tháng: Đơn vị to đứng trước (Tháng 月 trước, Ngày 号 sau)!" },
-                        { hz: "住", py: "zhù", vn: "Sống / Ở", sentence: "你___在哪儿？", trans: "Bạn sống ở đâu?", blankHint: "zhù", tip: "Mẹo: Hỏi nơi cư trú lâu dài dùng chữ Trú/Ở (住)!" },
-                        { hz: "叫", py: "jiào", vn: "Tên là / Kêu", sentence: "我的中国朋友___李华。", trans: "Bạn người Trung Quốc của tôi tên là Lý Hoa.", blankHint: "jiào", tip: "Mẹo giới thiệu tên: Chủ ngữ + 叫 + Tên riêng!" }
-                    ]
-                },
-                {
-                    id: "1-3",
-                    name: "Tiền Đường Trấn",
-                    icon: "🛶",
-                    suit: "Thủy Thần Yếm Lam Khí",
-                    questions: [
-                        { hz: "上", py: "shàng", vn: "Lên lớp (上课)", sentence: "我们八点___课。", trans: "Chúng tôi tám giờ lên lớp.", blankHint: "shàng", tip: "Mẹo: Vào học là 'Lên lớp' (上课), tan học là 'Xuống lớp' (下课)!" },
-                        { hz: "下", py: "xià", vn: "Rơi (mưa)", sentence: "外面正在___大雨呢。", trans: "Bên ngoài đang mưa to đấy.", blankHint: "xià", tip: "Mẹo: Mưa từ trên trời rơi xuống nên dùng chữ Xuống (下雨)!" },
-                        { hz: "写", py: "xiě", vn: "Viết", sentence: "你会___这个汉字吗？", trans: "Bạn biết viết chữ Hán này không?", blankHint: "xiě", tip: "Mẹo: Thấy 'Chữ Hán' (汉字) thì hành động đi kèm là Viết (写)!" },
-                        { hz: "字", py: "zì", vn: "Chữ", sentence: "你的汉___写得很漂亮。", trans: "Chữ Hán của bạn viết rất đẹp.", blankHint: "zì", tip: "Mẹo: Chữ Hán luôn đi thành cặp đôi: Hán (汉) + Tự (字)!" },
-                        { hz: "听", py: "tīng", vn: "Nghe", sentence: "请大家认真___我说。", trans: "Xin mọi người lắng nghe tôi nói.", blankHint: "tīng", tip: "Mẹo: Nói thì bằng mồm, còn lắng nhận thì dùng tai Nghe (听)!" },
-                        { hz: "说", py: "shuō", vn: "Nói", sentence: "他汉语___得非常流利。", trans: "Anh ấy nói tiếng Trung rất lưu loát.", blankHint: "shuō", tip: "Mẹo: Nói một ngôn ngữ nào đó: 说 + Tiếng Trung/Tiếng Anh!" },
-                        { hz: "家", py: "jiā", vn: "Nhà", sentence: "我想回___休息了。", trans: "Tôi muốn về nhà nghỉ ngơi rồi.", blankHint: "jiā", tip: "Mẹo: 'Hồi' (回) là quay về, về đâu? Về Nhà (家) là ấm áp nhất!" },
-                        { hz: "看", py: "kàn", vn: "Xem / Nhìn", sentence: "星期天我想在宿舍___书。", trans: "Chủ nhật tôi muốn ở ký túc xá xem sách.", blankHint: "kàn", tip: "Mẹo: Đọc sách / xem phim / ngắm cảnh người Trung đều dùng chữ Xem (看)!" }
+                    quests: [
+                        { hz: "书", py: "shū", vn: "Sách", sentence: "桌子上有一本汉语___。", trans: "Trên bàn có một cuốn sách tiếng Trung.", tip: "Mẹo: Lượng từ 'Một cuốn' (一本) chỉ đi kèm Sách (书)!" },
+                        { hz: "猫", py: "māo", vn: "Mèo", sentence: "那只小___在椅子下睡觉。", trans: "Con mèo nhỏ kia đang ngủ dưới ghế.", tip: "Mẹo: 'Một con' (一只) thường dành cho thú cưng như Mèo, Chó!" },
+                        { hz: "去", py: "qù", vn: "Đi", sentence: "明天我要___北京旅游。", trans: "Ngày mai tôi muốn đi Bắc Kinh du lịch.", tip: "Mẹo: Đến một địa danh: 去 + Nơi chốn (Bắc Kinh)!" },
+                        { hz: "钱", py: "qián", vn: "Tiền", sentence: "这个杯子多少___？", trans: "Cái cốc này bao nhiêu tiền?", tip: "Mẹo hỏi giá: Bao nhiêu (多少) + Tiền (钱)!" }
                     ]
                 }
             ]
         },
-        2: {
-            name: "HSK 2: Thục Đạo Mạc Bắc (Viễn Chinh)",
+        hsk2: {
+            title: "HSK 2: Ba Thục Mạc Bắc (Viễn Chinh)",
             castles: [
                 {
-                    id: "2-1",
+                    id: "c2_1",
                     name: "Kiếm Môn Quan",
                     icon: "🗡️",
-                    suit: "Giáp Trụ Hồng Phấn Chiến Tướng",
-                    questions: [
-                        { hz: "等", py: "děng", vn: "Chờ đợi", sentence: "请在外面稍___一下。", trans: "Xin hãy ở bên ngoài chờ một lát.", blankHint: "děng", tip: "Mẹo: Thấy 'một lát' (一下) đằng sau thường là động tác ngắn như Đợi (等一下)!" },
-                        { hz: "快", py: "kuài", vn: "Nhanh", sentence: "火车站很近，走得很___。", trans: "Ga tàu rất gần, đi bộ rất nhanh.", blankHint: "kuài", tip: "Mẹo: Đi bộ mà gần thì thời gian phải Nhanh (快)!" },
-                        { hz: "慢", py: "màn", vn: "Chậm", sentence: "老师，请说得___一点儿。", trans: "Thưa thầy, xin hãy nói chậm lại một chút.", blankHint: "màn", tip: "Mẹo: Nghe không kịp thì xin người ta nói Chậm lại (慢一点)!" },
-                        { hz: "给", py: "gěi", vn: "Cho / Đưa", sentence: "妈妈___我买了一件新衣服。", trans: "Mẹ mua cho tôi một bộ quần áo mới.", blankHint: "gěi", tip: "Mẹo: Làm cái gì 'Cho ai đó' cứ nhớ cấu trúc: A 给 B + Hành động!" },
-                        { hz: "懂", py: "dǒng", vn: "Hiểu", sentence: "你说的话我都听___了。", trans: "Lời bạn nói tôi đều nghe hiểu rồi.", blankHint: "dǒng", tip: "Mẹo bổ ngữ kết quả: Nghe (听) + Hiểu (懂) = Tiếp thu trọn vẹn!" },
-                        { hz: "过", py: "guò", vn: "Từng (trải nghiệm)", sentence: "我去___两次中国。", trans: "Tôi từng đi Trung Quốc hai lần rồi.", blankHint: "guò", tip: "Mẹo: Động từ + 过 = Từng trải qua việc gì đó trong đời!" },
-                        { hz: "问", py: "wèn", vn: "Hỏi", sentence: "我可以___你一个问题吗？", trans: "Tôi có thể hỏi bạn một câu hỏi không?", blankHint: "wèn", tip: "Mẹo ghép đôi: Có thắc mắc thì phải Hỏi (问) câu hỏi (问题)!" },
-                        { hz: "题", py: "tí", vn: "Đề bài / Câu hỏi", sentence: "这道考___不太容易做。", trans: "Đề thi này không dễ làm chút nào.", blankHint: "tí", tip: "Mẹo: Bài thi cử hoặc câu đố trong tiếng Trung gọi là Đề (考题/问题)!" },
-                        { hz: "着", py: "zhe", vn: "Đang (trạng thái)", sentence: "门开___呢，请直接进来吧。", trans: "Cửa đang mở đấy, xin cứ tự nhiên vào.", blankHint: "zhe", tip: "Mẹo: Cửa cứ giữ nguyên trạng thái mở: Mở (开) + 着 = Đang mở sẵn!" }
+                    quests: [
+                        { hz: "等", py: "děng", vn: "Chờ đợi", sentence: "请在外面稍___一下。", trans: "Xin hãy ở bên ngoài chờ một lát.", tip: "Mẹo: Đằng sau có 'một lát' (一下) thì động tác là Đợi (等一下)!" },
+                        { hz: "快", py: "kuài", vn: "Nhanh", sentence: "火车站很近，走得很___。", trans: "Ga tàu rất gần, đi bộ rất nhanh.", tip: "Mẹo: Gần thì đi bộ rất Nhanh (快)!" },
+                        { hz: "给", py: "gěi", vn: "Cho / Đưa", sentence: "妈妈___我买了一件新衣服。", trans: "Mẹ mua cho tôi một bộ quần áo mới.", tip: "Mẹo: Làm cái gì cho ai: A 给 B + Hành động!" },
+                        { hz: "懂", py: "dǒng", vn: "Hiểu", sentence: "你说的话我都听___了。", trans: "Lời bạn nói tôi đều nghe hiểu rồi.", tip: "Mẹo: Nghe (听) + Hiểu (懂) = Tiếp thu trọn vẹn!" }
                     ]
                 },
                 {
-                    id: "2-2",
+                    id: "c2_2",
                     name: "Tuyết Lĩnh Sơn",
                     icon: "❄️",
-                    suit: "Áo Choàng Lông Thỏ Bạch Tuyết",
-                    questions: [
-                        { hz: "贵", py: "guì", vn: "Đắt đỏ", sentence: "这条红裙子太___了。", trans: "Chiếc váy đỏ này đắt quá rồi.", blankHint: "guì", tip: "Mẹo: Đồ xịn sò trong cung đình giá cao thì kêu lên: Quá Đắt (太贵了)!" },
-                        { hz: "忙", py: "máng", vn: "Bận rộn", sentence: "你最近在___什么呢？", trans: "Dạo gần đây bạn đang bận gì thế?", blankHint: "máng", tip: "Mẹo: Hỏi thăm bạn bè dạo này vất vả: Bận việc gì (在忙什么)!" },
-                        { hz: "累", py: "lèi", vn: "Mệt mỏi", sentence: "今天走了一整天，太___了。", trans: "Hôm nay đi bộ cả ngày, mệt quá rồi.", blankHint: "lèi", tip: "Mẹo: Đi bộ viễn chinh suốt ngày thì cơ thể sẽ Mệt (累) rã rời!" },
-                        { hz: "远", py: "yuǎn", vn: "Xa xôi", sentence: "我家离公司不太___。", trans: "Nhà tôi cách công ty không xa lắm.", blankHint: "yuǎn", tip: "Mẹo khoảng cách: Không Xa (不太远) / Rất Gần (很近)!" },
-                        { hz: "穿", py: "chuān", vn: "Mặc đồ", sentence: "天气冷了，多___一件大衣吧。", trans: "Trời lạnh rồi, mặc thêm một chiếc áo khoác đi.", blankHint: "chuān", tip: "Mẹo: Áo quần, giày dép đội lên thân thể dùng động từ Mặc/Xỏ (穿)!" },
-                        { hz: "错", py: "cuò", vn: "Sai sót", sentence: "这道题你做___了。", trans: "Câu hỏi này bạn làm sai rồi.", blankHint: "cuò", tip: "Mẹo: Làm đúng là 做对, làm nhầm làm trật là 做错 (Làm sai)!" },
-                        { hz: "白", py: "bái", vn: "Trắng", sentence: "窗外下起了___雪。", trans: "Ngoài cửa sổ tuyết trắng đã rơi.", blankHint: "bái", tip: "Mẹo: Màu sắc của bông tuyết mùa đông là Bạch (白 - Trắng)!" },
-                        { hz: "晴", py: "qíng", vn: "Nắng ráo", sentence: "明天天气很好，是个___天。", trans: "Ngày mai thời tiết rất đẹp, là một ngày nắng ráo.", blankHint: "qíng", tip: "Mẹo: Trời quang mây tạnh có mặt trời chiếu sáng là ngày Nắng (晴天)!" },
-                        { hz: "洗", py: "xǐ", vn: "Rửa / Giặt", sentence: "饭前记得要___手。", trans: "Trước khi ăn nhớ phải rửa tay.", blankHint: "xǐ", tip: "Mẹo giữ vệ sinh: Trước khi ăn cơm phải Rửa (洗) tay sạch sẽ!" }
-                    ]
-                },
-                {
-                    id: "2-3",
-                    name: "Ba Thục Đô",
-                    icon: "🌶️",
-                    suit: "Trang Phục Thục Nữ Tứ Xuyên",
-                    questions: [
-                        { hz: "比", py: "bǐ", vn: "So với (câu chữ 比)", sentence: "今天的天气___昨天更冷。", trans: "Thời tiết hôm nay lạnh hơn hôm qua.", blankHint: "bǐ", tip: "Mẹo so sánh: Muốn đọ 2 thứ với nhau: [Vật A] + 比 + [Vật B] + Tính từ!" },
-                        { hz: "笑", py: "xiào", vn: "Cười", sentence: "听了这个笑话，大家都___了。", trans: "Nghe xong câu chuyện cười, mọi người đều cười rộ lên.", blankHint: "xiào", tip: "Mẹo: Chuyện cười (笑话) kể ra là để mọi người cùng Cười (笑)!" },
-                        { hz: "送", py: "sòng", vn: "Tặng / Tiễn", sentence: "生日那天，朋友___了我一块手表。", trans: "Ngày sinh nhật, bạn bè tặng tôi một chiếc đồng hồ.", blankHint: "sòng", tip: "Mẹo sinh nhật: Bạn bè đến chơi mang quà đến Tặng (送) cho mình!" },
-                        { hz: "帮", py: "bāng", vn: "Giúp đỡ", sentence: "你能___我拿一下包吗？", trans: "Bạn có thể giúp tôi cầm cái túi một lát không?", blankHint: "bāng", tip: "Mẹo nhờ vả: Nhờ ai việc gì cứ mở đầu bằng: Bạn có thể Giúp (帮) tôi...!" },
-                        { hz: "走", py: "zǒu", vn: "Đi bộ", sentence: "散步有助于健康，我们___吧。", trans: "Đi dạo có lợi cho sức khỏe, chúng ta đi bộ nhé.", blankHint: "zǒu", tip: "Mẹo: Đi dạo bộ nhẹ nhàng thư thả là động tác Đi (走)!" },
-                        { hz: "跑", py: "pǎo", vn: "Chạy", sentence: "弟弟喜欢在操场上___步。", trans: "Em trai thích chạy bộ trên sân tập.", blankHint: "pǎo", tip: "Mẹo thể thao: Chạy nhanh trên sân tập là môn Chạy bộ (跑步)!" },
-                        { hz: "新", py: "xīn", vn: "Mới", sentence: "祝你___年快乐！", trans: "Chúc bạn năm mới vui vẻ!", blankHint: "xīn", tip: "Mẹo chúc tết: Chúc bạn Năm (年) + Mới (新) ngập tràn niềm vui!" },
-                        { hz: "常", py: "cháng", vn: "Thường xuyên (常常)", sentence: "周末我___常去图书馆借书。", trans: "Cuối tuần tôi thường xuyên đến thư viện mượn sách.", blankHint: "cháng", tip: "Mẹo thói quen: Việc làm lặp đi lặp lại hàng tuần là Thường xuyên (常常)!" }
+                    quests: [
+                        { hz: "贵", py: "guì", vn: "Đắt đỏ", sentence: "这条红裙子太___了。", trans: "Chiếc váy đỏ này đắt quá rồi.", tip: "Mẹo: Giá cao thì kêu lên: Quá Đắt (太贵了)!" },
+                        { hz: "累", py: "lèi", vn: "Mệt mỏi", sentence: "今天走了一整天，太___了。", trans: "Hôm nay đi bộ cả ngày, mệt quá rồi.", tip: "Mẹo: Đi bộ cả ngày thì cơ thể Mệt mỏi (累)!" },
+                        { hz: "穿", py: "chuān", vn: "Mặc đồ", sentence: "天气冷了，多___一件大衣吧。", trans: "Trời lạnh rồi, mặc thêm một chiếc áo khoác đi.", tip: "Mẹo: Quần áo đội khoác lên người dùng chữ Mặc (穿)!" },
+                        { hz: "比", py: "bǐ", vn: "So với (chữ 比)", sentence: "今天的天气___昨天更冷。", trans: "Thời tiết hôm nay lạnh hơn hôm qua.", tip: "Mẹo so sánh: [Vật A] + 比 + [Vật B] + Tính từ!" }
                     ]
                 }
             ]
         },
-        3: {
-            name: "HSK 3: Định Đô Trung Nguyên (Thống Nhất)",
+        hsk3: {
+            title: "HSK 3: Định Đô Trung Nguyên (Thống Nhất)",
             castles: [
                 {
-                    id: "3-1",
+                    id: "c3_1",
                     name: "Lạc Dương Thành",
                     icon: "🏮",
-                    suit: "Cẩm Y Dạ Hành Bát Quái",
-                    questions: [
-                        { hz: "把", py: "bǎ", vn: "Câu chữ 把", sentence: "请___窗户关上，外面风大。", trans: "Hãy đóng cửa sổ lại, bên ngoài gió to.", blankHint: "bǎ", tip: "Mẹo chữ 把: Cứ nhớ công thức 'Túm lấy cái gì đó + Xử lý nó' (Túm cửa sổ + Đóng lại)!" },
-                        { hz: "被", py: "bèi", vn: "Bị / Được (bị động)", sentence: "桌子上的西瓜___弟弟吃了。", trans: "Dưa hấu trên bàn đã bị em trai ăn rồi.", blankHint: "bèi", tip: "Mẹo chữ 被: Bị hại / Gặp xui xẻo: Quả dưa hấu Bị (被) thằng em xơi tái!" },
-                        { hz: "敢", py: "gǎn", vn: "Dám", sentence: "天太黑了，我不太___一个人出门。", trans: "Trời tối quá, tôi không dám ra ngoài một mình.", blankHint: "gǎn", tip: "Mẹo tâm lý: Sợ hãi không có dũng khí thì kêu: Không Dám (不敢)!" },
-                        { hz: "完", py: "wán", vn: "Xong / Hết", sentence: "今天的作业我已经做___了。", trans: "Bài tập hôm nay tôi đã làm xong rồi.", blankHint: "wán", tip: "Mẹo hoàn thành: Làm (做) + Xong (完) = Đóng tập nghỉ ngơi!" },
-                        { hz: "愿", py: "yuàn", vn: "Sẵn lòng", sentence: "你___意跟我一起去旅行吗？", trans: "Bạn có sẵn lòng cùng tôi đi du lịch không?", blankHint: "yuàn", tip: "Mẹo rủ rê: Muốn hỏi người ta có tình nguyện đi cùng không: Sẵn lòng (愿意)!" },
-                        { hz: "带", py: "dài", vn: "Mang theo", sentence: "出门记得___伞，今天会下雨。", trans: "Ra ngoài nhớ mang theo ô, hôm nay sẽ mưa.", blankHint: "dài", tip: "Mẹo đồ đạc: Đem theo đồ vật bên mình là Mang (带) theo!" },
-                        { hz: "接", py: "jiē", vn: "Đón / Nhận", sentence: "下午三点我要去机场___人。", trans: "Ba giờ chiều tôi phải ra sân bay đón người.", blankHint: "jiē", tip: "Mẹo giao tiếp: Ra bến xe/sân bay đón bạn bè hoặc nghe máy là Đón (接)!" },
-                        { hz: "放", py: "fàng", vn: "Đặt / Để", sentence: "请把书___在书架上。", trans: "Xin hãy đặt sách lên trên giá sách.", blankHint: "fàng", tip: "Mẹo đồ vật: Hạ đồ đạc đặt yên một chỗ là Để/Đặt (放)!" },
-                        { hz: "换", py: "huàn", vn: "Đổi / Thay", sentence: "这件衣服有点小，我想___一件大的。", trans: "Bộ quần áo này hơi chật, tôi muốn đổi một chiếc to hơn.", blankHint: "huàn", tip: "Mẹo mua sắm: Đồ không vừa ý đem ra tiệm Đổi (换) cái mới!" }
+                    quests: [
+                        { hz: "把", py: "bǎ", vn: "Câu chữ 把", sentence: "请___窗户关上，外面风大。", trans: "Hãy đóng cửa sổ lại, bên ngoài gió to.", tip: "Mẹo chữ 把: Cứ nhớ 'Túm lấy cái gì đó + Xử lý nó' (Túm cửa sổ + Đóng lại)!" },
+                        { hz: "被", py: "bèi", vn: "Bị / Được", sentence: "桌子上的西瓜___弟弟吃了。", trans: "Dưa hấu trên bàn đã bị em trai ăn rồi.", tip: "Mẹo chữ 被: Bị hại / Gặp sự cố: Quả dưa hấu Bị (被) em trai ăn mất!" },
+                        { hz: "完", py: "wán", vn: "Xong / Hết", sentence: "今天的作业我已经做___了。", trans: "Bài tập hôm nay tôi đã làm xong rồi.", tip: "Mẹo hoàn thành: Làm (做) + Xong (完) = Đóng vở!" },
+                        { hz: "愿", py: "yuàn", vn: "Sẵn lòng", sentence: "你___意跟我一起去旅行吗？", trans: "Bạn có sẵn lòng cùng tôi đi du lịch không?", tip: "Mẹo rủ rê: Muốn hỏi người ta có tình nguyện không: Sẵn lòng (愿意)!" }
                     ]
                 },
                 {
-                    id: "3-2",
-                    name: "Biện Kinh Phủ",
-                    icon: "📜",
-                    suit: "Cung Đình Thượng Thư Quan Bào",
-                    questions: [
-                        { hz: "虽", py: "suī", vn: "Tuy rằng (虽然...但是...)", sentence: "___然天气很冷，但他还是去跑步了。", trans: "Tuy rằng thời tiết rất lạnh, nhưng anh ấy vẫn đi chạy bộ.", blankHint: "suī", tip: "Mẹo cặp bài trùng: Thấy vế sau có 但是 (nhưng mà) thì vế đầu 100% là 虽然 (Tuy rằng)!" },
-                        { hz: "因", py: "yīn", vn: "Bởi vì (因为)", sentence: "___为下雨，比赛推迟了。", trans: "Bởi vì trời mưa nên trận đấu bị hoãn lại.", blankHint: "yīn", tip: "Mẹo nguyên nhân: Giải thích lý do bắt đầu bằng Bởi vì (因为)!" },
-                        { hz: "而", py: "ér", vn: "Mà / Hơn nữa (而且)", sentence: "她不但聪明，___且很努力。", trans: "Cô ấy không những thông minh mà còn rất nỗ lực.", blankHint: "ér", tip: "Mẹo nhân đôi ưu điểm: Đã có 'Không những' (不但) thì phải đi với 'Hơn nữa' (而且)!" },
-                        { hz: "越", py: "yuè", vn: "Càng... càng... (越...越...)", sentence: "风___刮___大。", trans: "Gió thổi càng lúc càng mạnh.", blankHint: "yuè", tip: "Mẹo tăng tiến cấp độ: Càng thế này lại Càng thế kia: 越...越...!" },
-                        { hz: "跟", py: "gēn", vn: "Cùng / Với", sentence: "我想___你商量一件事。", trans: "Tôi muốn bàn bạc với bạn một việc.", blankHint: "gēn", tip: "Mẹo song hành: Tôi Cùng (跟) Bạn làm việc gì đó!" },
-                        { hz: "得", py: "de", vn: "Trợ từ kết cấu 得", sentence: "妹妹跑___比谁都快。", trans: "Em gái chạy nhanh hơn bất kỳ ai.", blankHint: "de", tip: "Mẹo khen chê: Động từ + 得 + Khen chê thế nào (Chạy nhanh, hát hay, nhảy đẹp)!" },
-                        { hz: "差", py: "chà", vn: "Kém / Kém cỏi", sentence: "这次考试他的成绩很___。", trans: "Kỳ thi lần này thành tích của anh ấy rất kém.", blankHint: "chà", tip: "Mẹo đánh giá: Kết quả thi cử không tốt thì gọi là Kém (差)!" },
-                        { hz: "极", py: "jí", vn: "Cực kỳ (...极了)", sentence: "这道中国菜好吃___了！", trans: "Món ăn Trung Quốc này ngon cực kỳ!", blankHint: "jí", tip: "Mẹo khen đỉnh chóp: Tính từ + 极了 = Ngon tuyệt đỉnh, đẹp hết nấc!" },
-                        { hz: "除", py: "chú", vn: "Ngoài ra (除了...以外)", sentence: "___了他，大家都按时参加了会议。", trans: "Ngoài anh ấy ra, mọi người đều tham gia cuộc họp đúng giờ.", blankHint: "chú", tip: "Mẹo loại trừ: Trừ ai đó ra: 除了 (Ngoài ra) + Ai đó + 以外!" }
-                    ]
-                },
-                {
-                    id: "3-3",
-                    name: "Trường An Hoàng Cung",
+                    id: "c3_2",
+                    name: "Trường An Cung",
                     icon: "👑",
-                    suit: "Long Bào Nữ Đế Cửu Ngũ Chí Tôn",
-                    questions: [
-                        { hz: "容", py: "róng", vn: "Dễ dàng (容易)", sentence: "学好一门外语并不___易。", trans: "Học tốt một ngoại ngữ không hề dễ dàng.", blankHint: "róng", tip: "Mẹo độ khó: Không Dễ (不容易) / Rất Dễ (很容易)!" },
-                        { hz: "简", py: "jiǎn", vn: "Đơn giản (简单)", sentence: "这个问题其实很___单。", trans: "Vấn đề này thật ra rất đơn giản.", blankHint: "jiǎn", tip: "Mẹo giải đề: Đề thi không phức tạp thì gọi là Đơn giản (简单)!" },
-                        { hz: "难", py: "nán", vn: "Khó khăn", sentence: "汉字虽然有点儿___，但我喜欢。", trans: "Chữ Hán tuy hơi khó, nhưng tôi thích.", blankHint: "nán", tip: "Mẹo vượt khó: Chữ Hán tuy Khó (难) nhưng có công chúa luyện là dễ ngay!" },
-                        { hz: "变", py: "biàn", vn: "Biến đổi", sentence: "几年没见，你的___化真大！", trans: "Mấy năm không gặp, sự thay đổi của bạn thật lớn!", blankHint: "biàn", tip: "Mẹo khen ngợi: Lâu ngày gặp lại thấy bạn bè Thay đổi (变化) ngoạn mục!" },
-                        { hz: "成", py: "chéng", vn: "Thành công", sentence: "经过努力，我们终于获得了___功。", trans: "Trải qua nỗ lực, chúng ta cuối cùng đã đạt được thành công.", blankHint: "chéng", tip: "Mẹo đích đến: Cố gắng hết mình sẽ gặt hái được Thành công (成功)!" },
-                        { hz: "信", py: "xìn", vn: "Tin tưởng", sentence: "你要相___自己的能力。", trans: "Bạn phải tin tưởng vào năng lực của chính mình.", blankHint: "xìn", tip: "Mẹo truyền cảm hứng: Phải luôn Tin tưởng (相信) vào bản thân mình!" },
-                        { hz: "关", py: "guān", vn: "Đóng cửa (关门)", sentence: "进门后请把门___好。", trans: "Sau khi vào phòng xin hãy đóng cửa cẩn thận.", blankHint: "guān", tip: "Mẹo hành động: Vào nhà thì Đóng (关) cửa lại kẻo gió lùa!" },
-                        { hz: "办", py: "bàn", vn: "Cách làm (办法)", sentence: "别担心，我们一定能想出___法。", trans: "Đừng lo, chúng ta nhất định sẽ nghĩ ra cách giải quyết.", blankHint: "bàn", tip: "Mẹo gỡ rối: Khi gặp bế tắc hãy cùng nhau nghĩ Cách (办法)!" },
-                        { hz: "总", py: "zǒng", vn: "Luôn luôn (总是)", sentence: "他上课___是迟到。", trans: "Anh ấy đi học luôn luôn đến muộn.", blankHint: "zǒng", tip: "Mẹo tần suất: Thói quen xấu diễn ra suốt ngày dùng chữ Luôn luôn (总是)!" }
+                    quests: [
+                        { hz: "虽", py: "suī", vn: "Tuy rằng (虽然)", sentence: "___然天气很冷，但他还是去跑步了。", trans: "Tuy rằng trời lạnh, anh ấy vẫn đi chạy.", tip: "Mẹo: Thấy 但是 (nhưng mà) thì vế đầu là 虽然 (Tuy rằng)!" },
+                        { hz: "得", py: "de", vn: "Trợ từ kết cấu 得", sentence: "妹妹跑___比谁都快。", trans: "Em gái chạy nhanh hơn bất kỳ ai.", tip: "Mẹo khen chê: Động từ + 得 + Khen chê thế nào (Chạy nhanh, hát hay)!" },
+                        { hz: "简", py: "jiǎn", vn: "Đơn giản", sentence: "这个问题其实很___单。", trans: "Vấn đề này thật ra rất đơn giản.", tip: "Mẹo: Đơn giản trong Hán ngữ là 简单 (Giản đơn)!" },
+                        { hz: "成", py: "chéng", vn: "Thành công", sentence: "经过努力，我们终于获得了___功。", trans: "Trải qua nỗ lực, chúng ta cuối cùng đã đạt được thành công.", tip: "Mẹo: Đích đến của nỗ lực là Thành công (成功)!" }
                     ]
                 }
             ]
         }
     };
 
-    let activeTier = 1;
-    let activeCastleIdx = 0;
-    let activeQuestionIdx = 0;
-    let conqueredSet = new Set();
-    let hanziWriter = null;
+    /* ==========================================================================
+       4. TẤU CHƯƠNG ĐỌC HIỂU THỰC CHIẾN (THEO MẪU BÀI BÁO)
+       ========================================================================== */
+    const readingPassages = [
+        {
+            id: 'p1',
+            title: '🔎 Tôi Không Tìm Thấy Điện Thoại',
+            keyWord: '找',
+            keyPy: 'zhǎo',
+            keyVn: 'Tìm kiếm (Trảo)',
+            hz: '今天早上，我找不到我的手机了。我找了十分钟，还是没有找到。我问妈妈：“妈妈，你看到我的手机了吗？”妈妈说：“没有，你再找找吧。”我在房间里找了很久。后来，我发现手机就在我的手里。原来，我一直拿着手机找手机！妈妈看到以后笑了，我也笑了。',
+            py: 'Jīntiān zǎoshang, wǒ zhǎo bú dào wǒ de shǒujī le. Wǒ zhǎo le shí fēnzhōng, háishi méiyǒu zhǎodào. Wǒ wèn māma: "Māma, nǐ kàndào wǒ de shǒujī le ma?" Māma shuō: "Méiyǒu, nǐ zài zhǎo zhǎo ba." Wǒ zài fángjiān lǐ zhǎo le hěn jiǔ. Hòulái, wǒ fāxiàn shǒujī jiù zài wǒ de shǒu lǐ. Yuánlái, wǒ yìzhí názhe shǒujī zhǎo shǒujī! Māma kàndào yǐhòu xiào le, wǒ yě xiào le.',
+            vn: 'Sáng nay, tôi không tìm thấy điện thoại của mình. Tôi tìm 10 phút mà vẫn không thấy. Tôi hỏi mẹ: "Mẹ ơi, mẹ có nhìn thấy điện thoại của con không?" Mẹ nói: "Không, con tìm lại xem." Tôi tìm rất lâu trong phòng. Sau đó, tôi phát hiện điện thoại đang ở ngay trong tay mình. Hóa ra, tôi vẫn đang cầm điện thoại để đi tìm điện thoại! Mẹ nhìn thấy thì cười, tôi cũng cười.',
+            vocab: [
+                '手机 (shǒujī): điện thoại',
+                '找不到 (zhǎo bú dào): không tìm thấy',
+                '分钟 (fēnzhōng): phút',
+                '还是 (háishi): vẫn / vẫn là',
+                '再 (zài): lại / thêm lần nữa',
+                '房间 (fángjiān): căn phòng',
+                '后来 (hòulái): sau đó',
+                '发现 (fāxiàn): phát hiện',
+                '一直 (yìzhí): suốt / luôn luôn',
+                '拿着 (názhe): đang cầm'
+            ],
+            grammar: [
+                '📌 <b>Bổ ngữ khả năng:</b> 找不到 (Không tìm thấy) vs 找到 (Đã tìm thấy).',
+                '📌 <b>Trạng thái tiếp diễn:</b> 拿着 (Đang cầm trên tay) - Động từ + 着.'
+            ]
+        },
+        {
+            id: 'p2',
+            title: '🍑🍒 Đi Chợ Mua Hoa Quả',
+            keyWord: '买',
+            keyPy: 'mǎi',
+            keyVn: 'Mua sắm (Mãi)',
+            hz: '今天下班以后，我去市场买水果。我想买苹果和香蕉。苹果很红，看起来很好吃。香蕉也很新鲜。我买了三个苹果和一把香蕉，一共花了二十块钱。回家以后，我洗了一个苹果，坐下来慢慢吃。',
+            py: 'Jīntiān xiàbān yǐhòu, wǒ qù shìchǎng mǎi shuǐguǒ. Wǒ xiǎng mǎi píngguǒ hé xiāngjiāo. Píngguǒ hěn hóng, kàn qǐlái hěn hǎochī. Xiāngjiāo yě hěn xīnxiān. Wǒ mǎi le sān ge píngguǒ hé yì bǎ xiāngjiāo, yígòng huā le èrshí kuài qián. Huí jiā yǐhòu, wǒ xǐ le yí ge píngguǒ, zuò xiàlái mànmàn chī.',
+            vn: 'Sau khi tan làm hôm nay, tôi đi chợ mua hoa quả. Tôi muốn mua táo và chuối. Táo rất đỏ, trông có vẻ rất ngon. Chuối cũng rất tươi. Tôi mua ba quả táo và một nải chuối, tổng cộng hết 20 tệ. Sau khi về nhà, tôi rửa một quả táo rồi ngồi xuống ăn từ từ.',
+            vocab: [
+                '市场 (shìchǎng): chợ, thị trường',
+                '水果 (shuǐguǒ): hoa quả',
+                '苹果 (píngguǒ): quả táo',
+                '香蕉 (xiāngjiāo): chuối',
+                '看起来 (kàn qǐlái): trông có vẻ',
+                '新鲜 (xīnxiān): tươi mới',
+                '一共 (yígòng): tổng cộng',
+                '慢慢 (mànmàn): từ từ, chậm rãi'
+            ],
+            grammar: [
+                '📌 <b>Cấu trúc cảm quan:</b> 看起来 + Tính từ (Trông có vẻ ngon/đẹp).',
+                '📌 <b>Thời gian:</b> Sau khi làm gì đó = Hành động + 以后 (下班以后: Sau khi tan ca).'
+            ]
+        },
+        {
+            id: 'p3',
+            title: '⏰ Chiếc Đồng Hồ Báo Thức',
+            keyWord: '闹',
+            keyPy: 'nào',
+            keyVn: 'Huyên náo / Chuông',
+            hz: '明天早上八点要开会，我不能迟到。我买了一个小闹钟叫我起床。因为有它，这一晚我睡得很好。第二天早上，我起来的时候已经七点四十了，我发现闹钟没有响。我到公司最快也要四十分钟，最后还是迟到了。下班以后，刚到家，闹钟就响了，“时间到了，时间到了”我看表，正好六点，原来我把时间定在了下午六点。',
+            py: 'Míngtiān zǎoshang bā diǎn yào kāihuì, wǒ bù néng chídào. Wǒ mǎi le yí gè xiǎo nàozhōng jiào wǒ qǐchuáng. Yīnwèi yǒu tā, zhè yì wǎn wǒ shuì de hěn hǎo. Dì èr tiān zǎoshang, wǒ qǐlái de shíhou yǐjīng qī diǎn sìshí le, wǒ fāxiàn nàozhōng méiyǒu xiǎng. Wǒ dào gōngsī zuì kuài yě yào sìshí fēnzhōng, zuìhòu háishì chídào le. Xiàbān yǐhòu, gāng dào jiā, nàozhōng jiù xiǎng le, "shíjiān dào le" wǒ kàn biǎo, zhènghǎo liù diǎn, yuánlái wǒ bǎ shíjiān dìng zài le xiàwǔ liù diǎn.',
+            vn: '8 giờ sáng mai phải họp, tôi không thể đến trễ. Tôi đã mua một chiếc đồng hồ báo thức nhỏ để gọi tôi dậy. Bởi vì có nó, buổi đêm này tôi đã ngủ rất ngon giấc. Buổi sáng hôm sau, khi tôi dậy thì đã 7 giờ 40 rồi, tôi phát hiện đồng hồ báo thức đã không kêu. Tôi đến công ty nhanh nhất cũng phải 40 phút, cuối cùng thì vẫn đến trễ. Sau khi tan làm, vừa về đến nhà, báo thức liền kêu vang, vừa hay 6 giờ, hoá ra tôi đã đặt giờ lúc 6 giờ chiều.',
+            vocab: [
+                '闹钟 (nàozhōng): đồng hồ báo thức',
+                '开会 (kāihuì): họp hành',
+                '迟到 (chídào): đến muộn / trễ',
+                '响 (xiǎng): kêu vang',
+                '正好 (zhènghǎo): vừa hay, đúng lúc',
+                '原来 (yuánlái): hóa ra'
+            ],
+            grammar: [
+                '📌 <b>Cấu trúc câu chữ 把:</b> 我把时间定在下午六点 (Tôi đặt giờ vào 6 giờ chiều).',
+                '📌 <b>Cấu trúc vừa... liền...:</b> 刚...就... (刚到家，闹钟就响了: Vừa về đến nhà thì chuông kêu).'
+            ]
+        },
+        {
+            id: 'p4',
+            title: '💼 Năng Lực Hay Thái Độ Quan Trọng Hơn?',
+            keyWord: '态',
+            keyPy: 'tài',
+            keyVn: 'Thái độ (Thái)',
+            hz: '在工作中，很多人认为能力很重要，因为能力强的人做事更快，也更容易解决问题。但是，我觉得工作态度也非常重要。有些人虽然能力很强，但是不愿意合作，也不愿意学习。相反，有些人经验不多，但是认真负责，愿意学习，遇到问题也不会轻易放弃。所以，我认为能力和态度都很重要。一个人只要认真工作、不断学习，就可以提高自己的能力，也能得到同事和公司的认可。',
+            py: 'Zài gōngzuò zhōng, hěn duō rén rènwéi nénglì hěn zhòngyào... Dànshì, wǒ juéde gōngzuò tàidù yě fēicháng zhòngyào. Yǒuxiē rén suīrán nénglì hěn qiáng, dànshì bú yuànyì hézuò... Xiāngfǎn, yǒuxiē rén jīngyàn bù duō, dànshì rènzhēn fùzé... Suǒyǐ, wǒ rènwéi nénglì hé tàidù dōu hěn zhòngyào.',
+            vn: 'Trong công việc, nhiều người cho rằng năng lực rất quan trọng... Nhưng tôi cho rằng thái độ làm việc cũng vô cùng quan trọng. Có một số người tuy năng lực rất tốt nhưng không muốn hợp tác... Ngược lại, có những người không nhiều kinh nghiệm nhưng làm việc nghiêm túc, có trách nhiệm... Vì vậy, tôi cho rằng năng lực và thái độ đều rất quan trọng.',
+            vocab: [
+                '能力 (nénglì): năng lực',
+                '态度 (tàidù): thái độ',
+                '解决 (jiějué): giải quyết',
+                '合作 (hézuò): hợp tác',
+                '相反 (xiāngfǎn): ngược lại',
+                '负责 (fùzé): có trách nhiệm'
+            ],
+            grammar: [
+                '📌 <b>Cặp liên từ:</b> 虽然...但是... (Tuy năng lực tốt nhưng không chịu hợp tác).',
+                '📌 <b>Cặp liên từ:</b> 只要...就... (Chỉ cần nỗ lực thì sẽ nâng cao được năng lực).'
+            ]
+        }
+    ];
+
+    /* ==========================================================================
+       5. QUẢN LÝ TIẾN TRÌNH & ĐIỀU KHIỂN GAME
+       ========================================================================== */
+    let currentTierKey = 'hsk1';
+    let currentCastleIndex = 0;
+    let currentQuestIndex = 0;
+    let completedQuests = new Set();
+    let currentReadingIndex = 0;
+
+    let examWriterInstance = null;
+    let readingWriterInstance = null;
 
     function initGame() {
-        switchTier(1);
-        updateRoyalProgress();
-        updateDollDisplay();
+        refreshAllChibiViews();
+        renderMapCastles();
+        renderWardrobeCloset();
+        renderReadingNav();
+        updateGlobalProgress();
     }
 
-    function switchTier(tierNum) {
-        activeTier = tierNum;
-        activeCastleIdx = 0;
-
-        document.querySelectorAll('.tier-btn').forEach((b, i) => {
-            b.classList.remove('active');
-            if ((i + 1) === tierNum) b.classList.add('active');
+    function switchMainTab(tabKey) {
+        // Toggle tab highlights
+        ['tab-hsk1', 'tab-hsk2', 'tab-hsk3', 'tab-reading', 'tab-wardrobe'].forEach(id => {
+            document.getElementById(id).classList.remove('tab-active');
         });
 
-        document.getElementById('tier-map-title').innerText = `🗺️ BẢN ĐỒ MỞ RỘNG BỜ CÕI • ${hskTiers[tierNum].name.split(' ')[0]} ${hskTiers[tierNum].name.split(' ')[1]}`;
-        showScreen('layer-map');
-        renderCastles();
-        loadCastle(0);
+        // Hide all views
+        ['view-map', 'view-exam', 'view-reading', 'view-wardrobe'].forEach(id => {
+            document.getElementById(id).classList.add('hidden');
+            document.getElementById(id).classList.remove('flex');
+        });
+
+        if (tabKey === 'wardrobe') {
+            document.getElementById('tab-wardrobe').classList.add('tab-active');
+            document.getElementById('view-wardrobe').classList.remove('hidden');
+            document.getElementById('view-wardrobe').classList.add('flex');
+            renderWardrobeCloset();
+        } else if (tabKey === 'reading') {
+            document.getElementById('tab-reading').classList.add('tab-active');
+            document.getElementById('view-reading').classList.remove('hidden');
+            document.getElementById('view-reading').classList.add('flex');
+            loadReadingPassage(currentReadingIndex);
+        } else {
+            currentTierKey = tabKey;
+            currentCastleIndex = 0;
+            document.getElementById(`tab-${tabKey}`).classList.add('tab-active');
+            document.getElementById('view-map').classList.remove('hidden');
+            document.getElementById('view-map').classList.add('flex');
+            renderMapCastles();
+        }
+        playZitherTone(550, 0.2);
     }
 
-    function showScreen(screenId) {
-        document.querySelectorAll('.screen-layer').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    }
+    /* Map and Castles Rendering */
+    function renderMapCastles() {
+        const tier = hskCurriculum[currentTierKey];
+        document.getElementById('map-header-title').innerText = `🗺️ ${tier.title.toUpperCase()}`;
+        const scrollBox = document.getElementById('castles-scroll-box');
+        scrollBox.innerHTML = '';
 
-    function renderCastles() {
-        const box = document.getElementById('map-castles-box');
-        box.innerHTML = '';
-        const list = hskTiers[activeTier].castles;
-
-        list.forEach((c, idx) => {
+        tier.castles.forEach((c, idx) => {
+            const isCompleted = c.quests.every(q => completedQuests.has(q.hz));
             const card = document.createElement('div');
-            const isDone = isCastleCompleted(c);
-            card.className = `castle-node ${isDone ? 'conquered' : ''} ${idx === activeCastleIdx ? 'active-castle' : ''}`;
+            card.className = `min-w-[150px] p-3 rounded-2xl border-2 cursor-pointer transition-all text-center ${
+                idx === currentCastleIndex
+                    ? 'bg-rose-50 border-rose-500 shadow-md scale-105'
+                    : isCompleted ? 'bg-amber-50 border-amber-300' : 'bg-white border-pink-200'
+            }`;
             card.innerHTML = `
-                <div class="castle-icon">${c.icon}</div>
-                <div class="castle-name">${c.name}</div>
-                <div class="castle-quest">${getCastleLearnedCount(c)} / ${c.questions.length} Khảo Thí</div>
+                <div class="text-3xl mb-1">${c.icon}</div>
+                <div class="font-extrabold text-xs text-pink-950">${c.name}</div>
+                <div class="text-[10px] text-rose-600 font-bold mt-1">
+                    ${c.quests.filter(q => completedQuests.has(q.hz)).length}/${c.quests.length} Đề Thi
+                </div>
             `;
-            card.onclick = () => loadCastle(idx);
-            box.appendChild(card);
+            card.onclick = () => selectCastle(idx);
+            scrollBox.appendChild(card);
         });
+
+        selectCastle(currentCastleIndex);
     }
 
-    function isCastleCompleted(c) {
-        return c.questions.every(q => conqueredSet.has(q.hz));
-    }
+    function selectCastle(idx) {
+        currentCastleIndex = idx;
+        const castle = hskCurriculum[currentTierKey].castles[idx];
+        document.getElementById('active-castle-label').innerHTML = `<span>${castle.icon}</span> Thành Trì: ${castle.name}`;
 
-    function getCastleLearnedCount(c) {
-        return c.questions.filter(q => conqueredSet.has(q.hz)).length;
-    }
-
-    function loadCastle(idx) {
-        activeCastleIdx = idx;
-        renderCastles();
-        const c = hskTiers[activeTier].castles[idx];
-        document.getElementById('current-castle-header').innerText = `Thành Trì: ${c.name} (${c.suit})`;
-
-        const grid = document.getElementById('castle-words-grid');
+        const grid = document.getElementById('words-badge-grid');
         grid.innerHTML = '';
-        c.questions.forEach((q, qIdx) => {
-            const node = document.createElement('div');
-            node.className = `pink-node ${conqueredSet.has(q.hz) ? 'learned' : ''}`;
-            node.innerHTML = `<div class="hz">${q.hz}</div><div class="py">${q.py}</div>`;
-            node.onclick = () => openExamScreen(qIdx);
-            grid.appendChild(node);
+        castle.quests.forEach((q, qIdx) => {
+            const isDone = completedQuests.has(q.hz);
+            const badge = document.createElement('div');
+            badge.className = `p-2 rounded-xl border text-center cursor-pointer transition-all ${
+                isDone ? 'bg-amber-100 border-amber-400 text-amber-950 font-black' : 'bg-pink-50 border-pink-200 text-pink-900 hover:border-pink-400'
+            }`;
+            badge.innerHTML = `
+                <div class="text-base font-serif font-black">${q.hz}</div>
+                <div class="text-[10px] text-rose-600 font-bold">${q.py}</div>
+            `;
+            badge.onclick = () => openExamScreen(qIdx);
+            grid.appendChild(badge);
         });
     }
 
-    // ==================== BẢNG KHẢO THÍ HSK ====================
-    function openExamScreen(qIdx) {
-        activeQuestionIdx = qIdx;
-        const c = hskTiers[activeTier].castles[activeCastleIdx];
-        const q = c.questions[qIdx];
+    function openExamScreen(questIdx) {
+        currentQuestIndex = questIdx;
+        const castle = hskCurriculum[currentTierKey].castles[currentCastleIndex];
+        const quest = castle.quests[questIdx];
 
-        showScreen('layer-exam');
+        // Switch to exam layer
+        ['view-map', 'view-reading', 'view-wardrobe'].forEach(id => {
+            document.getElementById(id).classList.add('hidden');
+            document.getElementById(id).classList.remove('flex');
+        });
+        const examView = document.getElementById('view-exam');
+        examView.classList.remove('hidden');
+        examView.classList.add('flex');
 
-        document.getElementById('exam-stage-counter').innerText = `${c.name} • Đề Khảo Thí ${qIdx + 1} / ${c.questions.length}`;
-        document.getElementById('princess-suit-title').innerText = `Công Chúa Cung Đình`;
-
-        const styledSentence = q.sentence.replace(q.hz, `<span class="exam-blank">___ (${q.blankHint})</span>`);
-        document.getElementById('exam-chinese-sentence').innerHTML = styledSentence;
-        document.getElementById('exam-vn-translation').innerText = q.trans;
-        document.getElementById('target-py').innerText = q.py;
-        document.getElementById('target-vn').innerText = q.vn;
+        document.getElementById('exam-quest-counter').innerText = `${castle.name} • Đề Khảo Thí ${questIdx + 1}/${castle.quests.length}`;
         
-        document.getElementById('grammar-tip-text').innerText = q.tip || "Mẹo: Điền chữ đúng ngữ cảnh giao tiếp tự nhiên!";
+        // Highlight placeholder
+        const styledZh = quest.sentence.replace(quest.hz, `<span class="text-rose-600 border-b-2 border-rose-500 font-black px-1.5 text-lg">___ (${quest.py})</span>`);
+        document.getElementById('exam-sentence-zh').innerHTML = styledZh;
+        document.getElementById('exam-sentence-vn').innerText = quest.trans;
+        document.getElementById('exam-grammar-tip').innerText = quest.tip;
 
-        document.getElementById('royal-reward-card').style.display = 'none';
-        document.getElementById('btn-next-quest').style.display = 'none';
+        document.getElementById('target-word-py').innerText = quest.py;
+        document.getElementById('target-word-vn').innerText = quest.vn;
 
-        document.getElementById('writer-board').innerHTML = '';
-        hanziWriter = HanziWriter.create('writer-board', q.hz, {
-            width: 250,
-            height: 250,
-            padding: 15,
+        document.getElementById('exam-reward-toast').classList.add('hidden');
+        document.getElementById('btn-next-exam').classList.add('hidden');
+
+        // Init Hanzi Writer Canvas
+        const writerBox = document.getElementById('hanzi-writer-box');
+        writerBox.innerHTML = '';
+        examWriterInstance = HanziWriter.create('hanzi-writer-box', quest.hz, {
+            width: 220,
+            height: 220,
+            padding: 12,
             showOutline: true,
             showCharacter: false,
             strokeAnimationSpeed: 1.2,
@@ -969,166 +931,245 @@
             drawingColor: '#be185d'
         });
 
-        startExamQuiz();
+        startExamWriterQuiz();
     }
 
-    function startExamQuiz() {
-        hanziWriter.quiz({
+    function startExamWriterQuiz() {
+        examWriterInstance.quiz({
             onMistake: function() {
-                const b = document.getElementById('writer-board');
-                b.classList.remove('shake-board');
-                void b.offsetWidth;
-                b.classList.add('shake-board');
-                playZither(160);
+                const box = document.getElementById('hanzi-writer-box');
+                box.classList.remove('shake-animation');
+                void box.offsetWidth;
+                box.classList.add('shake-animation');
+                playZitherTone(160, 0.4, 'sawtooth');
             },
             onCorrectStroke: function(strokeData) {
-                playZither(480 + strokeData.strokeNum * 40);
+                playZitherTone(480 + strokeData.strokeNum * 40, 0.25);
             },
             onComplete: function() {
-                const c = hskTiers[activeTier].castles[activeCastleIdx];
-                const q = c.questions[activeQuestionIdx];
+                const quest = hskCurriculum[currentTierKey].castles[currentCastleIndex].quests[currentQuestIndex];
+                speakChinese(quest.hz);
+                playZitherTone(960, 0.6);
+                completedQuests.add(quest.hz);
 
-                speakZh(q.hz);
-                playZither(960);
-                conqueredSet.add(q.hz);
+                // Reveal completed word in sentence
+                const solvedSentence = quest.sentence.replace(quest.hz, `<span class="text-rose-600 font-black text-xl border-b-2 border-rose-500">${quest.hz}</span>`);
+                document.getElementById('exam-sentence-zh').innerHTML = solvedSentence;
 
-                const solvedSentence = q.sentence.replace(q.hz, `<span style="color:#db2777; font-weight:900; font-size:20px; text-decoration:underline;">${q.hz}</span>`);
-                document.getElementById('exam-chinese-sentence').innerHTML = solvedSentence;
+                // Show reward toast
+                document.getElementById('exam-reward-toast').classList.remove('hidden');
+                document.getElementById('btn-next-exam').classList.remove('hidden');
 
-                document.getElementById('reward-gift-icon').innerText = "👗";
-                document.getElementById('reward-gift-title').innerText = `ĐÃ THU PHỤC THÀNH TRÌ!`;
-                document.getElementById('reward-gift-desc').innerText = `Khảo thí thành công chữ "${q.hz}"! Đã mở khóa thêm nhiều phục sức lộng lẫy trong Phòng Thử Đồ!`;
-                document.getElementById('royal-reward-card').style.display = 'block';
-                document.getElementById('btn-next-quest').style.display = 'inline-block';
+                updateGlobalProgress();
 
-                updateRoyalProgress();
-
-                // NẾU PHÁ ĐẢO TOÀN BỘ 75+ ĐỀ THI HSK -> KÍCH HOẠT CUTSCENE ĐĂNG NGAI VÀNG!
-                if (conqueredSet.size >= 75) {
-                    document.getElementById('cinematic-throne').style.display = 'flex';
+                // Check endgame victory (Thống nhất thiên hạ)
+                if (completedQuests.size >= 24) {
+                    showThroneModal();
                 }
             }
         });
     }
 
-    function demonstrateStroke() {
-        if (hanziWriter) {
-            hanziWriter.animateCharacter();
-            startExamQuiz();
+    function demoStroke() {
+        if (examWriterInstance) {
+            examWriterInstance.animateCharacter();
+            startExamWriterQuiz();
         }
     }
 
-    function clearSlate() {
-        if (hanziWriter) hanziWriter.quiz();
+    function resetStroke() {
+        if (examWriterInstance) {
+            examWriterInstance.quiz();
+        }
     }
 
-    function stepNextExam() {
-        const c = hskTiers[activeTier].castles[activeCastleIdx];
-        if (activeQuestionIdx + 1 < c.questions.length) {
-            openExamScreen(activeQuestionIdx + 1);
+    function nextExamQuest() {
+        const castle = hskCurriculum[currentTierKey].castles[currentCastleIndex];
+        if (currentQuestIndex + 1 < castle.quests.length) {
+            openExamScreen(currentQuestIndex + 1);
         } else {
-            alert(`🎉 Chúc mừng Công chúa! Đã thu phục trọn vẹn toàn bộ các đề thi tại ${c.name}! Hãy vào Phòng Thử Đồ để ướm trang phục mới!`);
-            returnToPalaceMap();
+            returnToMap();
         }
     }
 
-    function returnToPalaceMap() {
-        showScreen('layer-map');
-        loadCastle(activeCastleIdx);
+    function returnToMap() {
+        switchMainTab(currentTierKey);
     }
 
-    // ==================== PHÒNG THỬ ĐỒ DRESS-UP ====================
-    function openWardrobe() {
-        document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('tab-wardrobe').classList.add('active');
-        showScreen('layer-wardrobe');
-        renderClosetCategories();
-        updateDollDisplay();
+    /* Reading Passages Module */
+    function renderReadingNav() {
+        const tabsBox = document.getElementById('passage-nav-tabs');
+        tabsBox.innerHTML = '';
+        readingPassages.forEach((p, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `px-3 py-1.5 rounded-xl font-bold text-xs whitespace-nowrap transition-all border ${
+                idx === currentReadingIndex
+                    ? 'bg-amber-400 text-amber-950 border-amber-500 shadow'
+                    : 'bg-white text-amber-900 border-amber-200 hover:bg-amber-50'
+            }`;
+            btn.innerText = p.title.split(' ')[0] + ' ' + (p.title.split(' ')[1] || '');
+            btn.onclick = () => loadReadingPassage(idx);
+            tabsBox.appendChild(btn);
+        });
     }
 
-    function renderClosetCategories() {
-        const count = conqueredSet.size;
-        let unlockedTotal = 0;
+    function loadReadingPassage(idx) {
+        currentReadingIndex = idx;
+        renderReadingNav();
+        const p = readingPassages[idx];
 
-        ['headwear', 'pose', 'handheld'].forEach(category => {
-            const container = document.getElementById(`closet-${category}-box`);
+        document.getElementById('passage-detail-title').innerText = p.title;
+        document.getElementById('passage-detail-hz').innerText = p.hz;
+        document.getElementById('passage-detail-py').innerText = p.py;
+        document.getElementById('passage-detail-vn').innerText = p.vn;
+
+        // Vocab tags
+        const vocabBox = document.getElementById('passage-detail-vocab');
+        vocabBox.innerHTML = '';
+        p.vocab.forEach(v => {
+            const pill = document.createElement('div');
+            pill.className = 'bg-amber-50 border border-amber-200 p-1.5 rounded-lg text-slate-700 font-medium';
+            pill.innerText = v;
+            vocabBox.appendChild(pill);
+        });
+
+        // Grammar rules
+        const grammarBox = document.getElementById('passage-detail-grammar');
+        grammarBox.innerHTML = '';
+        p.grammar.forEach(g => {
+            const row = document.createElement('div');
+            row.className = 'bg-rose-50 border border-pink-200 p-2 rounded-lg text-xs text-rose-900';
+            row.innerHTML = g;
+            grammarBox.appendChild(row);
+        });
+
+        // Target verification writer
+        document.getElementById('reading-target-py').innerText = p.keyPy;
+        document.getElementById('reading-target-vn').innerText = p.keyVn;
+
+        const writerBox = document.getElementById('reading-writer-box');
+        writerBox.innerHTML = '';
+        readingWriterInstance = HanziWriter.create('reading-writer-box', p.keyWord, {
+            width: 170,
+            height: 170,
+            padding: 10,
+            showOutline: true,
+            showCharacter: false,
+            strokeColor: '#9a3412',
+            highlightColor: '#f97316',
+            drawingWidth: 12,
+            drawingColor: '#ea580c'
+        });
+
+        startReadingWriterQuiz();
+    }
+
+    function startReadingWriterQuiz() {
+        readingWriterInstance.quiz({
+            onMistake: function() {
+                playZitherTone(160, 0.4, 'sawtooth');
+            },
+            onCorrectStroke: function(strokeData) {
+                playZitherTone(500 + strokeData.strokeNum * 40, 0.2);
+            },
+            onComplete: function() {
+                const p = readingPassages[currentReadingIndex];
+                speakChinese(p.keyWord);
+                playZitherTone(880, 0.5);
+                completedQuests.add(p.keyWord);
+                updateGlobalProgress();
+            }
+        });
+    }
+
+    function demoReadingStroke() {
+        if (readingWriterInstance) {
+            readingWriterInstance.animateCharacter();
+            startReadingWriterQuiz();
+        }
+    }
+
+    function resetReadingStroke() {
+        if (readingWriterInstance) readingWriterInstance.quiz();
+    }
+
+    function speakPassage() {
+        const p = readingPassages[currentReadingIndex];
+        speakChinese(p.hz);
+    }
+
+    /* Wardrobe Closets Rendering & Interaction */
+    function renderWardrobeCloset() {
+        const completedCount = completedQuests.size;
+        let unlockedCount = 0;
+
+        ['crown', 'dress', 'weapon'].forEach(cat => {
+            const container = document.getElementById(`wardrobe-grid-${cat}`);
             container.innerHTML = '';
-            wardrobeItems[category].forEach(item => {
-                const isUnlocked = count >= item.unlockAt;
-                if (isUnlocked) unlockedTotal++;
+            wardrobeData[cat].forEach(item => {
+                const isUnlocked = completedCount >= item.unlock;
+                if (isUnlocked) unlockedCount++;
 
+                const isSelected = userWardrobeSelection[`${cat}Id`] === item.id;
                 const pill = document.createElement('div');
-                const isSelected = (category === 'pose' && currentDressed.poseOffset === item.offset) ||
-                                   (category !== 'pose' && currentDressed[category] === item.icon);
-                pill.className = `closet-item ${isUnlocked ? '' : 'locked'} ${isSelected ? 'selected' : ''}`;
-                pill.innerHTML = `<span>${item.icon}</span> <span>${item.name} ${isUnlocked ? '' : `(Cần ${item.unlockAt} chữ)`}</span>`;
-
+                pill.className = `flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                    isUnlocked
+                        ? isSelected
+                            ? 'bg-rose-100 border-rose-500 text-rose-900 shadow-sm scale-105'
+                            : 'bg-pink-50 border-pink-200 text-pink-950 hover:bg-pink-100'
+                        : 'bg-slate-100 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed'
+                }`;
+                pill.innerHTML = `
+                    <span>${item.icon}</span>
+                    <span>${item.name} ${isUnlocked ? '' : `(${item.unlock} ải)`}</span>
+                `;
                 if (isUnlocked) {
                     pill.onclick = () => {
-                        if (category === 'pose') {
-                            currentDressed.poseOffset = item.offset;
-                        } else {
-                            currentDressed[category] = item.icon;
-                        }
-                        playZither(660);
-                        renderClosetCategories();
-                        updateDollDisplay();
+                        userWardrobeSelection[`${cat}Id`] = item.id;
+                        playZitherTone(650, 0.25);
+                        renderWardrobeCloset();
+                        refreshAllChibiViews();
                     };
                 }
                 container.appendChild(pill);
             });
         });
 
-        document.getElementById('wardrobe-unlocked-count').innerText = `Đã Mở: ${unlockedTotal} / 15 Phục Sức`;
+        document.getElementById('wardrobe-count-pill').innerText = `Đã Mở: ${unlockedCount}/12 Phục Sức`;
     }
 
-    function updateDollDisplay() {
-        // Cập nhật vị trí ảnh công chúa (Sprite Offset)
-        const sprites = ['exam-princess-sprite', 'wardrobe-princess-sprite', 'throne-princess-sprite'];
-        sprites.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.style.backgroundPosition = currentDressed.poseOffset;
-        });
+    /* Progress and Endgame Handling */
+    function updateGlobalProgress() {
+        const count = completedQuests.size;
+        document.getElementById('stat-progress-count').innerText = count;
+        const percent = Math.min(100, Math.round((count / 24) * 100));
+        document.getElementById('stat-progress-bar').style.width = `${percent}%`;
 
-        // Cập nhật phụ kiện đầu
-        ['exam-doll-headwear', 'wardrobe-doll-headwear', 'throne-doll-headwear'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.innerText = currentDressed.headwear;
-        });
-
-        // Cập nhật phụ kiện tay
-        ['exam-doll-handheld', 'wardrobe-doll-handheld', 'throne-doll-handheld'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.innerText = currentDressed.handheld;
-        });
-
-        document.getElementById('dressed-doll-title').innerText = `Công Chúa: ${currentDressed.headwear} + ${currentDressed.handheld}`;
+        const badge = document.getElementById('crown-title-badge');
+        if (count >= 24) badge.innerText = "👑 Nữ Đế Định Thiên Hạ";
+        else if (count >= 16) badge.innerText = "🧝‍♀️ Trưởng Công Chúa";
+        else if (count >= 8) badge.innerText = "🌸 Quận Chúa Viễn Chinh";
+        else badge.innerText = "🎀 Tiểu Quận Chúa";
     }
 
-    function updateRoyalProgress() {
-        const count = conqueredSet.size;
-        document.getElementById('conquered-stat').innerText = count;
-        document.getElementById('royal-progress-fill').style.width = Math.min(100, (count / 75 * 100)) + '%';
-
-        const rankTag = document.getElementById('princess-rank');
-        if (count >= 75) rankTag.innerText = "👑 Nữ Đế Định Thiên Hạ (Master HSK 3)";
-        else if (count >= 50) rankTag.innerText = "🧝‍♀️ Trưởng Công Chúa Giám Quốc (HSK 2)";
-        else if (count >= 25) rankTag.innerText = "🌸 Quận Chúa Viễn Chinh (HSK 1)";
-        else rankTag.innerText = "🎀 Tiểu Quận Chúa Tập Sự";
+    function showThroneModal() {
+        document.getElementById('modal-throne').classList.remove('hidden');
+        document.getElementById('modal-throne').classList.add('flex');
+        playZitherTone(880, 0.8);
     }
 
-    function closeCinematic() {
-        document.getElementById('cinematic-throne').style.display = 'none';
-        returnToPalaceMap();
+    function closeThroneModal() {
+        document.getElementById('modal-throne').classList.add('hidden');
+        document.getElementById('modal-throne').classList.remove('flex');
     }
 
-    window.onload = () => {
+    /* User Interaction Kickstart */
+    window.addEventListener('DOMContentLoaded', () => {
         document.body.addEventListener('click', () => {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        }, {once:true});
+            initAudio();
+        }, { once: true });
         initGame();
-    };
+    });
 </script>
 
 </body>
